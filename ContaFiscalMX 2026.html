@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ContaFiscal MX 2026 v2 - ERP Personas Fisicas SAT</title>
+<style>
+:root{--nv:#0d1b3e;--nv2:#162548;--nv3:#1e3563;--ac:#2563eb;--ac2:#3b82f6;--aL:#dbeafe;--gd:#f59e0b;--gdL:#fef3c7;--ok:#059669;--okL:#d1fae5;--er:#dc2626;--erL:#fee2e2;--wn:#d97706;--wnL:#fef3c7;--bg:#f0f4f8;--bg2:#fff;--bg3:#e8eef5;--bd:#c8d4e8;--bd2:#a0b4d0;--tx:#0f1923;--tx2:#3d5068;--tx3:#6b85a0;--sw:252px;--hh:63px;--ff:'Segoe UI','Helvetica Neue',Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--ff);background:var(--bg);color:var(--tx);font-size:13px;overflow-x:hidden}
+#LS{position:fixed;inset:0;background:linear-gradient(135deg,var(--nv),var(--nv3));display:flex;align-items:center;justify-content:center;z-index:9999}
+.lbox{background:#fff;border-radius:12px;padding:40px 44px;width:390px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.lbox h1{font-size:22px;color:var(--nv);font-weight:700;text-align:center}
+.lsub{font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:2px;text-align:center;margin-bottom:24px}
+.lbox label{display:block;font-size:11px;font-weight:600;color:var(--tx2);text-transform:uppercase;letter-spacing:.8px;margin:14px 0 5px}
+.lbox input{width:100%;padding:9px 12px;border:1px solid var(--bd);border-radius:6px;font-size:13px;outline:none;background:var(--bg)}
+.lbox input:focus{border-color:var(--ac);background:#fff}
+.lbtn{width:100%;margin-top:22px;padding:11px;background:var(--ac);color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer}
+.lbtn:hover{background:var(--nv3)}
+.lhint{margin-top:12px;font-size:11px;color:var(--tx3);text-align:center}
+#app{display:none;height:100vh;flex-direction:column}
+#app.on{display:flex}
+header{height:var(--hh);background:var(--nv);display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;z-index:100}
+.hlog{color:#fff;font-size:18px;font-weight:700;white-space:nowrap;line-height:1.2}
+.hlog small{color:var(--gd);font-size:11px;font-weight:400;display:block;letter-spacing:1px;text-transform:uppercase}
+.hsep{width:1px;height:28px;background:rgba(255,255,255,.15);margin:0 6px}
+.hcs{flex:1;display:flex;align-items:center;gap:8px}
+.hcs select{background:var(--nv2);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:5px;padding:6px 12px;font-size:13px;max-width:300px}
+.hrgt{display:flex;align-items:center;gap:6px;margin-left:auto}
+.hpill{background:rgba(255,255,255,.1);color:#dbeafe;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.15)}
+.huser{color:#fff;font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer}
+.hav{width:28px;height:28px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.bwrap{flex:1;display:flex;overflow:hidden}
+aside{width:var(--sw);background:var(--nv2);display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
+.stit{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.5px;padding:10px 16px 4px}
+.ni{display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;color:rgba(255,255,255,.7);font-size:12.5px;transition:all .15s;border-left:2px solid transparent}
+.ni:hover{background:rgba(255,255,255,.07);color:#fff}
+.ni.on{background:rgba(37,99,235,.25);color:#fff;border-left-color:var(--ac2)}
+.ni svg{width:16px;height:16px;flex-shrink:0;opacity:.8}
+.sbot{margin-top:auto;padding:12px 16px;border-top:1px solid rgba(255,255,255,.08)}
+.sbtn{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.5);font-size:11px;cursor:pointer;padding:5px 0}
+.sbtn:hover{color:#fff}
+main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.pg{display:none;flex:1;flex-direction:column}
+.pg.on{display:flex}
+.phdr{padding:18px 24px 0;display:flex;align-items:flex-end;justify-content:space-between;flex-shrink:0}
+.phdr h2{font-size:18px;font-weight:700;color:var(--nv)}
+.phdr p{font-size:12px;color:var(--tx3);margin-top:2px}
+.pb{padding:16px 24px;flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:5px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+.bp{background:var(--ac);color:#fff}.bp:hover{background:#1d4ed8}
+.bs{background:var(--bg3);color:var(--tx2);border:1px solid var(--bd)}.bs:hover{background:var(--bd)}
+.bg2{background:var(--ok);color:#fff}.bg2:hover{background:#047857}
+.bd2{background:var(--er);color:#fff}
+.bw{background:var(--gd);color:#fff}
+.bsm{padding:5px 10px;font-size:11px}
+.bxs{padding:3px 8px;font-size:10px}
+.card{background:var(--bg2);border:1px solid var(--bd);border-radius:8px;padding:16px}
+.ctit{font-size:12px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.ctit::before{content:'';width:3px;height:14px;background:var(--ac);border-radius:2px;flex-shrink:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--bg2);border:1px solid var(--bd);border-radius:8px;padding:18px 20px}
+.kl{font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.8px;font-weight:600}
+.kv{font-size:27px;font-weight:700;color:var(--nv);margin-top:4px;letter-spacing:-.5px}
+.ks{font-size:12px;color:var(--tx3);margin-top:3px}
+.kb{border-top:3px solid var(--ac)}.kg{border-top:3px solid var(--ok)}.ko{border-top:3px solid var(--gd)}.kr{border-top:3px solid var(--er)}
+.tw{overflow-x:auto;border:1px solid var(--bd);border-radius:8px;background:var(--bg2)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--bg3);color:var(--tx2);font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;padding:9px 12px;border-bottom:1px solid var(--bd);text-align:left;white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid var(--bg3);color:var(--tx);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f7faff}
+.tr{text-align:right}.tc{text-align:center}
+.bk{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap}
+.bb{background:var(--aL);color:var(--ac)}.bgo{background:var(--okL);color:var(--ok)}.br{background:var(--erL);color:var(--er)}.bo{background:var(--gdL);color:var(--wn)}.bgr{background:var(--bg3);color:var(--tx2)}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg label{font-size:11px;font-weight:600;color:var(--tx2);text-transform:uppercase;letter-spacing:.6px}
+.fg input,.fg select,.fg textarea{padding:7px 10px;border:1px solid var(--bd);border-radius:5px;font-size:12.5px;color:var(--tx);background:var(--bg);outline:none;font-family:var(--ff)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--ac);background:#fff}
+.fg textarea{resize:vertical;min-height:60px}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.fsec{margin-bottom:20px}
+.fsect{font-size:12px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:.8px;padding-bottom:8px;border-bottom:2px solid var(--ac);margin-bottom:14px}
+.tabs{display:flex;gap:2px;border-bottom:2px solid var(--bd);margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:8px 16px;font-size:12px;font-weight:600;color:var(--tx3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:4px 4px 0 0}
+.tab:hover{color:var(--ac);background:var(--aL)}
+.tab.on{color:var(--ac);border-bottom-color:var(--ac);background:var(--aL)}
+.tc_{display:none}.tc_.on{display:block}
+.al{padding:10px 14px;border-radius:6px;font-size:12px;margin-bottom:12px;display:flex;align-items:flex-start;gap:8px}
+.ai{background:var(--aL);color:#1e3a8a;border-left:3px solid var(--ac)}
+.as{background:var(--okL);color:#065f46;border-left:3px solid var(--ok)}
+.aw{background:var(--gdL);color:#78350f;border-left:3px solid var(--gd)}
+.ae{background:var(--erL);color:#7f1d1d;border-left:3px solid var(--er)}
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center}
+.mo.on{display:flex}
+.md{background:var(--bg2);border-radius:10px;padding:24px;max-width:700px;width:95%;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.mdh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--bd)}
+.mdh h3{font-size:15px;font-weight:700;color:var(--nv)}
+.mx{cursor:pointer;color:var(--tx3);font-size:20px;line-height:1;padding:4px 8px;border-radius:4px}
+.mx:hover{background:var(--bg3);color:var(--er)}
+.tb{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.tbsp{width:1px;height:28px;background:var(--bd);margin:0 4px}
+.cr{background:var(--nv);color:#fff;border-radius:8px;padding:16px 20px;margin-top:16px}
+.crr{display:flex;justify-content:space-between;padding:5px 0;font-size:12.5px;border-bottom:1px solid rgba(255,255,255,.08)}
+.crr:last-child{border-bottom:none;font-weight:700;font-size:14px;padding-top:8px;margin-top:4px;border-top:1px solid rgba(255,255,255,.3)}
+.crr span:last-child{color:var(--gd);font-family:monospace;font-size:13px}
+.dc{color:var(--ok);font-weight:600;font-family:monospace}
+.hc{color:var(--er);font-weight:600;font-family:monospace}
+/* Wizard pasos */
+.wizard-steps{display:flex;gap:0;margin-bottom:24px;border:1px solid var(--bd);border-radius:8px;overflow:hidden}
+.wstep{flex:1;padding:10px 8px;text-align:center;font-size:11px;font-weight:600;color:var(--tx3);background:var(--bg3);border-right:1px solid var(--bd);cursor:default}
+.wstep:last-child{border-right:none}
+.wstep.done{background:var(--okL);color:var(--ok)}
+.wstep.act{background:var(--ac);color:#fff}
+.wstep .wnum{display:block;font-size:16px;font-weight:700;margin-bottom:2px}
+/* IMSS tabla */
+.imss-rama{background:var(--bg3);border-radius:6px;padding:10px 12px;margin-bottom:8px}
+.imss-rama-t{font-size:11px;font-weight:700;color:var(--nv2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.imss-row{display:flex;justify-content:space-between;font-size:11px;padding:2px 0}
+.imss-row span:last-child{font-family:monospace;font-weight:600}
+/* CSD upload */
+.cert-box{border:2px dashed var(--bd);border-radius:8px;padding:20px;text-align:center;cursor:pointer;transition:all .2s}
+.cert-box:hover{border-color:var(--ac);background:var(--aL)}
+.cert-ok{border-color:var(--ok);background:var(--okL)}
+/* Declaracion wizard */
+.decl-card{background:var(--bg2);border:1px solid var(--bd);border-radius:8px;padding:16px;margin-bottom:12px;cursor:pointer;transition:all .15s}
+.decl-card:hover{border-color:var(--ac);box-shadow:0 2px 8px rgba(37,99,235,.12)}
+.decl-card.sel{border-color:var(--ac);background:var(--aL)}
+/* Tag regimen */
+.rtag{display:inline-block;background:var(--nv);color:var(--gd);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-right:4px}
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
+</style>
+</head>
+<body>
+<div id="LS">
+  <div class="lbox">
+    <h1>ContaFiscal MX</h1>
+    <div class="lsub">ERP Personas Fisicas - SAT 2026 v2</div>
+    <label>Usuario</label>
+    <input type="text" id="lu" value="admin" placeholder="usuario">
+    <label>Contrasena</label>
+    <input type="password" id="lp" value="1234" placeholder="contrasena" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="lbtn" onclick="doLogin()">Iniciar Sesion</button>
+    <div class="lhint">Demo: admin / 1234 &nbsp;|&nbsp; v2026.2</div>
+  </div>
+</div>
+
+<div id="app">
+  <header>
+    <div class="hlog">ContaFiscal MX <small>SAT 2026 v2</small></div>
+    <div class="hsep"></div>
+    <div class="hcs">
+      <span style="color:rgba(255,255,255,.5);font-size:11px">Contribuyente:</span>
+      <select id="csel" onchange="selC(this.value)"></select>
+      <button class="btn bsm" style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)" onclick="mo('mNC')">+ Nuevo</button>
+    </div>
+    <div class="hrgt">
+      <span class="hpill" id="hpCSD" style="cursor:pointer;display:none" onclick="nav('pgCSD',null)" title="CSD Configurado">&#128274; CSD</span>
+      <span class="hpill">Ejercicio 2026</span>
+      <div class="huser" onclick="doLogout()">
+        <div class="hav">AD</div>
+        <span style="color:rgba(255,255,255,.8);font-size:11px">Admin</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="bwrap">
+    <aside>
+      <div style="padding:10px 0">
+        <div class="stit">Principal</div>
+        <div class="ni on" id="niDB" onclick="nav('pgDB',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Monitor</span></div>
+        <div class="ni" onclick="nav('pgCT',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Contribuyentes</span></div>
+        <div class="stit">Contabilidad</div>
+        <div class="ni" onclick="nav('pgCAT',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h7"/></svg><span>Catalogo de Cuentas</span></div>
+        <div class="ni" onclick="nav('pgPOL',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg><span>Polizas</span></div>
+        <div class="ni" onclick="mo('mAR')" style="border-left:2px solid transparent;background:linear-gradient(90deg,rgba(5,150,105,.08) 0%,transparent 100%)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><span style="color:#34d399;font-weight:600">Asiento Rapido</span></div>
+        <div class="ni" onclick="nav('pgBAL',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg><span>Balanza / Estados</span></div>
+        <div class="stit">Fiscal</div>
+        <div class="ni" onclick="nav('pgISR',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 11h.01M12 11h.01M15 11h.01M4 19h16a2 2 0 002-2V7a2 2 0 00-2-2H4a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg><span>Calculo ISR</span></div>
+        <div class="ni" onclick="nav('pgIVA',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>Calculo IVA</span></div>
+        <div class="ni" onclick="nav('pgDECL',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>Declaraciones</span></div>
+        <div class="stit">Facturacion</div>
+        <div class="ni" onclick="nav('pgCFDI',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg><span>CFDI 4.0</span></div>
+        <div class="ni" onclick="nav('pgCSD',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg><span>CSD / Sellos Digitales</span></div>
+        <div class="stit">Catalogos</div>
+        <div class="ni" onclick="nav('pgCLI',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg><span>Clientes</span></div>
+        <div class="ni" onclick="nav('pgPROV',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg><span>Proveedores</span></div>
+        <div class="stit">RRHH</div>
+        <div class="ni" onclick="nav('pgNOM',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg><span>Nomina</span></div>
+        <div class="ni" onclick="nav('pgIMSS',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg><span>Determinacion IMSS</span></div>
+        <div class="stit">Reportes</div>
+        <div class="ni" onclick="nav('pgREP',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg><span>Reportes Fiscales</span></div>
+      </div>
+      <div class="sbot">
+        <div class="sbtn" onclick="nav('pgCFG',null)"><svg style="width:14px;height:14px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Configuracion</div>
+      </div>
+    </aside>
+    <main id="mainArea">
+<!-- DASHBOARD -->
+<div id="pgDB" class="pg on">
+  <div class="phdr"><div><h2>Monitor</h2><p>Monitor fiscal y contable — Ejercicio 2026</p></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <select style="padding:6px 10px;border:1px solid var(--bd);border-radius:5px;font-size:12px;background:var(--bg2)"><option>Enero 2026</option><option>Febrero 2026</option><option>Marzo 2026</option><option>Abril 2026</option><option>Mayo 2026</option></select>
+      <button class="btn bp bsm" onclick="mo('mAR')" style="background:var(--ok)">&#9889; Asiento Rapido</button>
+      <button class="btn bp bsm" onclick="mo('mNCFDI')">+ Facturar</button>
+    </div>
+  </div>
+  <div class="pb">
+    <div id="dbAl" class="al ai" style="margin-bottom:14px">Sin contribuyente activo.</div>
+    <div class="g4" style="margin-bottom:16px">
+      <div class="kpi kb"><div class="kl">Ingresos Acumulados</div><div class="kv" id="dbIng">$0</div><div class="ks">Ejercicio 2026</div></div>
+      <div class="kpi kr"><div class="kl">ISR Causado</div><div class="kv" id="dbISR">$0</div><div class="ks">Provisional estimado</div></div>
+      <div class="kpi ko"><div class="kl">IVA a Pagar</div><div class="kv" id="dbIVA">$0</div><div class="ks">Saldo estimado</div></div>
+      <div class="kpi kg"><div class="kl">CFDIs Emitidos</div><div class="kv" id="dbCF">0</div><div class="ks">En el periodo</div></div>
+    </div>
+    <div class="g2" style="margin-bottom:16px">
+      <div class="card"><div class="ctit">Calendario Fiscal 2026</div><div id="dbCal"></div></div>
+      <div class="card"><div class="ctit">Regimen Fiscal Activo</div><div id="dbReg"></div></div>
+    </div>
+    <div class="card"><div class="ctit">Ultimas Polizas</div>
+      <div class="tw"><table><thead><tr><th>Fecha</th><th>Folio</th><th>Tipo</th><th>Concepto</th><th class="tr">Debe</th><th class="tr">Haber</th></tr></thead>
+      <tbody id="dbPol"><tr><td colspan="6" style="color:var(--tx3);text-align:center;padding:20px">Sin polizas</td></tr></tbody></table></div>
+    </div>
+  </div>
+</div>
+<!-- CONTRIBUYENTES -->
+<div id="pgCT" class="pg">
+  <div class="phdr"><div><h2>Contribuyentes</h2><p>Personas fisicas registradas</p></div><button class="btn bp" onclick="mo('mNC')">+ Nuevo Contribuyente</button></div>
+  <div class="pb"><div class="tw"><table><thead><tr><th>RFC</th><th>Nombre</th><th>Regimen SAT</th><th>CURP</th><th>CP Fiscal</th><th>CSD</th><th>Acciones</th></tr></thead><tbody id="tbCT"></tbody></table></div></div>
+</div>
+<!-- CATALOGO -->
+<div id="pgCAT" class="pg">
+  <div class="phdr"><div><h2>Catalogo de Cuentas</h2><p>Catalogo SAT PF - RCGCE 2026</p></div>
+    <div style="display:flex;gap:8px"><input type="text" id="bCTA" placeholder="Buscar cuenta..." style="padding:7px 12px;border:1px solid var(--bd);border-radius:5px;font-size:12px;width:220px" oninput="rCAT()"><button class="btn bs" onclick="mo('mCA')">+ Cuenta</button></div>
+  </div>
+  <div class="pb"><div class="tw"><table><thead><tr><th>Numero</th><th>Nombre</th><th>Naturaleza</th><th>Nivel</th><th>Tipo SAT</th><th>Acciones</th></tr></thead><tbody id="tbCAT"></tbody></table></div></div>
+</div>
+<!-- POLIZAS -->
+<div id="pgPOL" class="pg">
+  <div class="phdr"><div><h2>Polizas Contables</h2><p>Registro de movimientos</p></div><button class="btn bp" onclick="mo('mNP')">+ Nueva Poliza</button>
+      <button class="btn bw" onclick="mo('mAR')" style="background:var(--ok)">&#9889; Asiento Rapido</button></div>
+  <div class="pb">
+    <div class="tb">
+      <select id="fTP" style="padding:6px 10px;border:1px solid var(--bd);border-radius:5px;font-size:12px"><option value="">Todos los tipos</option><option>Ingreso</option><option>Egreso</option><option>Diario</option><option>Traspaso</option></select>
+      <input type="month" id="fMP" value="2026-01" style="padding:6px 10px;border:1px solid var(--bd);border-radius:5px;font-size:12px">
+      <button class="btn bs bsm" onclick="rPOL()">Filtrar</button><div class="tbsp"></div>
+      <button class="btn bs bsm" onclick="expPolXML()">&#8595; XML SAT</button>
+      <button class="btn bs bsm" onclick="mo('mAR')" style="color:var(--ok);border-color:var(--ok)">&#9889; Asiento Rapido</button>
+    </div>
+    <div class="tw"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Tipo</th><th>Concepto</th><th class="tr">Debe</th><th class="tr">Haber</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="tbPOL"></tbody></table></div>
+  </div>
+</div>
+<!-- BALANZA -->
+<div id="pgBAL" class="pg">
+  <div class="phdr"><div><h2>Balanza y Estados Financieros</h2><p>Balanza - Balance General - Estado de Resultados</p></div>
+    <div style="display:flex;gap:8px">
+      <select id="perBAL" style="padding:6px 10px;border:1px solid var(--bd);border-radius:5px;font-size:12px"><option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option><option value="12">Dic/Anual</option></select>
+      <button class="btn bp bsm" onclick="genBAL()">Generar</button>
+      <button class="btn bs bsm" onclick="expBalXML()">&#8595; XML SAT</button>
+    </div>
+  </div>
+  <div class="pb">
+    <div class="tabs"><div class="tab on" onclick="stab('tB1','gBAL',this)">Balanza</div><div class="tab" onclick="stab('tB2','gBAL',this)">Balance General</div><div class="tab" onclick="stab('tB3','gBAL',this)">Estado de Resultados</div></div>
+    <div id="gBAL">
+      <div id="tB1" class="tc_ on"><div class="tw"><table><thead><tr><th>Cuenta</th><th>Nombre</th><th class="tr">Saldo Inicial</th><th class="tr">Debe</th><th class="tr">Haber</th><th class="tr">Saldo Final</th></tr></thead><tbody id="tbBAL"></tbody></table></div></div>
+      <div id="tB2" class="tc_"><div id="cBG"></div></div>
+      <div id="tB3" class="tc_"><div id="cER"></div></div>
+    </div>
+  </div>
+</div>
+<!-- ISR -->
+<div id="pgISR" class="pg">
+  <div class="phdr"><div><h2>Calculo de ISR</h2><p>Impuesto Sobre la Renta PF 2026</p></div></div>
+  <div class="pb">
+    <div class="tabs">
+      <div class="tab on" onclick="stab('tI1','gISR',this)">RESICO-PF</div>
+      <div class="tab" onclick="stab('tI2','gISR',this)">Act. Empresarial</div>
+      <div class="tab" onclick="stab('tI3','gISR',this)">Arrendamiento</div>
+      <div class="tab" onclick="stab('tI4','gISR',this)">Sueldos</div>
+      <div class="tab" onclick="stab('tI5','gISR',this)">Plataformas</div>
+      <div class="tab" onclick="stab('tI6','gISR',this)">Anual PF</div>
+    </div>
+    <div id="gISR">
+      <div id="tI1" class="tc_ on">
+        <div class="al ai"><b>RESICO-PF 2026:</b> Tasa progresiva 1%-2.5% sobre ingresos brutos. Pago definitivo mensual. Limite $3,500,000 anuales.</div>
+        <div class="g2">
+          <div class="card"><div class="ctit">Datos del Periodo</div>
+            <div class="fgrid" style="gap:10px">
+              <div class="fg"><label>Mes</label><select id="rMes"><option value="1">Enero</option><option value="2">Febrero</option><option value="3">Marzo</option><option value="4">Abril</option><option value="5">Mayo</option><option value="6">Junio</option><option value="7">Julio</option><option value="8">Agosto</option><option value="9">Septiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option></select></div>
+              <div class="fg"><label>Ingresos del Mes ($)</label><input type="number" id="rIng" value="50000"></div>
+              <div class="fg"><label>Pagos Anteriores ($)</label><input type="number" id="rPA" value="0"></div>
+              <div class="fg"><label>Retenciones ($)</label><input type="number" id="rRet" value="0"></div>
+            </div>
+            <button class="btn bp" style="margin-top:12px;width:100%" onclick="calcResico()">Calcular ISR RESICO</button>
+            <button class="btn bs bsm" style="margin-top:8px;width:100%" onclick="abrirPresentarDecl('ISR RESICO-PF')">&#128196; Presentar esta Declaracion</button>
+          </div>
+          <div id="rRes"></div>
+        </div>
+        <div class="card" style="margin-top:16px"><div class="ctit">Tasas RESICO-PF 2026</div>
+          <div class="tw"><table><thead><tr><th>Limite Inferior</th><th>Limite Superior</th><th>Tasa ISR</th></tr></thead><tbody>
+            <tr><td>$0.01</td><td>$25,000.00</td><td><span class="bk bgo">1.00%</span></td></tr>
+            <tr><td>$25,000.01</td><td>$50,000.00</td><td><span class="bk bgo">1.10%</span></td></tr>
+            <tr><td>$50,000.01</td><td>$83,333.33</td><td><span class="bk bb">1.50%</span></td></tr>
+            <tr><td>$83,333.34</td><td>$208,333.33</td><td><span class="bk bb">2.00%</span></td></tr>
+            <tr><td>$208,333.34</td><td>$3,500,000.00</td><td><span class="bk bo">2.50%</span></td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+      <div id="tI2" class="tc_">
+        <div class="al ai"><b>Actividad Empresarial y Profesional:</b> Pagos provisionales mensuales. Tarifa Art. 96 LISR 2026.</div>
+        <div class="g2">
+          <div class="card"><div class="ctit">Pago Provisional Mensual</div>
+            <div class="fgrid" style="gap:10px">
+              <div class="fg"><label>Ingresos Acumulados ($)</label><input type="number" id="aIA" value="150000"></div>
+              <div class="fg"><label>Deducciones Acumuladas ($)</label><input type="number" id="aDA" value="60000"></div>
+              <div class="fg"><label>PTU Pagada ($)</label><input type="number" id="aPTU" value="0"></div>
+              <div class="fg"><label>Perdidas Fiscales ($)</label><input type="number" id="aPerd" value="0"></div>
+              <div class="fg"><label>Pagos Anteriores ($)</label><input type="number" id="aPA" value="0"></div>
+              <div class="fg"><label>Retenciones ($)</label><input type="number" id="aRet" value="0"></div>
+            </div>
+            <button class="btn bp" style="margin-top:12px;width:100%" onclick="calcActEmp()">Calcular ISR Provisional</button>
+            <button class="btn bs bsm" style="margin-top:8px;width:100%" onclick="abrirPresentarDecl('ISR Act. Empresarial')">&#128196; Presentar esta Declaracion</button>
+          </div>
+          <div id="aRes"></div>
+        </div>
+      </div>
+      <div id="tI3" class="tc_">
+        <div class="al ai"><b>Arrendamiento:</b> Deduccion ciega 35% o gastos reales. Tasa opcional 20%.</div>
+        <div class="g2">
+          <div class="card"><div class="ctit">Calculo Arrendamiento</div>
+            <div class="fgrid" style="gap:10px">
+              <div class="fg"><label>Ingresos por Renta ($)</label><input type="number" id="arrI" value="30000"></div>
+              <div class="fg"><label>Tipo Deduccion</label><select id="arrTD" onchange="tglArr()"><option value="ciega">Deduccion Ciega 35%</option><option value="real">Gastos Reales</option><option value="opc">Tasa Opcional 20%</option></select></div>
+              <div class="fg" id="arrGG" style="display:none"><label>Gastos Reales ($)</label><input type="number" id="arrGR" value="8000"></div>
+              <div class="fg"><label>Predial Pagado ($)</label><input type="number" id="arrPr" value="1200"></div>
+              <div class="fg"><label>Pagos Anteriores ($)</label><input type="number" id="arrPA" value="0"></div>
+              <div class="fg"><label>Retenciones ($)</label><input type="number" id="arrRet" value="0"></div>
+            </div>
+            <button class="btn bp" style="margin-top:12px;width:100%" onclick="calcArr()">Calcular ISR</button>
+            <button class="btn bs bsm" style="margin-top:8px;width:100%" onclick="abrirPresentarDecl('ISR Arrendamiento')">&#128196; Presentar esta Declaracion</button>
+          </div>
+          <div id="arrRes"></div>
+        </div>
+      </div>
+      <div id="tI4" class="tc_">
+        <div class="al ai"><b>Sueldos y Salarios:</b> Retencion mensual por el patron. Subsidio al empleo 2026.</div>
+        <div class="g2">
+          <div class="card"><div class="ctit">Retencion Mensual ISR</div>
+            <div class="fgrid" style="gap:10px">
+              <div class="fg"><label>Ingreso Mensual Bruto ($)</label><input type="number" id="sI" value="25000"></div>
+              <div class="fg"><label>IMSS Obrero ($)</label><input type="number" id="sIMSS" value="0"></div>
+              <div class="fg"><label>Dias Trabajados</label><input type="number" id="sDias" value="30"></div>
+              <div class="fg"><label>Otras Deducciones ($)</label><input type="number" id="sOD" value="0"></div>
+            </div>
+            <button class="btn bp" style="margin-top:12px;width:100%" onclick="calcSuel()">Calcular Retencion ISR</button>
+          </div>
+          <div id="sRes"></div>
+        </div>
+      </div>
+      <div id="tI5" class="tc_">
+        <div class="al ai"><b>Plataformas Digitales 2026:</b> Transporte 2.1%, Hospedaje 4%, Venta bienes 1%, Otros 1%.</div>
+        <div class="g2">
+          <div class="card"><div class="ctit">Calculo Plataformas Digitales</div>
+            <div class="fgrid" style="gap:10px">
+              <div class="fg"><label>Tipo de Servicio</label><select id="pTipo"><option value="0.021">Transporte (Uber/DiDi) 2.1%</option><option value="0.04">Hospedaje (Airbnb) 4%</option><option value="0.01">Venta Bienes (MercadoLibre) 1%</option><option value="0.010">Otros Servicios 1%</option></select></div>
+              <div class="fg"><label>Ingresos del Mes ($)</label><input type="number" id="pI" value="15000"></div>
+              <div class="fg"><label>Retencion por Plataforma ($)</label><input type="number" id="pRet" value="0"></div>
+              <div class="fg"><label>Ingresos acum. &gt; $300,000?</label><select id="pAcum"><option value="no">No - Pago Definitivo</option><option value="si">Si - Acumular</option></select></div>
+            </div>
+            <button class="btn bp" style="margin-top:12px;width:100%" onclick="calcPlat()">Calcular ISR</button>
+          </div>
+          <div id="pRes"></div>
+        </div>
+      </div>
+      <div id="tI6" class="tc_">
+        <div class="al aw"><b>Declaracion Anual PF 2026:</b> Presentacion en abril 2027. Tarifa Art. 152. Deducciones personales hasta 15% o 5 UMAs.</div>
+        <div class="g2">
+          <div class="card"><div class="ctit">ISR Anual - Calculo</div>
+            <div class="fsec"><div class="fsect">Ingresos Totales del Ejercicio</div>
+              <div class="fgrid" style="gap:10px">
+                <div class="fg"><label>Act. Empresarial / Profesional ($)</label><input type="number" id="anAE" value="600000"></div>
+                <div class="fg"><label>Sueldos y Salarios ($)</label><input type="number" id="anSS" value="0"></div>
+                <div class="fg"><label>Arrendamiento ($)</label><input type="number" id="anArr" value="0"></div>
+                <div class="fg"><label>Plataformas ($)</label><input type="number" id="anPl" value="0"></div>
+                <div class="fg"><label>Otros Ingresos ($)</label><input type="number" id="anOt" value="0"></div>
+              </div>
+            </div>
+            <div class="fsec"><div class="fsect">Deducciones Personales</div>
+              <div class="fgrid" style="gap:10px">
+                <div class="fg"><label>Honorarios Medicos ($)</label><input type="number" id="dMed" value="15000"></div>
+                <div class="fg"><label>Gastos Dentales ($)</label><input type="number" id="dDen" value="0"></div>
+                <div class="fg"><label>Gastos Hospitalarios ($)</label><input type="number" id="dHosp" value="0"></div>
+                <div class="fg"><label>Colegiaturas ($)</label><input type="number" id="dCole" value="0"></div>
+                <div class="fg"><label>Intereses Hipotecarios ($)</label><input type="number" id="dHipo" value="0"></div>
+                <div class="fg"><label>Aportaciones AFORE ($)</label><input type="number" id="dAFO" value="0"></div>
+                <div class="fg"><label>Donativos ($)</label><input type="number" id="dDon" value="0"></div>
+                <div class="fg"><label>Primas Seguros Medicos ($)</label><input type="number" id="dSeg" value="0"></div>
+              </div>
+            </div>
+            <div class="fg"><label>Pagos Provisionales / Retenciones ($)</label><input type="number" id="anPA" value="60000"></div>
+            <button class="btn bp" style="margin-top:12px;width:100%" onclick="calcAnual()">Calcular ISR Anual</button>
+            <button class="btn bs bsm" style="margin-top:8px;width:100%" onclick="abrirPresentarDecl('Declaracion Anual PF')">&#128196; Presentar Declaracion Anual</button>
+          </div>
+          <div id="anRes"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- IVA -->
+<div id="pgIVA" class="pg">
+  <div class="phdr"><div><h2>Calculo de IVA</h2><p>Declaracion Mensual IVA 2026</p></div></div>
+  <div class="pb">
+    <div class="al ai"><b>IVA 2026:</b> Tasa general 16%. Frontera norte 8%. Factor de acreditamiento. DIOT mensual obligatoria.</div>
+    <div class="g2">
+      <div class="card"><div class="ctit">Calculo Mensual IVA</div>
+        <div class="fsec"><div class="fsect">IVA Causado (Ventas)</div>
+          <div class="fgrid" style="gap:10px">
+            <div class="fg"><label>Base Actos 16% ($)</label><input type="number" id="iv16" value="100000"></div>
+            <div class="fg"><label>Base Actos 8% Frontera ($)</label><input type="number" id="iv8" value="0"></div>
+            <div class="fg"><label>Base Tasa 0% ($)</label><input type="number" id="iv0" value="0"></div>
+            <div class="fg"><label>Base Actos Exentos ($)</label><input type="number" id="ivEx" value="0"></div>
+          </div>
+        </div>
+        <div class="fsec"><div class="fsect">IVA Acreditable (Compras)</div>
+          <div class="fgrid" style="gap:10px">
+            <div class="fg"><label>IVA en Compras / Gastos ($)</label><input type="number" id="ivCp" value="12000"></div>
+            <div class="fg"><label>IVA Retenido por Clientes ($)</label><input type="number" id="ivRC" value="0"></div>
+            <div class="fg"><label>IVA Retenido a Proveedores ($)</label><input type="number" id="ivRP" value="0"></div>
+            <div class="fg"><label>Saldo a Favor Periodo Ant. ($)</label><input type="number" id="ivSA" value="0"></div>
+          </div>
+        </div>
+        <button class="btn bp" style="width:100%" onclick="calcIVA()">Calcular IVA a Pagar</button>
+        <button class="btn bs bsm" style="margin-top:8px;width:100%" onclick="abrirPresentarDecl('IVA Mensual')">&#128196; Presentar esta Declaracion</button>
+      </div>
+      <div id="ivRes"></div>
+    </div>
+    <div class="card" style="margin-top:16px"><div class="ctit">DIOT - Declaracion Informativa de Operaciones con Terceros</div>
+      <div class="tb" style="margin-bottom:10px">
+        <button class="btn bs bsm" onclick="mo('mDIOT')">+ Agregar Proveedor</button>
+        <button class="btn bs bsm" onclick="expDIOT()">&#8595; Exportar DIOT</button>
+      </div>
+      <div class="tw"><table><thead><tr><th>RFC Proveedor</th><th>Nombre</th><th class="tr">Base Pagada</th><th class="tr">IVA Pagado</th><th>Tipo</th></tr></thead>
+      <tbody id="tbDIOT"><tr><td colspan="5" style="color:var(--tx3);text-align:center;padding:20px">Sin proveedores</td></tr></tbody></table></div>
+    </div>
+  </div>
+</div>
+<!-- DECLARACIONES CON WIZARD COMPLETO -->
+<div id="pgDECL" class="pg">
+  <div class="phdr"><div><h2>Declaraciones Fiscales</h2><p>Presentacion de obligaciones ante el SAT 2026</p></div>
+    <button class="btn bp" onclick="mo('mNDecl')">+ Nueva Declaracion</button>
+  </div>
+  <div class="pb">
+    <div class="g4" style="margin-bottom:16px">
+      <div class="kpi kg"><div class="kl">Presentadas</div><div class="kv" id="dkP">0</div></div>
+      <div class="kpi ko"><div class="kl">Pendientes</div><div class="kv" id="dkPe">0</div></div>
+      <div class="kpi kr"><div class="kl">Vencidas</div><div class="kv" id="dkV">0</div></div>
+      <div class="kpi kb"><div class="kl">Prox. Vencimiento</div><div class="kv" id="dkPx" style="font-size:14px">--</div></div>
+    </div>
+    <!-- WIZARD PRESENTACION -->
+    <div id="declWizard" style="display:none" class="card" style="margin-bottom:16px">
+      <div class="ctit" id="wTitulo">Presentar Declaracion</div>
+      <div class="wizard-steps" id="wSteps">
+        <div class="wstep act" id="ws1"><span class="wnum">1</span>Datos</div>
+        <div class="wstep" id="ws2"><span class="wnum">2</span>Importes</div>
+        <div class="wstep" id="ws3"><span class="wnum">3</span>Revision</div>
+        <div class="wstep" id="ws4"><span class="wnum">4</span>Presentar</div>
+      </div>
+      <div id="wContent"></div>
+      <div style="display:flex;justify-content:space-between;margin-top:16px">
+        <button class="btn bs" onclick="wPrev()">&#8592; Anterior</button>
+        <button class="btn bp" id="wBtnNext" onclick="wNext()">Siguiente &#8594;</button>
+      </div>
+    </div>
+    <div class="tw"><table><thead><tr><th>Obligacion</th><th>Periodo</th><th>Fecha Limite</th><th>Regimen</th><th class="tr">Monto</th><th>Estado</th><th>Acciones</th></tr></thead>
+    <tbody id="tbDECL"></tbody></table></div>
+  </div>
+</div>
+<!-- CFDI 4.0 -->
+<div id="pgCFDI" class="pg">
+  <div class="phdr"><div><h2>Facturacion CFDI 4.0</h2><p>Comprobante Fiscal Digital por Internet</p></div><button class="btn bp" onclick="mo('mNCFDI')">+ Nueva Factura</button></div>
+  <div class="pb">
+    <div class="tb">
+      <input type="text" placeholder="Buscar folio, RFC, receptor..." style="padding:6px 12px;border:1px solid var(--bd);border-radius:5px;font-size:12px;width:250px" oninput="filtCFDI(this.value)">
+      <select id="fTipCFDI" style="padding:6px 10px;border:1px solid var(--bd);border-radius:5px;font-size:12px"><option value="">Todos</option><option>Ingreso</option><option>Egreso</option></select>
+      <button class="btn bs bsm" onclick="expAllCFDI()">&#8595; Generar XMLs</button>
+    </div>
+    <div class="tw"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Tipo</th><th>RFC Receptor</th><th>Receptor</th><th class="tr">Subtotal</th><th class="tr">IVA</th><th class="tr">Total</th><th>Estado</th><th>Acciones</th></tr></thead>
+    <tbody id="tbCFDI"></tbody></table></div>
+  </div>
+</div>
+<!-- CSD / SELLOS DIGITALES -->
+<div id="pgCSD" class="pg">
+  <div class="phdr"><div><h2>CSD - Certificado de Sello Digital</h2><p>Configuracion de certificados para firma de CFDI</p></div></div>
+  <div class="pb">
+    <div class="al aw"><b>Importante:</b> Para emitir CFDIs validos ante el SAT, debe configurar su Certificado de Sello Digital (CSD) emitido por el SAT. Sin CSD, los XMLs generados son NO TIMBRADOS y requieren PAC para su validez fiscal.</div>
+    <div class="g2" style="margin-bottom:16px">
+      <div class="card"><div class="ctit">Certificado (.cer)</div>
+        <div id="csdCerBox" class="cert-box" onclick="document.getElementById('csdCerFile').click()">
+          <div style="font-size:32px;margin-bottom:8px">&#128196;</div>
+          <div style="font-weight:600;color:var(--nv);margin-bottom:4px">Cargar archivo .cer</div>
+          <div style="font-size:11px;color:var(--tx3)">Certificado de Sello Digital emitido por el SAT</div>
+          <input type="file" id="csdCerFile" accept=".cer" style="display:none" onchange="loadCer(this)">
+        </div>
+        <div id="csdCerInfo" style="margin-top:10px;display:none">
+          <div class="al as"><b>Certificado cargado:</b> <span id="csdCerNom">--</span></div>
+          <div style="font-size:11px;color:var(--tx3)">No. Serie: <b id="csdCerSerie">--</b></div>
+          <div style="font-size:11px;color:var(--tx3)">Vigencia: <b id="csdCerVig">--</b></div>
+        </div>
+      </div>
+      <div class="card"><div class="ctit">Llave Privada (.key)</div>
+        <div id="csdKeyBox" class="cert-box" onclick="document.getElementById('csdKeyFile').click()">
+          <div style="font-size:32px;margin-bottom:8px">&#128273;</div>
+          <div style="font-weight:600;color:var(--nv);margin-bottom:4px">Cargar archivo .key</div>
+          <div style="font-size:11px;color:var(--tx3)">Llave privada del certificado (protegida por contrasena)</div>
+          <input type="file" id="csdKeyFile" accept=".key" style="display:none" onchange="loadKey(this)">
+        </div>
+        <div class="fg" style="margin-top:10px">
+          <label>Contrasena de la llave privada</label>
+          <input type="password" id="csdKeyPass" placeholder="Contrasena del archivo .key">
+        </div>
+        <div id="csdKeyInfo" style="margin-top:10px;display:none">
+          <div class="al as"><b>Llave privada cargada:</b> <span id="csdKeyNom">--</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:16px"><div class="ctit">Datos del Emisor para CFDI</div>
+      <div class="fgrid" style="gap:10px">
+        <div class="fg"><label>RFC del Emisor</label><input type="text" id="csdRFC" placeholder="RFC 13 caracteres" oninput="syncRFC(this.value)"></div>
+        <div class="fg"><label>Nombre / Razon Social</label><input type="text" id="csdNombre" placeholder="Nombre completo sin abreviaturas"></div>
+        <div class="fg"><label>Regimen Fiscal Principal</label>
+          <select id="csdRegimen">
+            <option value="625">625 - RESICO Personas Fisicas</option>
+            <option value="612">612 - Act. Empresarial y Profesional</option>
+            <option value="606">606 - Arrendamiento</option>
+            <option value="605">605 - Sueldos y Salarios</option>
+          </select>
+        </div>
+        <div class="fg"><label>Codigo Postal Fiscal</label><input type="text" id="csdCP" placeholder="00000" maxlength="5"></div>
+        <div class="fg"><label>Correo para notificaciones SAT</label><input type="email" id="csdEmail" placeholder="correo@dominio.com"></div>
+        <div class="fg"><label>PAC Autorizado</label>
+          <select id="csdPAC">
+            <option value="">Seleccionar PAC...</option>
+            <option value="SW">SW Sapien - sw.com.mx</option>
+            <option value="EDICOM">EDICOM</option>
+            <option value="FINKOK">Finkok</option>
+            <option value="FACTURAPI">FacturAPI</option>
+            <option value="OTRO">Otro PAC autorizado</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <button class="btn bp" onclick="guardarCSD()">Guardar Configuracion CSD</button>
+        <button class="btn bs" onclick="testCSD()">Probar Conexion PAC</button>
+        <button class="btn bg2" id="btnCSDStatus" style="display:none">&#10003; CSD Activo</button>
+      </div>
+    </div>
+    <div class="card"><div class="ctit">Estado del Certificado</div>
+      <div id="csdEstado">
+        <div class="al ai">Configure su CSD para comenzar a timbrar CFDIs. Los XMLs generados sin CSD deben ser timbrados externamente por su PAC.</div>
+        <div class="tw"><table><thead><tr><th>Parametro</th><th>Valor</th><th>Estado</th></tr></thead>
+        <tbody id="tbCSDStatus">
+          <tr><td>Certificado (.cer)</td><td id="csdStatCer">No cargado</td><td><span class="bk br">Pendiente</span></td></tr>
+          <tr><td>Llave Privada (.key)</td><td id="csdStatKey">No cargada</td><td><span class="bk br">Pendiente</span></td></tr>
+          <tr><td>RFC Emisor</td><td id="csdStatRFC">No configurado</td><td><span class="bk br">Pendiente</span></td></tr>
+          <tr><td>PAC Seleccionado</td><td id="csdStatPAC">No seleccionado</td><td><span class="bk br">Pendiente</span></td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CLIENTES -->
+<div id="pgCLI" class="pg">
+  <div class="phdr"><div><h2>Catalogo de Clientes</h2><p>Receptores de CFDI y cuentas por cobrar</p></div><button class="btn bp" onclick="mo('mNCL')">+ Nuevo Cliente</button></div>
+  <div class="pb">
+    <div class="tb">
+      <input type="text" id="bCLI" placeholder="Buscar RFC, nombre..." style="padding:6px 12px;border:1px solid var(--bd);border-radius:5px;font-size:12px;width:250px" oninput="rCLI()">
+      <button class="btn bs bsm" onclick="expCatClientes()">&#8595; Exportar</button>
+    </div>
+    <div class="tw"><table><thead><tr><th>RFC</th><th>Nombre / Razon Social</th><th>Uso CFDI</th><th>Regimen Fiscal</th><th>CP</th><th>Email</th><th>CFDIs</th><th>Acciones</th></tr></thead>
+    <tbody id="tbCLI"></tbody></table></div>
+  </div>
+</div>
+<!-- PROVEEDORES -->
+<div id="pgPROV" class="pg">
+  <div class="phdr"><div><h2>Catalogo de Proveedores</h2><p>Proveedores para DIOT y cuentas por pagar</p></div><button class="btn bp" onclick="mo('mNPROV')">+ Nuevo Proveedor</button></div>
+  <div class="pb">
+    <div class="tb">
+      <input type="text" id="bPROV" placeholder="Buscar RFC, nombre..." style="padding:6px 12px;border:1px solid var(--bd);border-radius:5px;font-size:12px;width:250px" oninput="rPROV()">
+      <button class="btn bs bsm" onclick="expCatProveedores()">&#8595; Exportar DIOT</button>
+    </div>
+    <div class="tw"><table><thead><tr><th>RFC</th><th>Nombre / Razon Social</th><th>Tipo</th><th>Regimen Fiscal</th><th>CP</th><th class="tr">Compras Acum.</th><th class="tr">IVA Acred.</th><th>Acciones</th></tr></thead>
+    <tbody id="tbPROV"></tbody></table></div>
+  </div>
+</div>
+<!-- NOMINA -->
+<div id="pgNOM" class="pg">
+  <div class="phdr"><div><h2>Nomina</h2><p>Calculo de nomina y CFDI Nomina 4.0</p></div><button class="btn bp" onclick="mo('mNEMP')">+ Empleado</button></div>
+  <div class="pb">
+    <div class="tabs">
+      <div class="tab on" onclick="stab('tN1','gNOM',this)">Empleados</div>
+      <div class="tab" onclick="stab('tN2','gNOM',this)">Calcular Nomina</div>
+      <div class="tab" onclick="stab('tN3','gNOM',this)">CFDI Nomina</div>
+    </div>
+    <div id="gNOM">
+      <div id="tN1" class="tc_ on">
+        <div class="tw"><table><thead><tr><th>RFC</th><th>CURP</th><th>Nombre</th><th>NSS</th><th class="tr">Sal. Diario</th><th class="tr">SDI</th><th>Contrato</th><th>Acciones</th></tr></thead><tbody id="tbEMP"></tbody></table></div>
+      </div>
+      <div id="tN2" class="tc_">
+        <div class="g2">
+          <div class="card"><div class="ctit">Parametros de Nomina</div>
+            <div class="fgrid" style="gap:10px">
+              <div class="fg"><label>Empleado</label><select id="nomEmp"><option value="">Seleccionar...</option></select></div>
+              <div class="fg"><label>Periodo</label><select id="nomPer"><option>Mensual</option><option>Quincenal</option><option>Semanal</option></select></div>
+              <div class="fg"><label>Dias Laborados</label><input type="number" id="nomD" value="30" min="1" max="31"></div>
+              <div class="fg"><label>Horas Extra Dobles</label><input type="number" id="nomHE" value="0"></div>
+              <div class="fg"><label>Dias Vacaciones</label><input type="number" id="nomVac" value="0"></div>
+              <div class="fg"><label>Prima Vacacional (%)</label><input type="number" id="nomPV" value="25"></div>
+              <div class="fg"><label>Prop. Aguinaldo ($)</label><input type="number" id="nomAg" value="0"></div>
+              <div class="fg"><label>Otras Percepciones ($)</label><input type="number" id="nomOP" value="0"></div>
+              <div class="fg"><label>Otras Deducciones ($)</label><input type="number" id="nomOD" value="0"></div>
+              <div class="fg"><label>INFONAVIT / Credito ($)</label><input type="number" id="nomINF" value="0"></div>
+            </div>
+            <button class="btn bp" style="margin-top:12px;width:100%" onclick="calcNom()">Calcular Nomina</button>
+          </div>
+          <div id="nomRes"></div>
+        </div>
+      </div>
+      <div id="tN3" class="tc_">
+        <div class="tw"><table><thead><tr><th>Periodo</th><th>Empleado</th><th class="tr">Percepciones</th><th class="tr">Deducciones</th><th class="tr">Neto</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="tbNOM3"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- DETERMINACION IMSS -->
+<div id="pgIMSS" class="pg">
+  <div class="phdr"><div><h2>Determinacion IMSS</h2><p>Calculo completo de cuotas IMSS - 7 ramas LSS 2026</p></div></div>
+  <div class="pb">
+    <div class="al ai"><b>IMSS 2026:</b> Calculo conforme a la Ley del Seguro Social. UMA diaria: <b>$108.57</b>. Tope SBC: <b>25 UMAs = $2,714.25 diarios</b>. Salario minimo: <b>$278.80</b>.</div>
+    <div class="g2">
+      <div class="card"><div class="ctit">Datos del Trabajador</div>
+        <div class="fgrid" style="gap:10px">
+          <div class="fg"><label>Empleado</label><select id="imssEmp" onchange="autoFillIMSS(this.value)"><option value="">Seleccionar o capturar...</option></select></div>
+          <div class="fg"><label>Salario Diario ($)</label><input type="number" id="imssSD" value="350" oninput="calcIMSS()"></div>
+          <div class="fg"><label>Dias del Periodo</label><input type="number" id="imssDias" value="30" oninput="calcIMSS()"></div>
+          <div class="fg"><label>Tipo de Riesgo</label>
+            <select id="imssRiesgo" onchange="calcIMSS()">
+              <option value="0.005">Clase I - Prima 0.50%</option>
+              <option value="0.01" selected>Clase II - Prima 1.00%</option>
+              <option value="0.025">Clase III - Prima 2.50%</option>
+              <option value="0.045">Clase IV - Prima 4.50%</option>
+              <option value="0.075">Clase V - Prima 7.50%</option>
+            </select>
+          </div>
+          <div class="fg"><label>Salario Minimo Zona ($)</label>
+            <select id="imssSMZ" onchange="calcIMSS()">
+              <option value="278.80">$278.80 - General</option>
+              <option value="419.88">$419.88 - Frontera Norte</option>
+            </select>
+          </div>
+          <div class="fg"><label>Prestaciones</label>
+            <select id="imssPresta" onchange="calcIMSS()">
+              <option value="min">Minimas de Ley</option>
+              <option value="mejor">Superiores a Ley</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:12px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>SBC calculado:</span><b id="imssSBCres" style="font-family:monospace;color:var(--nv)">$0.00</b></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>SBC topado (25 UMAs):</span><b id="imssTopeRes" style="font-family:monospace;color:var(--nv)">$2,714.25</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Factor integracion:</span><b id="imssFIres" style="font-family:monospace;color:var(--nv)">1.0493</b></div>
+        </div>
+      </div>
+      <div id="imssRes"></div>
+    </div>
+    <div class="card" style="margin-top:16px"><div class="ctit">Resumen Mensual de Cuotas</div><div id="imssTabla"></div></div>
+  </div>
+</div>
+<!-- REPORTES -->
+<div id="pgREP" class="pg">
+  <div class="phdr"><div><h2>Reportes Fiscales</h2><p>Informes para el SAT y analisis financiero</p></div></div>
+  <div class="pb">
+    <div class="g3" style="margin-bottom:16px">
+      <div class="card"><div style="font-size:28px;margin-bottom:8px">&#128202;</div><div style="font-weight:700;color:var(--nv);margin-bottom:4px">Resumen ISR Anual</div><div style="font-size:11px;color:var(--tx3)">Todos los regimenes acumulados</div><button class="btn bp bsm" style="margin-top:12px" onclick="repISR()">Generar</button></div>
+      <div class="card"><div style="font-size:28px;margin-bottom:8px">&#129534;</div><div style="font-weight:700;color:var(--nv);margin-bottom:4px">Reporte IVA Mensual</div><div style="font-size:11px;color:var(--tx3)">IVA causado vs acreditable</div><button class="btn bp bsm" style="margin-top:12px" onclick="repIVA()">Generar</button></div>
+      <div class="card"><div style="font-size:28px;margin-bottom:8px">&#128203;</div><div style="font-weight:700;color:var(--nv);margin-bottom:4px">Catalogo Cuentas SAT</div><div style="font-size:11px;color:var(--tx3)">XML para envio al SAT</div><button class="btn bs bsm" style="margin-top:12px" onclick="expCatXML()">&#8595; XML</button></div>
+      <div class="card"><div style="font-size:28px;margin-bottom:8px">&#9878;</div><div style="font-weight:700;color:var(--nv);margin-bottom:4px">Balanza Comprobacion</div><div style="font-size:11px;color:var(--tx3)">Envio mensual SAT</div><button class="btn bs bsm" style="margin-top:12px" onclick="expBalXML()">&#8595; XML</button></div>
+      <div class="card"><div style="font-size:28px;margin-bottom:8px">&#128188;</div><div style="font-weight:700;color:var(--nv);margin-bottom:4px">Estado de Resultados</div><div style="font-size:11px;color:var(--tx3)">P&L del ejercicio</div><button class="btn bp bsm" style="margin-top:12px" onclick="nav('pgBAL',null);stab('tB3','gBAL',null)">Ver</button></div>
+      <div class="card"><div style="font-size:28px;margin-bottom:8px">&#127968;</div><div style="font-weight:700;color:var(--nv);margin-bottom:4px">DIOT</div><div style="font-size:11px;color:var(--tx3)">Declaracion informativa terceros</div><button class="btn bs bsm" style="margin-top:12px" onclick="expDIOT()">&#8595; Exportar</button></div>
+    </div>
+    <div id="repCont"></div>
+  </div>
+</div>
+<!-- CONFIG -->
+<div id="pgCFG" class="pg">
+  <div class="phdr"><div><h2>Configuracion</h2><p>Parametros del sistema</p></div></div>
+  <div class="pb">
+    <div class="g2">
+      <div class="card"><div class="ctit">Datos del Despacho</div>
+        <div class="fgrid" style="gap:10px">
+          <div class="fg"><label>Nombre del Despacho</label><input type="text" id="cfgD" value="Despacho Contable S.C."></div>
+          <div class="fg"><label>RFC del Despacho</label><input type="text" id="cfgR" value="DCS200101ABC"></div>
+          <div class="fg"><label>Ejercicio Fiscal</label><select id="cfgE"><option>2026</option><option>2025</option></select></div>
+        </div>
+        <button class="btn bp" style="margin-top:12px" onclick="saveConf()">Guardar</button>
+      </div>
+      <div class="card"><div class="ctit">Parametros Fiscales 2026</div>
+        <div class="tw"><table><thead><tr><th>Parametro</th><th>Valor</th></tr></thead><tbody>
+          <tr><td>UMA Diaria</td><td><b>$108.57</b></td></tr>
+          <tr><td>UMA Mensual</td><td><b>$3,300.53</b></td></tr>
+          <tr><td>Salario Minimo Diario</td><td><b>$278.80</b></td></tr>
+          <tr><td>SMD Frontera Norte</td><td><b>$419.88</b></td></tr>
+          <tr><td>Tope SBC IMSS (25 UMAs)</td><td><b>$2,714.25</b></td></tr>
+          <tr><td>Limite RESICO-PF Anual</td><td><b>$3,500,000</b></td></tr>
+          <tr><td>IVA General</td><td><b>16%</b></td></tr>
+          <tr><td>IVA Frontera Norte</td><td><b>8%</b></td></tr>
+          <tr><td>PTU</td><td><b>10%</b></td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:12px"><div class="ctit">Gestion de Datos</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+        <button class="btn bs" onclick="expDB()">&#8595; Exportar JSON</button>
+        <button class="btn bs" onclick="impDB()">&#8593; Importar JSON</button>
+        <button class="btn bd2 bsm" onclick="if(confirm('Borrar TODOS los datos?'))clearDB()">Limpiar Base de Datos</button>
+      </div>
+    </div>
+  </div>
+</div>
+    </main>
+  </div>
+</div>
+<!-- MODAL: Nuevo Contribuyente -->
+<div class="mo" id="mNC">
+  <div class="md" style="max-width:760px">
+    <div class="mdh"><h3>Nuevo Contribuyente - Persona Fisica</h3><span class="mx" onclick="cm('mNC')">x</span></div>
+    <div class="fsec"><div class="fsect">Datos de Identificacion</div>
+      <div class="fgrid">
+        <div class="fg"><label>RFC *</label><input type="text" id="ncRFC" placeholder="XAXX010101000" maxlength="13"></div>
+        <div class="fg"><label>CURP *</label><input type="text" id="ncCURP" placeholder="18 caracteres" maxlength="18"></div>
+        <div class="fg"><label>Nombres *</label><input type="text" id="ncNom"></div>
+        <div class="fg"><label>Ap. Paterno *</label><input type="text" id="ncAP"></div>
+        <div class="fg"><label>Ap. Materno</label><input type="text" id="ncAM"></div>
+        <div class="fg"><label>Fecha Nacimiento</label><input type="date" id="ncFN"></div>
+        <div class="fg"><label>CP Fiscal *</label><input type="text" id="ncCP" maxlength="5" placeholder="00000"></div>
+        <div class="fg"><label>Ejercicio</label><select id="ncEj"><option>2026</option><option>2025</option></select></div>
+      </div>
+    </div>
+    <div class="fsec"><div class="fsect">Regimen(es) Fiscal(es) SAT</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer"><input type="checkbox" id="rgR" value="625"> <b>625</b> - RESICO Personas Fisicas</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer"><input type="checkbox" id="rgA" value="612"> <b>612</b> - Act. Empresarial y Profesional</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer"><input type="checkbox" id="rgS" value="605"> <b>605</b> - Sueldos y Salarios</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer"><input type="checkbox" id="rgAr" value="606"> <b>606</b> - Arrendamiento</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer"><input type="checkbox" id="rgP" value="626"> <b>626</b> - Plataformas Tecnologicas</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer"><input type="checkbox" id="rgF" value="621"> <b>621</b> - Incorporacion Fiscal</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer"><input type="checkbox" id="rgI" value="614"> <b>614</b> - Ingresos por Intereses</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer"><input type="checkbox" id="rgPr" value="615"> <b>615</b> - Premios</label>
+      </div>
+    </div>
+    <div class="fsec"><div class="fsect">Informacion Complementaria</div>
+      <div class="fgrid">
+        <div class="fg"><label>Email</label><input type="email" id="ncEmail"></div>
+        <div class="fg"><label>Telefono</label><input type="tel" id="ncTel"></div>
+        <div class="fg" style="grid-column:1/-1"><label>Domicilio Fiscal</label><input type="text" id="ncDom" placeholder="Calle, No., Colonia, Municipio, Estado"></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+      <button class="btn bs" onclick="cm('mNC')">Cancelar</button>
+      <button class="btn bp" onclick="saveContrib()">Guardar Contribuyente</button>
+    </div>
+  </div>
+</div>
+<!-- MODAL: Nueva Poliza -->
+<div class="mo" id="mNP">
+  <div class="md" style="max-width:820px">
+    <div class="mdh"><h3>Nueva Poliza Contable</h3><span class="mx" onclick="cm('mNP')">x</span></div>
+    <div class="fgrid" style="gap:10px;margin-bottom:16px">
+      <div class="fg"><label>Tipo</label><select id="polTipo"><option>Ingreso</option><option>Egreso</option><option>Diario</option><option>Traspaso</option></select></div>
+      <div class="fg"><label>Fecha</label><input type="date" id="polFec" value="2026-01-15"></div>
+      <div class="fg"><label>Concepto</label><input type="text" id="polCon" placeholder="Descripcion"></div>
+      <div class="fg"><label>RFC relacionado</label><input type="text" id="polRFC" placeholder="RFC del comprobante"></div>
+    </div>
+    <div class="ctit" style="margin-bottom:8px">Movimientos Contables</div>
+    <div class="tw" style="margin-bottom:12px"><table><thead><tr><th style="width:130px">Cuenta</th><th>Nombre</th><th>Concepto</th><th class="tr" style="width:110px">Debe ($)</th><th class="tr" style="width:110px">Haber ($)</th><th style="width:30px"></th></tr></thead>
+    <tbody id="polMovs">
+      <tr>
+        <td><input type="text" id="pc0" placeholder="1010" style="width:100%;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px" oninput="lookCta(this,0)"></td>
+        <td><span id="pn0" style="font-size:11px;color:var(--tx3)">--</span></td>
+        <td><input type="text" placeholder="Concepto" style="width:100%;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px"></td>
+        <td><input type="number" class="pd" placeholder="0.00" style="width:100%;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px;text-align:right" oninput="updPT()"></td>
+        <td><input type="number" class="ph" placeholder="0.00" style="width:100%;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px;text-align:right" oninput="updPT()"></td>
+        <td><span style="cursor:pointer;color:var(--er)" onclick="this.closest('tr').remove();updPT()">x</span></td>
+      </tr>
+    </tbody></table></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <button class="btn bs bsm" onclick="addPR()">+ Agregar Linea</button>
+      <div style="display:flex;gap:20px;font-size:12px">
+        <span>Debe: <b id="ptD" class="dc">$0.00</b></span>
+        <span>Haber: <b id="ptH" class="hc">$0.00</b></span>
+        <span id="ptBal" style="color:var(--tx3)">Balance: <b>$0.00</b></span>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px">
+      <button class="btn bs" onclick="cm('mNP')">Cancelar</button>
+      <button class="btn bp" onclick="savePol()">Guardar Poliza</button>
+    </div>
+  </div>
+</div>
+<!-- MODAL: CFDI -->
+<div class="mo" id="mNCFDI">
+  <div class="md" style="max-width:800px">
+    <div class="mdh"><h3>Nueva Factura CFDI 4.0</h3><span class="mx" onclick="cm('mNCFDI')">x</span></div>
+    <div class="fsec"><div class="fsect">Datos del Comprobante</div>
+      <div class="fgrid">
+        <div class="fg"><label>Tipo</label><select id="cfTipo"><option value="I">I - Ingreso</option><option value="E">E - Egreso</option><option value="T">T - Traslado</option></select></div>
+        <div class="fg"><label>Serie</label><input type="text" id="cfSerie" value="A" maxlength="10"></div>
+        <div class="fg"><label>Folio</label><input type="number" id="cfFolio" value="1"></div>
+        <div class="fg"><label>Fecha y Hora</label><input type="datetime-local" id="cfFec"></div>
+        <div class="fg"><label>Forma de Pago</label><select id="cfFP"><option value="01">01 Efectivo</option><option value="02">02 Cheque</option><option value="03">03 Transferencia</option><option value="04">04 Tarjeta credito</option><option value="99">99 Por definir</option></select></div>
+        <div class="fg"><label>Metodo de Pago</label><select id="cfMP"><option value="PUE">PUE - Una exhibicion</option><option value="PPD">PPD - Parcialidades</option></select></div>
+        <div class="fg"><label>Moneda</label><select id="cfMon"><option value="MXN">MXN</option><option value="USD">USD</option></select></div>
+        <div class="fg"><label>Tipo de Cambio</label><input type="number" id="cfTC" value="1" step="0.0001"></div>
+      </div>
+    </div>
+    <div class="fsec"><div class="fsect">Receptor</div>
+      <div class="fgrid">
+        <div class="fg"><label>RFC Receptor *</label><input type="text" id="cfRFC" placeholder="RFC" oninput="lookCli(this.value)"></div>
+        <div class="fg"><label>Nombre / Razon Social *</label><input type="text" id="cfNom"></div>
+        <div class="fg"><label>CP Receptor *</label><input type="text" id="cfCP" placeholder="00000" maxlength="5"></div>
+        <div class="fg"><label>Uso CFDI *</label><select id="cfUso"><option value="G01">G01 Adq. mercancias</option><option value="G03">G03 Gastos general</option><option value="I01">I01 Construcciones</option><option value="D01">D01 Honorarios medicos</option><option value="S01">S01 Sin efectos fiscales</option><option value="CP01">CP01 Pagos</option></select></div>
+        <div class="fg"><label>Regimen Fiscal Receptor *</label><select id="cfReg"><option value="625">625 RESICO-PF</option><option value="612">612 Act. Empresarial</option><option value="605">605 Sueldos</option><option value="606">606 Arrendamiento</option><option value="601">601 General Ley PM</option></select></div>
+      </div>
+    </div>
+    <div class="fsec"><div class="fsect">Conceptos</div>
+      <div class="tw" style="margin-bottom:8px"><table><thead><tr><th>ClaveProdServ</th><th>Descripcion</th><th>Unidad</th><th class="tr">Cant.</th><th class="tr">V. Unit.</th><th>IVA</th><th class="tr">Importe</th><th></th></tr></thead>
+      <tbody id="cfCons">
+        <tr>
+          <td><input type="text" value="84111506" style="width:90px;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px"></td>
+          <td><input type="text" value="Servicios profesionales" style="width:150px;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px"></td>
+          <td><input type="text" value="E48" style="width:50px;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px"></td>
+          <td><input type="number" value="1" class="cc" style="width:60px;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px;text-align:right" oninput="calcCFDI()"></td>
+          <td><input type="number" value="10000" class="cv" style="width:90px;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px;text-align:right" oninput="calcCFDI()"></td>
+          <td><select class="ci" style="padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px" onchange="calcCFDI()"><option value="0.16">16%</option><option value="0.08">8%</option><option value="0">0%</option><option value="X">Exento</option></select></td>
+          <td style="font-family:monospace;font-size:11px;text-align:right"><span class="cim">$10,000.00</span></td>
+          <td><span style="cursor:pointer;color:var(--er)" onclick="this.closest('tr').remove();calcCFDI()">x</span></td>
+        </tr>
+      </tbody></table></div>
+      <button class="btn bs bsm" onclick="addCFDICon()">+ Concepto</button>
+    </div>
+    <div style="background:var(--bg3);border-radius:6px;padding:12px;margin-top:8px;display:flex;justify-content:flex-end;gap:20px">
+      <div style="text-align:right"><div style="font-size:11px;color:var(--tx3)">Subtotal</div><div id="cfSub" style="font-weight:700;font-family:monospace">$0.00</div></div>
+      <div style="text-align:right"><div style="font-size:11px;color:var(--tx3)">IVA</div><div id="cfIVA" style="font-weight:700;font-family:monospace;color:var(--ac)">$0.00</div></div>
+      <div style="text-align:right"><div style="font-size:11px;color:var(--tx3)">Total</div><div id="cfTot" style="font-weight:700;font-size:16px;font-family:monospace;color:var(--nv)">$0.00</div></div>
+    </div>
+    <div id="csdWarning" class="al aw" style="margin-top:10px;display:none"><b>Aviso:</b> CSD no configurado. El XML generado debe timbrar con su PAC para tener validez fiscal.</div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+      <button class="btn bs" onclick="cm('mNCFDI')">Cancelar</button>
+      <button class="btn bp" onclick="saveCFDI()">Guardar y Generar XML</button>
+    </div>
+  </div>
+</div>
+<!-- MODAL: Nuevo Cliente -->
+<div class="mo" id="mNCL">
+  <div class="md">
+    <div class="mdh"><h3>Nuevo Cliente / Receptor CFDI</h3><span class="mx" onclick="cm('mNCL')">x</span></div>
+    <div class="fgrid">
+      <div class="fg"><label>RFC *</label><input type="text" id="clRFC"></div>
+      <div class="fg"><label>Nombre / Razon Social *</label><input type="text" id="clNom"></div>
+      <div class="fg"><label>CP Fiscal</label><input type="text" id="clCP" maxlength="5"></div>
+      <div class="fg"><label>Regimen Fiscal</label><select id="clReg"><option value="625">625 RESICO-PF</option><option value="612">612 Act. Empresarial</option><option value="601">601 General PM</option><option value="605">605 Sueldos</option></select></div>
+      <div class="fg"><label>Uso CFDI Habitual</label><select id="clUso"><option value="G03">G03 Gastos general</option><option value="G01">G01 Adq. mercancias</option><option value="S01">S01 Sin efectos</option><option value="CP01">CP01 Pagos</option></select></div>
+      <div class="fg"><label>Email</label><input type="email" id="clEmail"></div>
+      <div class="fg"><label>Telefono</label><input type="tel" id="clTel"></div>
+      <div class="fg"><label>Credito (dias)</label><input type="number" id="clCred" value="30"></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+      <button class="btn bs" onclick="cm('mNCL')">Cancelar</button>
+      <button class="btn bp" onclick="saveCli()">Guardar</button>
+    </div>
+  </div>
+</div>
+<!-- MODAL: Nuevo Proveedor -->
+<div class="mo" id="mNPROV">
+  <div class="md">
+    <div class="mdh"><h3>Nuevo Proveedor</h3><span class="mx" onclick="cm('mNPROV')">x</span></div>
+    <div class="fgrid">
+      <div class="fg"><label>RFC *</label><input type="text" id="pvRFC"></div>
+      <div class="fg"><label>Nombre / Razon Social *</label><input type="text" id="pvNom"></div>
+      <div class="fg"><label>CP Fiscal</label><input type="text" id="pvCP" maxlength="5"></div>
+      <div class="fg"><label>Regimen Fiscal</label><select id="pvReg"><option value="601">601 General de Ley PM</option><option value="612">612 Act. Empresarial PF</option><option value="625">625 RESICO-PF</option><option value="626">626 Plataformas</option></select></div>
+      <div class="fg"><label>Tipo Operacion DIOT</label><select id="pvTipoDIOT"><option value="04">04 Proveedor Nacional</option><option value="05">05 Proveedor Extranjero</option><option value="85">85 Global</option></select></div>
+      <div class="fg"><label>Email</label><input type="email" id="pvEmail"></div>
+      <div class="fg"><label>Telefono</label><input type="tel" id="pvTel"></div>
+      <div class="fg"><label>Banco / Cuenta</label><input type="text" id="pvBanco" placeholder="CLABE o cuenta"></div>
+      <div class="fg"><label>Limite de Credito ($)</label><input type="number" id="pvCred" value="0"></div>
+      <div class="fg"><label>Dias de Credito</label><input type="number" id="pvDiasCred" value="30"></div>
+      <div class="fg" style="grid-column:1/-1"><label>Giro / Productos que provee</label><textarea id="pvGiro" placeholder="Descripcion de los productos o servicios que provee"></textarea></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+      <button class="btn bs" onclick="cm('mNPROV')">Cancelar</button>
+      <button class="btn bp" onclick="saveProv()">Guardar Proveedor</button>
+    </div>
+  </div>
+</div>
+<!-- MODAL: Nuevo Empleado -->
+<div class="mo" id="mNEMP">
+  <div class="md" style="max-width:750px">
+    <div class="mdh"><h3>Nuevo Empleado</h3><span class="mx" onclick="cm('mNEMP')">x</span></div>
+    <div class="fgrid">
+      <div class="fg"><label>RFC *</label><input type="text" id="empRFC" maxlength="13"></div>
+      <div class="fg"><label>CURP *</label><input type="text" id="empCURP" maxlength="18"></div>
+      <div class="fg"><label>Nombres *</label><input type="text" id="empNom"></div>
+      <div class="fg"><label>Ap. Paterno *</label><input type="text" id="empAP"></div>
+      <div class="fg"><label>Ap. Materno</label><input type="text" id="empAM"></div>
+      <div class="fg"><label>NSS IMSS</label><input type="text" id="empNSS" maxlength="11"></div>
+      <div class="fg"><label>Salario Diario ($)</label><input type="number" id="empSD" value="278.80" min="278.80" oninput="autoSDI()"></div>
+      <div class="fg"><label>Sal. Diario Integrado ($)</label><input type="number" id="empSDI" value="292.25"></div>
+      <div class="fg"><label>Tipo Contrato</label><select id="empCT"><option value="01">01 Tiempo indeterminado</option><option value="02">02 Obra determinada</option><option value="03">03 Tiempo determinado</option><option value="04">04 Temporada</option></select></div>
+      <div class="fg"><label>Jornada</label><select id="empJR"><option value="01">01 Diurna</option><option value="02">02 Nocturna</option><option value="03">03 Mixta</option><option value="04">04 Por hora</option></select></div>
+      <div class="fg"><label>Fecha Ingreso</label><input type="date" id="empFI"></div>
+      <div class="fg"><label>Departamento</label><input type="text" id="empDep"></div>
+      <div class="fg"><label>Tipo de Riesgo IMSS</label><select id="empRiesgo"><option value="0.005">Clase I 0.50%</option><option value="0.01" selected>Clase II 1.00%</option><option value="0.025">Clase III 2.50%</option><option value="0.045">Clase IV 4.50%</option><option value="0.075">Clase V 7.50%</option></select></div>
+      <div class="fg"><label>No. Credito INFONAVIT</label><input type="text" id="empINFO" placeholder="Opcional"></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+      <button class="btn bs" onclick="cm('mNEMP')">Cancelar</button>
+      <button class="btn bp" onclick="saveEmp()">Guardar Empleado</button>
+    </div>
+  </div>
+</div>
+<!-- MODAL: Nueva Cuenta -->
+<div class="mo" id="mCA">
+  <div class="md">
+    <div class="mdh"><h3>Nueva Cuenta Contable</h3><span class="mx" onclick="cm('mCA')">x</span></div>
+    <div class="fgrid">
+      <div class="fg"><label>Numero *</label><input type="text" id="caN" placeholder="Ej: 1010.01"></div>
+      <div class="fg"><label>Nombre *</label><input type="text" id="caNom"></div>
+      <div class="fg"><label>Naturaleza</label><select id="caNat"><option value="D">Deudora</option><option value="A">Acreedora</option></select></div>
+      <div class="fg"><label>Nivel</label><select id="caNiv"><option value="1">1 Mayor</option><option value="2">2 Submayor</option><option value="3">3 Auxiliar</option></select></div>
+      <div class="fg"><label>Tipo SAT</label><select id="caTip"><option value="A">A Activo</option><option value="P">P Pasivo</option><option value="C">C Capital</option><option value="I">I Ingreso</option><option value="E">E Egreso</option></select></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+      <button class="btn bs" onclick="cm('mCA')">Cancelar</button>
+      <button class="btn bp" onclick="saveCta()">Guardar</button>
+    </div>
+  </div>
+</div>
+<!-- MODAL: DIOT Proveedor -->
+<div class="mo" id="mDIOT">
+  <div class="md">
+    <div class="mdh"><h3>Agregar Proveedor DIOT</h3><span class="mx" onclick="cm('mDIOT')">x</span></div>
+    <div class="fgrid">
+      <div class="fg"><label>RFC Proveedor</label><input type="text" id="dtRFC" oninput="lookProv(this.value)"></div>
+      <div class="fg"><label>Nombre</label><input type="text" id="dtNom"></div>
+      <div class="fg"><label>Base Pagada ($)</label><input type="number" id="dtBase" value="0"></div>
+      <div class="fg"><label>IVA Pagado ($)</label><input type="number" id="dtIVA" value="0"></div>
+      <div class="fg"><label>Tipo Operacion</label><select id="dtTipo"><option value="04">04 Proveedor Nacional</option><option value="05">05 Proveedor Extranjero</option><option value="85">85 Global</option></select></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+      <button class="btn bs" onclick="cm('mDIOT')">Cancelar</button>
+      <button class="btn bp" onclick="saveDIOT()">Agregar</button>
+    </div>
+  </div>
+</div>
+<!-- MODAL: Presentar Declaracion (desde modulo) -->
+<div class="mo" id="mNDecl">
+  <div class="md">
+    <div class="mdh"><h3>Nueva Declaracion Manual</h3><span class="mx" onclick="cm('mNDecl')">x</span></div>
+    <div class="fgrid">
+      <div class="fg"><label>Tipo de Obligacion</label>
+        <select id="ndTipo">
+          <option>ISR Provisional RESICO-PF</option><option>ISR Provisional Act. Empresarial</option>
+          <option>ISR Provisional Arrendamiento</option><option>IVA Mensual</option>
+          <option>Declaracion Anual PF</option><option>DIOT Mensual</option><option>Otra</option>
+        </select>
+      </div>
+      <div class="fg"><label>Periodo</label><input type="text" id="ndPer" placeholder="Ej: Enero 2026"></div>
+      <div class="fg"><label>Fecha Limite</label><input type="date" id="ndVenc"></div>
+      <div class="fg"><label>Regimen</label><input type="text" id="ndReg" placeholder="Ej: 625, 612"></div>
+      <div class="fg"><label>Monto ($)</label><input type="number" id="ndMonto" value="0"></div>
+      <div class="fg"><label>Estado</label><select id="ndEst"><option>Pendiente</option><option>Presentada</option><option>Vencida</option></select></div>
+      <div class="fg"><label>Linea de Captura SAT</label><input type="text" id="ndLC" placeholder="Numero de linea de captura"></div>
+      <div class="fg"><label>Folio Acuse SAT</label><input type="text" id="ndAcuse" placeholder="Folio del acuse de recibo"></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+      <button class="btn bs" onclick="cm('mNDecl')">Cancelar</button>
+      <button class="btn bp" onclick="saveDecl()">Guardar Declaracion</button>
+    </div>
+  </div>
+</div>
+<script>
+const DB={cs:[],cat:[],pols:[],cfdis:[],clis:[],provs:[],emps:[],nomR:[],diot:[],decls:[],csd:{cer:null,key:null,rfc:'',nombre:'',reg:'625',cp:'',email:'',pac:'',activo:false},cfg:{d:'Despacho Contable S.C.',r:'DCS200101ABC',e:'2026'}};
+let curC=null,pfi=1,wPaso=1,wTipoDecl='',wMontoDecl=0;
+const CATB=[
+  {n:'1010',nom:'Caja',nat:'D',niv:'1',tip:'A'},{n:'1020',nom:'Bancos',nat:'D',niv:'1',tip:'A'},
+  {n:'1030',nom:'Inversiones Temporales',nat:'D',niv:'1',tip:'A'},{n:'1110',nom:'Clientes',nat:'D',niv:'1',tip:'A'},
+  {n:'1120',nom:'IVA Acreditable',nat:'D',niv:'1',tip:'A'},{n:'1130',nom:'IVA Acreditable Pendiente',nat:'D',niv:'1',tip:'A'},
+  {n:'1140',nom:'ISR a Favor',nat:'D',niv:'1',tip:'A'},{n:'1150',nom:'IVA Saldo a Favor',nat:'D',niv:'1',tip:'A'},
+  {n:'1200',nom:'Activo Fijo',nat:'D',niv:'1',tip:'A'},{n:'1210',nom:'Equipo de Computo',nat:'D',niv:'1',tip:'A'},
+  {n:'1220',nom:'Mobiliario y Equipo',nat:'D',niv:'1',tip:'A'},{n:'1230',nom:'Vehiculos',nat:'D',niv:'1',tip:'A'},
+  {n:'1290',nom:'Depreciacion Acumulada',nat:'A',niv:'1',tip:'A'},{n:'2010',nom:'Proveedores',nat:'A',niv:'1',tip:'P'},
+  {n:'2020',nom:'IVA por Pagar',nat:'A',niv:'1',tip:'P'},{n:'2030',nom:'ISR por Pagar',nat:'A',niv:'1',tip:'P'},
+  {n:'2040',nom:'IMSS por Pagar',nat:'A',niv:'1',tip:'P'},{n:'2050',nom:'Acreedores Diversos',nat:'A',niv:'1',tip:'P'},
+  {n:'2060',nom:'ISR Retenido',nat:'A',niv:'1',tip:'P'},{n:'2070',nom:'IVA Retenido',nat:'A',niv:'1',tip:'P'},
+  {n:'3010',nom:'Capital Contribuido',nat:'A',niv:'1',tip:'C'},{n:'3020',nom:'Utilidades Retenidas',nat:'A',niv:'1',tip:'C'},
+  {n:'3030',nom:'Resultado del Ejercicio',nat:'A',niv:'1',tip:'C'},{n:'4010',nom:'Ingresos por Servicios',nat:'A',niv:'1',tip:'I'},
+  {n:'4020',nom:'Ingresos por Arrendamiento',nat:'A',niv:'1',tip:'I'},{n:'4030',nom:'Ingresos por Ventas',nat:'A',niv:'1',tip:'I'},
+  {n:'4040',nom:'Otros Ingresos',nat:'A',niv:'1',tip:'I'},{n:'5010',nom:'Gastos de Operacion',nat:'D',niv:'1',tip:'E'},
+  {n:'5020',nom:'Honorarios Pagados',nat:'D',niv:'1',tip:'E'},{n:'5030',nom:'Renta de Oficina',nat:'D',niv:'1',tip:'E'},
+  {n:'5040',nom:'Papeleria y Utiles',nat:'D',niv:'1',tip:'E'},{n:'5050',nom:'Comunicaciones',nat:'D',niv:'1',tip:'E'},
+  {n:'5060',nom:'Gasolina y Mantenimiento',nat:'D',niv:'1',tip:'E'},{n:'5070',nom:'Servicios Contratados',nat:'D',niv:'1',tip:'E'},
+  {n:'5080',nom:'Sueldos y Salarios',nat:'D',niv:'1',tip:'E'},{n:'5090',nom:'Cuotas IMSS Patronal',nat:'D',niv:'1',tip:'E'},
+  {n:'5100',nom:'Depreciaciones',nat:'D',niv:'1',tip:'E'},{n:'5110',nom:'ISR del Ejercicio',nat:'D',niv:'1',tip:'E'},
+  {n:'5200',nom:'Gastos No Deducibles',nat:'D',niv:'1',tip:'E'}
+];
+const TM=[
+  {li:0.01,ls:746.04,ci:0,t:0.0192},{li:746.05,ls:6332.05,ci:14.32,t:0.064},
+  {li:6332.06,ls:11128.01,ci:372.83,t:0.1088},{li:11128.02,ls:12935.82,ci:894.63,t:0.16},
+  {li:12935.83,ls:15487.71,ci:1183.54,t:0.1792},{li:15487.72,ls:31236.49,ci:1640.18,t:0.2136},
+  {li:31236.5,ls:49233,ci:5004.12,t:0.2352},{li:49233.01,ls:93993.9,ci:9236.89,t:0.3},
+  {li:93993.91,ls:125325.2,ci:22665.17,t:0.32},{li:125325.21,ls:375975.61,ci:32691.18,t:0.34},
+  {li:375975.62,ls:1e10,ci:117912.32,t:0.35}
+];
+const TA=[
+  {li:0.01,ls:8952.49,ci:0,t:0.0192},{li:8952.5,ls:75984.55,ci:171.88,t:0.064},
+  {li:75984.56,ls:133536.07,ci:4461.94,t:0.1088},{li:133536.08,ls:155229.8,ci:10735.59,t:0.16},
+  {li:155229.81,ls:185852.57,ci:14204.54,t:0.1792},{li:185852.58,ls:374841.89,ci:19682.13,t:0.2136},
+  {li:374841.9,ls:590795.99,ci:60049.4,t:0.2352},{li:590795.01,ls:1127926.84,ci:110842.74,t:0.3},
+  {li:1127926.85,ls:1503902.46,ci:271981.99,t:0.32},{li:1503902.47,ls:4511707.37,ci:392294.17,t:0.34},
+  {li:4511707.38,ls:1e10,ci:1414947.85,t:0.35}
+];
+const SE=[
+  {li:0.01,ls:1768.96,s:407.02},{li:1768.97,ls:2653.38,s:406.83},{li:2653.39,ls:3472.84,s:406.62},
+  {li:3472.85,ls:3537.87,s:392.77},{li:3537.88,ls:4446.15,s:382.46},{li:4446.16,ls:4717.18,s:354.23},
+  {li:4717.19,ls:5335.42,s:324.87},{li:5335.43,ls:6224.67,s:294.63},{li:6224.68,ls:7113.9,s:253.54},
+  {li:7113.91,ls:7382.33,s:217.61},{li:7382.34,ls:1e10,s:0}
+];
+const RS=[{li:0,ls:25000,t:0.01},{li:25000.01,ls:50000,t:0.011},{li:50000.01,ls:83333.33,t:0.015},{li:83333.34,ls:208333.33,t:0.02},{li:208333.34,ls:3500000,t:0.025}];
+// IMSS 2026 - Cuotas por rama (LSS)
+const UMA=108.57,SMG=278.80,TOPE_SBC=UMA*25; // $2,714.25
+const IMSS_RAMAS={
+  enf_mat_p:{nom:'Enf. y Maternidad Patronal',tasa:0.204,tope:'smg',base:'excedente'},// sobre excedente 3 SMG
+  enf_mat_fijo:{nom:'Enf. y Maternidad Fijo',tasa:0.204,monto:UMA*0.204*3,fijo:true},// cuota fija sobre 3 UMAs
+  enf_mat_obs:{nom:'Enf. y Maternidad Obrero',tasa:0.002,tope:'ninguno'},
+  inv_vida_p:{nom:'Invalidez y Vida Patronal',tasa:0.01175,tope:'25uma'},
+  inv_vida_o:{nom:'Invalidez y Vida Obrero',tasa:0.00625,tope:'25uma'},
+  vejez_p:{nom:'CEAV Patronal (Cesantia)',tasa:0.03150,tope:'25uma'},
+  vejez_o:{nom:'CEAV Obrero (Retiro)',tasa:0.01125,tope:'25uma'},
+  guarderia:{nom:'Guarderias y Prest. Sociales',tasa:0.01,tope:'25uma'},
+  retiro:{nom:'Retiro Patronal',tasa:0.02,tope:'25uma'},
+  riesgos:{nom:'Riesgo de Trabajo',tasa:null,tope:'25uma'},// prima variable
+  infonavit:{nom:'INFONAVIT Patronal',tasa:0.05,tope:'25uma'}
+};
+const f=n=>'$'+parseFloat(n||0).toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2});
+const v=id=>document.getElementById(id);
+const g=id=>parseFloat(v(id)?.value||0);
+const mo=id=>{if(v(id)){v(id).classList.add('on');if(id==='mNCFDI'){const cw=v('csdWarning');if(cw)cw.style.display=DB.csd.activo?'none':'flex';}}};
+const cm=id=>v(id)?.classList.remove('on');
+function stab(tid,gid,el){
+  const grp=v(gid);if(!grp)return;
+  grp.querySelectorAll('.tc_').forEach(x=>x.classList.remove('on'));
+  const t=v(tid);if(t)t.classList.add('on');
+  if(el&&el.closest){
+    const tb=el.closest('.tabs');
+    if(tb)tb.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    el.classList.add('on');
+  }
+}
+function nav(pgId,el){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  const pg=v(pgId);if(pg)pg.classList.add('on');
+  if(el)el.classList.add('on');
+  else document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')?.includes(pgId))n.classList.add('on');});
+  ({pgDB:rDB,pgCT:rCT,pgCAT:rCAT,pgPOL:rPOL,pgBAL:genBAL,pgDECL:rDECL,pgCFDI:rCFDI,pgCLI:rCLI,pgPROV:rPROV,pgNOM:rNOM,pgIMSS:initIMSS,pgCSD:rCSD})[pgId]?.();
+}
+function doLogin(){if(v('lu').value==='admin'&&v('lp').value==='1234'){v('LS').style.display='none';v('app').classList.add('on');loadDB();initCat();rAll();}else alert('Credenciales incorrectas.\nUsuario: admin | Contrasena: 1234');}
+function doLogout(){if(confirm('Cerrar sesion?')){saveDB();v('app').classList.remove('on');v('LS').style.display='flex';}}
+function saveDB(){try{localStorage.setItem('cfmx26v2',JSON.stringify(DB));}catch(e){}}
+function loadDB(){try{const d=localStorage.getItem('cfmx26v2');if(d){const p=JSON.parse(d);Object.assign(DB,p);if(!DB.provs)DB.provs=[];if(!DB.csd)DB.csd={cer:null,key:null,rfc:'',nombre:'',reg:'625',cp:'',email:'',pac:'',activo:false};}}catch(e){}}
+function initCat(){if(!DB.cat.length){DB.cat=CATB.map(c=>({...c}));saveDB();}}
+function rAll(){rCS();rDB();rCT();rCAT();rPOL();rCFDI();rCLI();rPROV();rNOM();rDECL();}
+function rCS(){const s=v('csel');s.innerHTML='<option value="">Seleccionar contribuyente...</option>';DB.cs.forEach((c,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${c.rfc} -- ${c.noms} ${c.ap}`;s.appendChild(o);});if(curC!==null)s.value=curC;}
+function selC(idx){
+  curC=idx===''?null:parseInt(idx);
+  rDB();
+  // sync CSD RFC if contribuyente tiene RFC y CSD vacío
+  const cc=gc();
+  if(cc&&!DB.csd.rfc&&v('csdRFC')){v('csdRFC').value=cc.rfc;}
+}
+const gc=()=>curC!==null?DB.cs[curC]:null;
+function rDB(){
+  const c=gc(),al=v('dbAl');
+  const rn={625:'RESICO-PF',612:'Act.Emp.',605:'Sueldos',606:'Arrendamiento',626:'Plataformas',621:'FIF',614:'Intereses',615:'Premios'};
+  if(!c){al.textContent='Sin contribuyente activo. Seleccione o cree uno.';al.className='al ai';}
+  else al.innerHTML=`<b>${c.noms} ${c.ap}</b> | RFC: <b>${c.rfc}</b> | ${(c.regs||[]).map(r=>`<span class="bk bb">${r} ${rn[r]||''}</span>`).join(' ')}`;
+  const ing=DB.pols.filter(p=>p.tipo==='Ingreso').reduce((s,p)=>s+(p.td||0),0);
+  v('dbIng').textContent=f(ing);v('dbISR').textContent=f(ing*0.025);v('dbIVA').textContent=f(ing*0.048);v('dbCF').textContent=DB.cfdis.length;
+  const ms=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  let hc='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">';
+  ms.forEach((m,i)=>{const ip=i<4,ic=i===4;hc+=`<div style="background:${ic?'var(--ac)':ip?'var(--okL)':'var(--bg3)'};color:${ic?'#fff':ip?'var(--ok)':'var(--tx2)'};border-radius:5px;padding:6px;text-align:center;font-size:11px"><div style="font-weight:700">${m}</div><div style="font-size:9px;margin-top:2px">${ip?'&#10003; Pagado':ic?'Actual':'Pendiente'}</div></div>`;});
+  v('dbCal').innerHTML=hc+'</div><div style="margin-top:8px;font-size:10px;color:var(--tx3)">Vencimiento: dia 17 de cada mes siguiente</div>';
+  const dr={625:'Tasa 1%-2.5% brutos. Pago definitivo.',612:'Ing-Ded=Base. Tarifa Art.96.',606:'Ded.ciega 35% o gastos reales.',605:'Retencion patron. Subsidio empleo.',626:'Retencion definitiva 1%-4%.',621:'En extincion.',614:'ISR s/intereses.',615:'1% premios.'};
+  v('dbReg').innerHTML=!c?'<div style="color:var(--tx3);font-size:12px">Sin contribuyente</div>':(c.regs||[]).map(r=>`<div style="margin-bottom:8px"><div style="font-weight:700;font-size:12px;color:var(--nv)">${r} -- ${rn[r]||r}</div><div style="font-size:11px;color:var(--tx3);margin-top:2px">${dr[r]||''}</div></div>`).join('')||'<div style="color:var(--tx3);font-size:12px">Sin regimen configurado</div>';
+  const tb=v('dbPol'),ul=DB.pols.slice(-5).reverse();
+  tb.innerHTML=!ul.length?'<tr><td colspan="6" style="color:var(--tx3);text-align:center;padding:20px">Sin polizas</td></tr>':ul.map(p=>`<tr><td>${p.fec}</td><td><span class="bk bb">${p.folio}</span></td><td><span class="bk ${p.tipo==='Ingreso'?'bgo':p.tipo==='Egreso'?'br':'bgr'}">${p.tipo}</span></td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.con}</td><td class="tr dc">${f(p.td)}</td><td class="tr hc">${f(p.th)}</td></tr>`).join('');
+}
+function rCT(){const tb=v('tbCT'),rn={625:'RESICO-PF',612:'Act.Emp.',605:'Sueldos',606:'Arrendamiento',626:'Plataformas',621:'FIF'};tb.innerHTML=!DB.cs.length?'<tr><td colspan="7" style="color:var(--tx3);text-align:center;padding:20px">Sin contribuyentes</td></tr>':DB.cs.map((c,i)=>`<tr><td><b style="font-family:monospace">${c.rfc}</b></td><td>${c.noms} ${c.ap} ${c.am||''}</td><td>${(c.regs||[]).map(r=>`<span class="bk bb" style="margin-right:2px">${rn[r]||r}</span>`).join('')}</td><td style="font-family:monospace;font-size:11px">${c.curp||'--'}</td><td>${c.cp||'--'}</td><td><span class="bk ${DB.csd.activo&&DB.csd.rfc===c.rfc?'bgo':'bgr'}">${DB.csd.activo&&DB.csd.rfc===c.rfc?'Activo':'Sin CSD'}</span></td><td><button class="btn bs bxs" onclick="selGo(${i})">Selec.</button> <button class="btn bd2 bxs" onclick="delC(${i})">Elim.</button></td></tr>`).join('');}
+function rCAT(){const q=(v('bCTA')?.value||'').toLowerCase(),cs=q?DB.cat.filter(c=>c.n.includes(q)||c.nom.toLowerCase().includes(q)):DB.cat,tn={A:'Activo',P:'Pasivo',C:'Capital',I:'Ingreso',E:'Egreso'};v('tbCAT').innerHTML=cs.map(c=>`<tr><td><b style="font-family:monospace">${c.n}</b></td><td>${c.nom}</td><td><span class="bk ${c.nat==='D'?'bb':'br'}">${c.nat==='D'?'Deudora':'Acreedora'}</span></td><td>${c.niv}</td><td><span class="bk bgr">${tn[c.tip]||c.tip}</span></td><td><button class="btn bd2 bxs" onclick="delCta(${DB.cat.indexOf(c)})">Elim.</button></td></tr>`).join('')||'<tr><td colspan="6" style="color:var(--tx3);text-align:center;padding:20px">Sin coincidencias</td></tr>';}
+function rPOL(){const tp=v('fTP')?.value,ps=tp?DB.pols.filter(p=>p.tipo===tp):DB.pols;v('tbPOL').innerHTML=!ps.length?'<tr><td colspan="8" style="color:var(--tx3);text-align:center;padding:20px">Sin polizas</td></tr>':ps.map((p,i)=>`<tr><td><span class="bk bb">${p.folio}</span></td><td>${p.fec}</td><td><span class="bk ${p.tipo==='Ingreso'?'bgo':p.tipo==='Egreso'?'br':'bgr'}">${p.tipo}</span></td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.con}</td><td class="tr dc">${f(p.td)}</td><td class="tr hc">${f(p.th)}</td><td><span class="bk bgo">Registrada</span></td><td><button class="btn bs bxs" onclick="infoP(${DB.pols.indexOf(p)})">Ver</button> <button class="btn bd2 bxs" onclick="delP(${DB.pols.indexOf(p)})">Elim.</button></td></tr>`).join('');}
+function rCFDI(){v('tbCFDI').innerHTML=!DB.cfdis.length?'<tr><td colspan="10" style="color:var(--tx3);text-align:center;padding:20px">Sin CFDIs</td></tr>':DB.cfdis.map((c,i)=>`<tr><td><b style="font-family:monospace">${c.ser}${c.fol}</b></td><td>${(c.fec||'').split('T')[0]||'--'}</td><td><span class="bk ${c.tip==='I'?'bgo':c.tip==='E'?'br':'bgr'}">${c.tip==='I'?'Ingreso':c.tip==='E'?'Egreso':'Traslado'}</span></td><td style="font-family:monospace;font-size:11px">${c.rfcR}</td><td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.nomR}</td><td class="tr" style="font-family:monospace">${f(c.sub)}</td><td class="tr" style="font-family:monospace;color:var(--ac)">${f(c.iva)}</td><td class="tr" style="font-family:monospace;font-weight:700;color:var(--nv)">${f(c.tot)}</td><td><span class="bk ${c.timbrado?'bgo':'bo'}">${c.timbrado?'Timbrado':'Sin Timbre'}</span></td><td><button class="btn bs bxs" onclick="genXML(${i})">XML</button> <button class="btn bd2 bxs" onclick="delCFDI(${i})">Elim.</button></td></tr>`).join('');}
+function rCLI(){const q=(v('bCLI')?.value||'').toLowerCase();const cs=q?DB.clis.filter(c=>c.rfc.toLowerCase().includes(q)||c.nom.toLowerCase().includes(q)):DB.clis;v('tbCLI').innerHTML=!cs.length?'<tr><td colspan="8" style="color:var(--tx3);text-align:center;padding:20px">Sin clientes</td></tr>':cs.map((c,i)=>{const nCFDI=DB.cfdis.filter(x=>x.rfcR===c.rfc).length;return`<tr><td><b style="font-family:monospace">${c.rfc}</b></td><td>${c.nom}</td><td><span class="bk bb">${c.uso}</span></td><td>${c.reg}</td><td>${c.cp||'--'}</td><td style="font-size:11px;color:var(--tx3)">${c.email||'--'}</td><td><span class="bk ${nCFDI>0?'bb':'bgr'}">${nCFDI}</span></td><td><button class="btn bs bxs" onclick="cfdiParaCli('${c.rfc}')">Facturar</button> <button class="btn bd2 bxs" onclick="delCli(${DB.clis.indexOf(c)})">Elim.</button></td></tr>`}).join('');}
+function rPROV(){const q=(v('bPROV')?.value||'').toLowerCase();const ps=q?DB.provs.filter(p=>p.rfc.toLowerCase().includes(q)||p.nom.toLowerCase().includes(q)):DB.provs;v('tbPROV').innerHTML=!ps.length?'<tr><td colspan="8" style="color:var(--tx3);text-align:center;padding:20px">Sin proveedores registrados</td></tr>':ps.map((p,i)=>`<tr><td><b style="font-family:monospace">${p.rfc}</b></td><td>${p.nom}</td><td><span class="bk bb">${p.tipoDIOT||'04'}</span></td><td>${p.reg||'601'}</td><td>${p.cp||'--'}</td><td class="tr" style="font-family:monospace">${f(p.comprasAcum||0)}</td><td class="tr" style="font-family:monospace;color:var(--ac)">${f(p.ivaAcred||0)}</td><td><button class="btn bs bxs" onclick="editProv(${DB.provs.indexOf(p)})">Ver</button> <button class="btn bd2 bxs" onclick="delProv(${DB.provs.indexOf(p)})">Elim.</button></td></tr>`).join('');}
+function rNOM(){const s=v('nomEmp'),si=v('imssEmp');if(s){s.innerHTML='<option value="">Seleccionar...</option>';DB.emps.forEach((e,i)=>{s.innerHTML+=`<option value="${i}">${e.noms} ${e.ap} -- ${e.rfc}</option>`;});}if(si){si.innerHTML='<option value="">Seleccionar o capturar...</option>';DB.emps.forEach((e,i)=>{si.innerHTML+=`<option value="${i}">${e.noms} ${e.ap}</option>`;});}v('tbEMP').innerHTML=!DB.emps.length?'<tr><td colspan="8" style="color:var(--tx3);text-align:center;padding:20px">Sin empleados</td></tr>':DB.emps.map((e,i)=>`<tr><td style="font-family:monospace;font-size:11px">${e.rfc}</td><td style="font-family:monospace;font-size:11px">${e.curp}</td><td>${e.noms} ${e.ap}</td><td>${e.nss||'--'}</td><td class="tr">${f(e.sd)}</td><td class="tr">${f(e.sdi||e.sd)}</td><td>${e.ct||'01'}</td><td><button class="btn bs bxs" onclick="calcIMSSEmp(${i})">IMSS</button> <button class="btn bd2 bxs" onclick="delEmp(${i})">Elim.</button></td></tr>`).join('');const tb3=v('tbNOM3');if(tb3)tb3.innerHTML=!DB.nomR.length?'<tr><td colspan="7" style="color:var(--tx3);text-align:center;padding:20px">Sin recibos</td></tr>':DB.nomR.map((r,i)=>`<tr><td>${r.per}</td><td>${r.emp}</td><td class="tr">${f(r.perc)}</td><td class="tr">${f(r.ded)}</td><td class="tr" style="font-weight:700;color:var(--ok)">${f(r.neto)}</td><td><span class="bk bo">${r.est}</span></td><td><button class="btn bp bxs" onclick="alert('CFDI Nomina para: '+DB.nomR[${i}].emp)">CFDI</button></td></tr>`).join('');}
+function rDECL(){if(!DB.decls.length)genDecls();v('tbDECL').innerHTML=!DB.decls.length?'<tr><td colspan="7" style="color:var(--tx3);text-align:center;padding:20px">Sin declaraciones</td></tr>':DB.decls.map((d,i)=>`<tr><td>${d.tipo}</td><td>${d.per}</td><td>${d.venc}</td><td><span class="bk bb">${d.reg||'--'}</span></td><td class="tr">${f(d.monto||0)}</td><td><span class="bk ${d.est==='Presentada'?'bgo':d.est==='Vencida'?'br':'bo'}">${d.est}</span></td><td><button class="btn bp bxs" onclick="abrirWizardDecl(${i})">&#128196; Ver / Presentar</button>${d.est!=='Presentada'?`<button class="btn bg2 bxs" style="margin-left:4px" onclick="mDecl(${i})">&#10003;</button>`:''}<button class="btn bd2 bxs" style="margin-left:4px" onclick="DB.decls.splice(${i},1);saveDB();rDECL()">Elim.</button></td></tr>`).join('');const pr=DB.decls.filter(d=>d.est==='Presentada').length,pe=DB.decls.filter(d=>d.est==='Pendiente').length,vn=DB.decls.filter(d=>d.est==='Vencida').length;v('dkP').textContent=pr;v('dkPe').textContent=pe;v('dkV').textContent=vn;const px=DB.decls.filter(d=>d.est==='Pendiente').sort((a,b)=>a.venc>b.venc?1:-1)[0];v('dkPx').textContent=px?px.venc:'--';}
+function genDecls(){const ms=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];ms.forEach((m,i)=>{const nm=String(i+2).padStart(2,'0');DB.decls.push({tipo:'ISR Provisional',per:`${m} 2026`,venc:`17/${nm}/2026`,reg:'625/612',monto:0,est:i<3?'Presentada':'Pendiente',lc:'',acuse:''});DB.decls.push({tipo:'IVA Mensual',per:`${m} 2026`,venc:`17/${nm}/2026`,reg:'612/606',monto:0,est:i<3?'Presentada':'Pendiente',lc:'',acuse:''});});DB.decls.push({tipo:'Declaracion Anual PF',per:'Ejercicio 2025',venc:'30/04/2026',reg:'Todos',monto:0,est:'Pendiente',lc:'',acuse:''});saveDB();}
+function mDecl(i){DB.decls[i].est='Presentada';saveDB();rDECL();}
+// WIZARD DECLARACIONES
+function abrirWizardDecl(idx){
+  const d=DB.decls[idx];wTipoDecl=d.tipo;wMontoDecl=d.monto||0;wPaso=1;
+  const wz=v('declWizard');wz.style.display='block';
+  v('wTitulo').innerHTML=`Presentar Declaracion: <span style="color:var(--ac)">${d.tipo} - ${d.per}</span>`;
+  renderWizard(d);wz.scrollIntoView({behavior:'smooth'});
+}
+function abrirPresentarDecl(tipo){wTipoDecl=tipo;wMontoDecl=0;wPaso=1;const wz=v('declWizard');wz.style.display='block';v('wTitulo').innerHTML=`Presentar Declaracion: <span style="color:var(--ac)">${tipo}</span>`;renderWizard(null);nav('pgDECL',null);wz.scrollIntoView({behavior:'smooth'});}
+function renderWizard(decl){
+  [1,2,3,4].forEach(i=>{const s=v(`ws${i}`);if(s){s.className='wstep '+(i<wPaso?'done':i===wPaso?'act':'');}});
+  const c=v('wContent'),cc=gc();
+  if(wPaso===1){c.innerHTML=`<div class="fgrid" style="gap:12px"><div class="fg"><label>Contribuyente</label><input type="text" value="${cc?cc.noms+' '+cc.ap:'(seleccione contribuyente)'}" readonly style="background:var(--bg3)"></div><div class="fg"><label>RFC</label><input type="text" value="${cc?.rfc||'--'}" readonly style="background:var(--bg3)"></div><div class="fg"><label>Tipo Obligacion</label><input type="text" id="wTipo" value="${wTipoDecl}" readonly style="background:var(--bg3)"></div><div class="fg"><label>Periodo</label><input type="text" id="wPer" placeholder="Ej: Enero 2026" value="${decl?.per||''}"></div><div class="fg"><label>Regimen Fiscal</label><input type="text" id="wReg" placeholder="Ej: 625, 612" value="${decl?.reg||cc?.regs?.join(', ')||''}"></div><div class="fg"><label>Fecha Limite</label><input type="date" id="wVenc" value="${decl?decl.venc?.split('/').reverse().join('-'):''}"></div></div>`;
+  }else if(wPaso===2){c.innerHTML=`<div class="al aw">Capture los importes de su declaracion. Si ya calculo ISR o IVA, use esos resultados.</div><div class="fgrid" style="gap:12px"><div class="fg"><label>Ingresos Totales del Periodo ($)</label><input type="number" id="wIng" value="0" oninput="calcWMonto()"></div><div class="fg"><label>Deducciones / Base Gravable ($)</label><input type="number" id="wDed" value="0" oninput="calcWMonto()"></div><div class="fg"><label>ISR / IVA Causado ($)</label><input type="number" id="wCausado" value="${wMontoDecl}" oninput="calcWMonto()"></div><div class="fg"><label>Pagos Provisionales / Retenciones ($)</label><input type="number" id="wPP" value="0" oninput="calcWMonto()"></div><div class="fg"><label>Saldo a Favor Anterior ($)</label><input type="number" id="wSAF" value="0" oninput="calcWMonto()"></div><div class="fg"><label>Actualizacion y Recargos ($)</label><input type="number" id="wRec" value="0" oninput="calcWMonto()"></div></div><div id="wMontoResult" style="margin-top:12px;padding:12px;background:var(--nv);color:#fff;border-radius:8px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:600">TOTAL A PAGAR:</span><span id="wMontoTot" style="font-size:22px;font-weight:700;color:var(--gd);font-family:monospace">${f(wMontoDecl)}</span></div>`;
+  }else if(wPaso===3){const monto=wMontoDecl;c.innerHTML=`<div class="al ai"><b>Revision antes de presentar.</b> Verifique que todos los datos sean correctos.</div><div style="background:var(--bg3);border-radius:8px;padding:16px"><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd);font-size:12px"><span style="color:var(--tx2)">Contribuyente</span><b>${cc?cc.noms+' '+cc.ap:'--'}</b></div><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd);font-size:12px"><span style="color:var(--tx2)">RFC</span><b style="font-family:monospace">${cc?.rfc||'--'}</b></div><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd);font-size:12px"><span style="color:var(--tx2)">Obligacion</span><b>${wTipoDecl}</b></div><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd);font-size:12px"><span style="color:var(--tx2)">Periodo</span><b>${v('wPer')?.value||'--'}</b></div><div style="display:flex;justify-content:space-between;padding:6px 0;font-size:14px;font-weight:700;border-top:2px solid var(--ac);margin-top:4px;padding-top:8px"><span style="color:var(--nv)">MONTO A PAGAR</span><span style="color:var(--ac);font-family:monospace;font-size:18px">${f(monto)}</span></div></div><div class="fg" style="margin-top:12px"><label>Observaciones</label><textarea id="wObs" rows="2" placeholder="Notas o aclaraciones..."></textarea></div>`;
+  }else if(wPaso===4){c.innerHTML=`<div class="al as"><b>&#10003; Declaracion marcada como presentada.</b> Registre los datos del acuse SAT para control.</div><div class="fgrid" style="gap:12px"><div class="fg"><label>Linea de Captura SAT</label><input type="text" id="wLC" placeholder="Numero de linea de captura del SAT"></div><div class="fg"><label>Folio Acuse de Recibo</label><input type="text" id="wAcuse" placeholder="Folio del acuse PDF del SAT"></div><div class="fg"><label>Fecha de Pago / Presentacion</label><input type="date" id="wFPago"></div><div class="fg"><label>Banco / Referencia de Pago</label><input type="text" id="wBanco" placeholder="Banco y referencia del pago"></div></div><div style="display:flex;gap:10px;margin-top:14px"><button class="btn bg2" onclick="finalizarDecl()">&#10003; Confirmar y Registrar Declaracion</button><button class="btn bs bsm" onclick="genLayoutDecl()">&#8595; Generar Layout SAT</button></div>`;
+  }
+  v('wBtnNext').textContent=wPaso<4?'Siguiente &#8594;':(wPaso===4?'Registrar':'Siguiente');
+}
+function calcWMonto(){const causado=g('wCausado'),pp=g('wPP'),saf=g('wSAF'),rec=g('wRec');wMontoDecl=Math.max(0,causado-pp-saf)+rec;const el=v('wMontoTot');if(el)el.textContent=f(wMontoDecl);}
+function wNext(){if(wPaso<4){wPaso++;renderWizard(null);}else finalizarDecl();}
+function wPrev(){if(wPaso>1){wPaso--;renderWizard(null);}}
+function finalizarDecl(){
+  const per=v('wPer')?.value,reg=v('wReg')?.value,venc=v('wVenc')?.value,lc=v('wLC')?.value||'',acuse=v('wAcuse')?.value||'';
+  const d={tipo:wTipoDecl,per:per||'--',venc:venc||'17/06/2026',reg:reg||'--',monto:wMontoDecl,est:'Presentada',lc,acuse,fPago:v('wFPago')?.value||''};
+  const idx=DB.decls.findIndex(x=>x.tipo===wTipoDecl&&x.per===per);
+  if(idx>=0)Object.assign(DB.decls[idx],d);else DB.decls.push(d);
+  saveDB();rDECL();v('declWizard').style.display='none';alert(`Declaracion "${wTipoDecl}" registrada como PRESENTADA.\nLinea de captura: ${lc||'(sin registrar)'}`);
+}
+function genLayoutDecl(){const cc=gc(),txt=`LAYOUT DECLARACION SAT - ContaFiscal MX 2026\n${'='.repeat(50)}\nContribuyente: ${cc?cc.noms+' '+cc.ap:'--'}\nRFC: ${cc?.rfc||'--'}\nObligation: ${wTipoDecl}\nPeriodo: ${v('wPer')?.value||'--'}\nMonto a Pagar: ${f(wMontoDecl)}\nFecha: ${new Date().toLocaleString('es-MX')}\n${'='.repeat(50)}\nEste layout debe complementarse con la declaracion oficial en portal.sat.gob.mx`;dlF('Layout_Declaracion.txt',txt,'text/plain');alert('Layout generado. Presente su declaracion en: portal.sat.gob.mx');}
+// CSD
+function rCSD(){const csd=DB.csd;if(csd.rfc){v('csdRFC').value=csd.rfc;v('csdNombre').value=csd.nombre||'';v('csdRegimen').value=csd.reg||'625';v('csdCP').value=csd.cp||'';v('csdEmail').value=csd.email||'';v('csdPAC').value=csd.pac||'';}updCSDStatus();}
+function loadCer(inp){const f=inp.files[0];if(!f)return;DB.csd.cer=f.name;v('csdCerBox').classList.add('cert-ok');v('csdCerInfo').style.display='block';v('csdCerNom').textContent=f.name;v('csdCerSerie').textContent='(cargado - verificar con PAC)';v('csdCerVig').textContent='Vigencia visible al timbrar';saveDB();updCSDStatus();}
+function loadKey(inp){const f=inp.files[0];if(!f)return;DB.csd.key=f.name;v('csdKeyBox').classList.add('cert-ok');v('csdKeyInfo').style.display='block';v('csdKeyNom').textContent=f.name;saveDB();updCSDStatus();}
+function guardarCSD(){DB.csd.rfc=v('csdRFC').value.trim().toUpperCase();DB.csd.nombre=v('csdNombre').value.trim();DB.csd.reg=v('csdRegimen').value;DB.csd.cp=v('csdCP').value.trim();DB.csd.email=v('csdEmail').value.trim();DB.csd.pac=v('csdPAC').value;DB.csd.activo=!!(DB.csd.rfc&&DB.csd.pac);saveDB();updCSDStatus();alert(DB.csd.activo?'CSD configurado. Estado: ACTIVO - listo para generar XMLs firmados (timbrar con PAC).':'Configuracion guardada. Configure PAC y RFC para activar CSD.');}
+function testCSD(){if(!DB.csd.pac){alert('Seleccione un PAC primero.');return;}alert(`Prueba de conexion con ${DB.csd.pac}:\n\nEn produccion, este modulo se conectaria al endpoint del PAC para verificar credenciales y timbrar CFDIs.\n\nPAC seleccionado: ${DB.csd.pac}\nRFC configurado: ${DB.csd.rfc||'(no configurado)'}`);}
+function syncRFC(rfc){const csd=DB.csd;csd.rfc=rfc.toUpperCase();v('csdStatRFC').textContent=csd.rfc||'No configurado';updCSDStatus();}
+function updCSDStatus(){const csd=DB.csd;v('csdStatCer').textContent=csd.cer||'No cargado';v('csdStatKey').textContent=csd.key||'No cargada';v('csdStatRFC').textContent=csd.rfc||'No configurado';v('csdStatPAC').textContent=csd.pac||'No seleccionado';const rows=v('tbCSDStatus')?.querySelectorAll('tr');if(rows){rows[0].querySelector('td:last-child').innerHTML=`<span class="bk ${csd.cer?'bgo':'br'}">${csd.cer?'Cargado':'Pendiente'}</span>`;rows[1].querySelector('td:last-child').innerHTML=`<span class="bk ${csd.key?'bgo':'br'}">${csd.key?'Cargada':'Pendiente'}</span>`;rows[2].querySelector('td:last-child').innerHTML=`<span class="bk ${csd.rfc?'bgo':'br'}">${csd.rfc?'OK':'Pendiente'}</span>`;rows[3].querySelector('td:last-child').innerHTML=`<span class="bk ${csd.pac?'bgo':'br'}">${csd.pac||'Pendiente'}</span>`;}const hpCSD=v('hpCSD');if(hpCSD)hpCSD.style.display=csd.activo?'inline-flex':'none';const btnS=v('btnCSDStatus');if(btnS)btnS.style.display=csd.activo?'inline-flex':'none';}
+function initIMSS(){const s=v('imssEmp');if(!s)return;s.innerHTML='<option value="">Seleccionar o capturar...</option>';DB.emps.forEach((e,i)=>{s.innerHTML+=`<option value="${i}">${e.noms} ${e.ap}</option>`;});calcIMSS();}
+// IMSS - CALCULO COMPLETO 7 RAMAS
+function autoFillIMSS(idx){if(idx==='')return;const e=DB.emps[parseInt(idx)];if(e){v('imssSD').value=e.sd;v('imssRiesgo').value=e.riesgo||'0.01';}calcIMSS();}
+function calcIMSSEmp(idx){nav('pgIMSS',null);setTimeout(()=>{v('imssEmp').value=idx;autoFillIMSS(idx);},100);}
+function calcIMSS(){
+  const sd=g('imssSD'),dias=g('imssDias')||30,riesgoPrima=parseFloat(v('imssRiesgo')?.value||0.01),smz=parseFloat(v('imssSMZ')?.value||278.80);
+  // SDI = SD * Factor Integracion (minimo ley: aguinaldo 15d + vacaciones 12d + prima 25%)
+  const fi_dias = 15 + 12 + (12*0.25); // dias equivalentes de prestaciones
+  const fi = 1 + fi_dias/365; // factor integración = 1.0740 aprox
+  const sdi=sd*fi; // Factor integracion minimo ley (aguinaldo 15d, vacaciones 12d primer año, prima 25%)
+  const sbcCalc=sdi;const sbcTopado=Math.min(sbcCalc,TOPE_SBC);
+  v('imssSBCres').textContent=f(sbcCalc);v('imssTopeRes').textContent=f(sbcTopado);v('imssFIres').textContent='1.0493 (minimo ley)';
+  // CALCULO POR RAMAS
+  const smg3=smz*3; // 3 salarios minimos
+  // Excedente para Enf y Mat
+  const excedente=Math.max(0,sbcTopado-smg3);
+  const cuotaFijaDiaria=smg3*0.204; // sobre 3 SMG
+  const r={
+    enf_mat_p_fijo: {nom:'Enf. y Mat. Cuota Fija Patronal',pat:cuotaFijaDiaria*dias,obt:0,desc:'Sobre 3 SMG diarios'},
+    enf_mat_p_exc: {nom:'Enf. y Mat. Excedente Patronal (1.10%)',pat:excedente*dias*0.011,obt:0,desc:`Sobre excedente de 3 SMG`},
+    enf_mat_obs: {nom:'Enf. y Mat. Obrero (0.40%)',pat:0,obt:sbcTopado*dias*0.004,desc:'Sobre SBC topado'},
+    pen_dis: {nom:'Pensiones y Discapacidad Patronal (1.75%)',pat:sbcTopado*dias*0.0175,obt:0,desc:'Sobre SBC topado'},
+    pen_dis_o: {nom:'Pensiones y Discapacidad Obrero (0.625%)',pat:0,obt:sbcTopado*dias*0.00625,desc:'Sobre SBC topado'},
+    guarderias: {nom:'Guarderias y Prest. Sociales Patronal (1.0%)',pat:sbcTopado*dias*0.01,obt:0,desc:'Solo patronal'},
+    riesgo: {nom:`Riesgo de Trabajo Patronal (${(riesgoPrima*100).toFixed(2)}%)`,pat:sbcTopado*dias*riesgoPrima,obt:0,desc:'Prima variable segun clase de riesgo'},
+    retiro: {nom:'Retiro Patronal (2.0%)',pat:sbcTopado*dias*0.02,obt:0,desc:'AFORE, solo patronal'},
+    cesantia_p: {nom:'Cesantia y Vejez Patronal (3.150%)',pat:sbcTopado*dias*0.0315,obt:0,desc:'Sobre SBC topado'},
+    cesantia_o: {nom:'Cesantia y Vejez Obrero (1.125%)',pat:0,obt:sbcTopado*dias*0.01125,desc:'Sobre SBC topado'},
+    infonavit: {nom:'INFONAVIT Patronal (5.0%)',pat:sbcTopado*dias*0.05,obt:0,desc:'Sobre SBC topado'},
+  };
+  const totPat=Object.values(r).reduce((s,x)=>s+x.pat,0);
+  const totObt=Object.values(r).reduce((s,x)=>s+x.obt,0);
+  const totTotal=totPat+totObt;
+  // Resultado
+  v('imssRes').innerHTML=`<div class="cr"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:8px">Resumen IMSS -- ${dias} dias</div><div class="crr"><span>Salario Diario</span><span>${f(sd)}</span></div><div class="crr"><span>Factor integracion</span><span>1.0493</span></div><div class="crr"><span>SBC calculado</span><span>${f(sbcCalc)}</span></div><div class="crr"><span>SBC topado (25 UMAs)</span><span>${f(sbcTopado)}</span></div><div class="crr"><span>Cuota Patronal Total</span><span>${f(totPat)}</span></div><div class="crr"><span>Cuota Obrera Total</span><span>${f(totObt)}</span></div><div class="crr"><span>TOTAL IMSS</span><span>${f(totTotal)}</span></div></div>`;
+  // Tabla detalle
+  v('imssTabla').innerHTML=`<div style="margin-bottom:8px;display:flex;gap:16px;font-size:11px;font-weight:600;color:var(--tx2);padding:6px 12px;background:var(--bg3);border-radius:6px"><span style="flex:2">Rama</span><span style="flex:1;text-align:right">Patronal</span><span style="flex:1;text-align:right">Obrero</span><span style="flex:1;text-align:right">Total</span></div>${Object.values(r).map(rama=>`<div class="imss-rama"><div class="imss-rama-t">${rama.nom}</div><div style="font-size:10px;color:var(--tx3);margin-bottom:4px">${rama.desc}</div><div style="display:flex;gap:16px;font-size:12px"><span style="flex:2"></span><span style="flex:1;text-align:right;font-family:monospace;color:var(--nv);font-weight:600">${f(rama.pat)}</span><span style="flex:1;text-align:right;font-family:monospace;color:var(--ac);font-weight:600">${f(rama.obt)}</span><span style="flex:1;text-align:right;font-family:monospace;font-weight:700">${f(rama.pat+rama.obt)}</span></div></div>`).join('')}<div style="display:flex;gap:16px;font-size:13px;font-weight:700;padding:10px 12px;background:var(--nv);color:#fff;border-radius:6px;margin-top:8px"><span style="flex:2">TOTAL MENSUAL</span><span style="flex:1;text-align:right;font-family:monospace;color:var(--gd)">${f(totPat)}</span><span style="flex:1;text-align:right;font-family:monospace;color:#86efac">${f(totObt)}</span><span style="flex:1;text-align:right;font-family:monospace;color:#fff">${f(totTotal)}</span></div>`;
+}
+// ISR CALCULOS
+const calcT=(base,tarifa)=>{const fi=tarifa.find(t=>base>=t.li&&base<=t.ls);return fi?fi.ci+(base-fi.li)*fi.t:0;};
+function calcResico(){const ing=g('rIng'),pa=g('rPA'),ret=g('rRet');const fi=RS.find(t=>ing>=t.li&&ing<=t.ls)||RS[RS.length-1];const isr=ing*fi.t,pay=Math.max(0,isr-pa-ret);wMontoDecl=pay;v('rRes').innerHTML=`<div class="cr"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:8px">RESICO-PF 2026</div><div class="crr"><span>Ingresos</span><span>${f(ing)}</span></div><div class="crr"><span>Tasa</span><span>${(fi.t*100).toFixed(2)}%</span></div><div class="crr"><span>ISR Causado</span><span>${f(isr)}</span></div><div class="crr"><span>Pagos anteriores</span><span>- ${f(pa)}</span></div><div class="crr"><span>Retenciones</span><span>- ${f(ret)}</span></div><div class="crr"><span>ISR A PAGAR</span><span>${f(pay)}</span></div></div><div class="al ai" style="margin-top:10px"><b>Pago definitivo.</b> Vence dia 17 del mes siguiente.</div>`;}
+function calcActEmp(){const ia=g('aIA'),da=g('aDA'),ptu=g('aPTU'),perd=g('aPerd'),pa=g('aPA'),ret=g('aRet');const base=Math.max(0,ia-da-ptu-perd),isr=calcT(ia,TM),pay=Math.max(0,isr-pa-ret);wMontoDecl=pay;v('aRes').innerHTML=`<div class="cr"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:8px">Act. Empresarial y Profesional</div><div class="crr"><span>Ingresos acumulados</span><span>${f(ia)}</span></div><div class="crr"><span>Deducciones</span><span>- ${f(da)}</span></div><div class="crr"><span>PTU</span><span>- ${f(ptu)}</span></div><div class="crr"><span>Perdidas</span><span>- ${f(perd)}</span></div><div class="crr"><span>Base gravable</span><span>${f(base)}</span></div><div class="crr"><span>ISR (Art.96)</span><span>${f(isr)}</span></div><div class="crr"><span>Pagos anteriores</span><span>- ${f(pa)}</span></div><div class="crr"><span>ISR A PAGAR</span><span>${f(pay)}</span></div></div>`;}
+function tglArr(){v('arrGG').style.display=v('arrTD').value==='real'?'flex':'none';}
+function calcArr(){const ing=g('arrI'),td=v('arrTD').value,gr=g('arrGR'),pred=g('arrPr'),pa=g('arrPA'),ret=g('arrRet');if(td==='opc'){const isr=ing*0.20,pay=Math.max(0,isr-pa-ret);wMontoDecl=pay;v('arrRes').innerHTML=`<div class="cr"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:8px">Arrendamiento - Tasa Opcional 20%</div><div class="crr"><span>Ingresos</span><span>${f(ing)}</span></div><div class="crr"><span>ISR (20%)</span><span>${f(isr)}</span></div><div class="crr"><span>Pagos anteriores</span><span>- ${f(pa)}</span></div><div class="crr"><span>ISR A PAGAR</span><span>${f(pay)}</span></div></div>`;return;}const ded=td==='ciega'?ing*0.35:(gr+pred),base=Math.max(0,ing-ded),isr=calcT(base,TM),pay=Math.max(0,isr-pa-ret);wMontoDecl=pay;v('arrRes').innerHTML=`<div class="cr"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:8px">Arrendamiento - ${td==='ciega'?'Ded. Ciega 35%':'Gastos Reales'}</div><div class="crr"><span>Ingresos</span><span>${f(ing)}</span></div><div class="crr"><span>Deducciones</span><span>- ${f(ded)}</span></div><div class="crr"><span>Base gravable</span><span>${f(base)}</span></div><div class="crr"><span>ISR (Art.96)</span><span>${f(isr)}</span></div><div class="crr"><span>ISR A PAGAR</span><span>${f(pay)}</span></div></div>`;}
+function calcSuel(){const ing=g('sI'),imss=g('sIMSS'),od=g('sOD'),base=ing-imss-od,isr=calcT(base,TM);const sf=SE.find(s=>base>=s.li&&base<=s.ls),sub=sf?sf.s:0,isrN=Math.max(0,isr-sub),neto=ing-isrN-imss-od;v('sRes').innerHTML=`<div class="cr"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:8px">Sueldos - Retencion Mensual</div><div class="crr"><span>Ingreso bruto</span><span>${f(ing)}</span></div><div class="crr"><span>IMSS obrero</span><span>- ${f(imss)}</span></div><div class="crr"><span>Otras deducciones</span><span>- ${f(od)}</span></div><div class="crr"><span>Base gravable</span><span>${f(base)}</span></div><div class="crr"><span>ISR Art.96</span><span>${f(isr)}</span></div><div class="crr"><span>Subsidio al empleo</span><span>- ${f(sub)}</span></div><div class="crr"><span>ISR A RETENER</span><span>${f(isrN)}</span></div><div class="crr"><span>NETO A PAGAR</span><span style="color:#86efac">${f(neto)}</span></div></div>`;}
+function calcPlat(){const tasa=parseFloat((v('pTipo')?.value||'0.021').replace('b','').replace('x','')),ing=g('pI'),ret=g('pRet'),acum=v('pAcum')?.value;const isr=ing*tasa,pay=Math.max(0,isr-ret);wMontoDecl=pay;v('pRes').innerHTML=`<div class="cr"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:8px">Plataformas Digitales</div><div class="crr"><span>Ingresos</span><span>${f(ing)}</span></div><div class="crr"><span>Tasa</span><span>${(tasa*100).toFixed(1)}%</span></div><div class="crr"><span>ISR Causado</span><span>${f(isr)}</span></div><div class="crr"><span>Retencion plataforma</span><span>- ${f(ret)}</span></div><div class="crr"><span>${acum==='no'?'ISR A PAGAR':'ISR adicional'}</span><span>${f(pay)}</span></div></div>`;}
+function calcAnual(){const ing=g('anAE')+g('anSS')+g('anArr')+g('anPl')+g('anOt');const deds=['dMed','dDen','dHosp','dCole','dHipo','dAFO','dDon','dSeg'].reduce((s,id)=>s+g(id),0);const lim=Math.min(ing*0.15,198031.80),dedA=Math.min(deds,lim),base=Math.max(0,ing-dedA),isr=calcT(base,TA),pa=g('anPA'),saldo=isr-pa;wMontoDecl=Math.max(0,saldo);v('anRes').innerHTML=`<div class="cr"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:8px">Declaracion Anual PF 2026</div><div class="crr"><span>Ingresos Totales</span><span>${f(ing)}</span></div><div class="crr"><span>Ded. personales</span><span>- ${f(dedA)}</span></div><div class="crr"><span>Base gravable anual</span><span>${f(base)}</span></div><div class="crr"><span>ISR (Art.152)</span><span>${f(isr)}</span></div><div class="crr"><span>Pagos prov. / retenciones</span><span>- ${f(pa)}</span></div><div class="crr"><span>${saldo>=0?'ISR A PAGAR':'SALDO A FAVOR'}</span><span style="color:${saldo>=0?'#fca5a5':'#86efac'}">${f(Math.abs(saldo))}</span></div></div><div class="al ${saldo>=0?'aw':'as'}" style="margin-top:10px">${saldo>=0?`<b>ISR a cargo: ${f(saldo)}</b> Plazo: 30 de abril de 2027.`:`<b>Saldo a favor: ${f(Math.abs(saldo))}</b> Puede solicitar devolucion.`}</div>`;}
+function calcIVA(){const v16=g('iv16'),v8=g('iv8'),v0=g('iv0'),ex=g('ivEx'),cp=g('ivCp'),rc=g('ivRC'),rp=g('ivRP'),sa=g('ivSA');const caus=v16*0.16+v8*0.08,tot=v16+v8+v0+ex,fac=tot>0?(v16+v8+v0)/tot:1,acred=cp*fac,saldo=caus-acred-rc-sa+rp;wMontoDecl=Math.max(0,saldo);v('ivRes').innerHTML=`<div class="cr"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:8px">Calculo IVA Mensual</div><div class="crr"><span>IVA Causado 16%</span><span>${f(v16*0.16)}</span></div><div class="crr"><span>IVA Causado 8%</span><span>${f(v8*0.08)}</span></div><div class="crr"><span>IVA Causado Total</span><span>${f(caus)}</span></div><div class="crr"><span>Factor acreditamiento</span><span>${(fac*100).toFixed(2)}%</span></div><div class="crr"><span>IVA acreditable</span><span>- ${f(acred)}</span></div><div class="crr"><span>IVA retenido clientes</span><span>- ${f(rc)}</span></div><div class="crr"><span>Saldo a favor ant.</span><span>- ${f(sa)}</span></div><div class="crr"><span>${saldo>=0?'IVA A PAGAR':'SALDO A FAVOR'}</span><span style="color:${saldo>=0?'#fca5a5':'#86efac'}">${f(Math.abs(saldo))}</span></div></div><div class="al ${saldo>=0?'aw':'as'}" style="margin-top:10px">${saldo>=0?`<b>IVA a pagar: ${f(saldo)}</b> Vence dia 17.`:`<b>Saldo a favor: ${f(Math.abs(saldo))}</b>`}</div>`;}
+function calcNom(){const ei=v('nomEmp')?.value;if(!ei){alert('Seleccione un empleado.');return;}const e=DB.emps[parseInt(ei)];const dias=parseInt(v('nomD').value||0),he=parseInt(v('nomHE').value||0),vac=parseInt(v('nomVac').value||0),pvp=parseFloat(v('nomPV').value||25)/100,ag=g('nomAg'),op=g('nomOP'),od=g('nomOD'),inf=g('nomINF');const sd=e.sd,sdi=e.sdi||sd*1.0493;const suel=sd*dias,heD=he*2*(sd/8),pv=vac>0?sd*vac*pvp:0,perc=suel+heD+pv+ag+op;// IMSS obrero solo ramas obrero
+const imss=Math.max(0,(sdi*dias)*0.04375);// Enf.Mat+Inv.Vida+Cesantia obrero aprox
+const base=perc-imss,isr=calcT(base,TM),sf=SE.find(s=>base>=s.li&&base<=s.ls),sub=sf?sf.s:0,isrN=Math.max(0,isr-sub),ded=imss+isrN+od+inf,neto=perc-ded;const riesgoTasa=parseFloat((DB.emps[parseInt(ei)]?.riesgo)||'0.01');const pat=sdi*dias*(0.011+0.0175+0.01+riesgoTasa+0.02+0.0315+0.05);v('nomRes').innerHTML=`<div class="cr"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:8px">Nomina -- ${e.noms} ${e.ap}</div><div class="crr"><span>Sueldo (${dias}d x ${f(sd)})</span><span>${f(suel)}</span></div><div class="crr"><span>Horas extra dobles (${he}h)</span><span>${f(heD)}</span></div><div class="crr"><span>Prima vacacional</span><span>${f(pv)}</span></div><div class="crr"><span>Prop. aguinaldo</span><span>${f(ag)}</span></div><div class="crr"><span>Otras percepciones</span><span>${f(op)}</span></div><div class="crr"><span>TOTAL PERCEPCIONES</span><span>${f(perc)}</span></div><div style="height:6px"></div><div class="crr"><span>IMSS obrero (aprox.)</span><span>- ${f(imss)}</span></div><div class="crr"><span>ISR retenido (neto subsidio)</span><span>- ${f(isrN)}</span></div><div class="crr"><span>INFONAVIT descuento</span><span>- ${f(inf)}</span></div><div class="crr"><span>Otras deducciones</span><span>- ${f(od)}</span></div><div class="crr"><span>NETO A PAGAR</span><span style="color:#86efac;font-size:15px">${f(neto)}</span></div></div><div class="al ai" style="margin-top:10px"><b>Cuota patronal IMSS (est.):</b> ${f(pat)} | <button class="btn bs bxs" onclick="nav('pgIMSS',null)">Ver detalle IMSS</button></div>`;DB.nomR.push({per:v('nomPer')?.value,emp:`${e.noms} ${e.ap}`,rfc:e.rfc,perc,ded,neto,est:'Calculado'});saveDB();rNOM();}
+// GUARDADO
+function saveContrib(){const regs=[['rgR','rgA','rgS','rgAr','rgP','rgF','rgI','rgPr']].flat().filter(id=>v(id)?.checked).map(id=>v(id).value);if(!regs.length){alert('Seleccione al menos un regimen fiscal.');return;}const rfc=v('ncRFC').value.trim().toUpperCase();if(!rfc||rfc.length<12){alert('RFC invalido.');return;}if(!v('ncNom').value.trim()){alert('El nombre es obligatorio.');return;}DB.cs.push({rfc,curp:v('ncCURP').value.trim().toUpperCase(),noms:v('ncNom').value.trim(),ap:v('ncAP').value.trim(),am:v('ncAM').value.trim(),cp:v('ncCP').value.trim(),ej:v('ncEj').value,email:v('ncEmail').value.trim(),tel:v('ncTel').value.trim(),dom:v('ncDom').value.trim(),regs});saveDB();cm('mNC');rCS();rCT();alert('Contribuyente registrado.');}
+function savePol(){const rows=document.querySelectorAll('#polMovs tr'),movs=[];let td=0,th=0;rows.forEach(r=>{const cta=r.querySelector('input:first-child')?.value,d=parseFloat(r.querySelectorAll('input')[3]?.value||0),h=parseFloat(r.querySelectorAll('input')[4]?.value||0);if(cta){movs.push({cta,d,h});td+=d;th+=h;}});if(Math.abs(td-th)>0.01&&!confirm(`No balanceada. Diferencia: ${f(Math.abs(td-th))}. Guardar?`))return;const tipo=v('polTipo').value;DB.pols.push({folio:`${tipo.charAt(0)}${String(DB.pols.length+1).padStart(5,'0')}`,tipo,fec:v('polFec').value,con:v('polCon').value,rfc:v('polRFC').value,movs,td,th,est:'Registrada'});saveDB();cm('mNP');rPOL();rDB();alert('Poliza guardada.');}
+function saveCFDI(){const ser=v('cfSerie').value,fol=v('cfFolio').value;let sub=0,iva=0;const cons=[];document.querySelectorAll('#cfCons tr').forEach(r=>{const cant=parseFloat(r.querySelector('.cc')?.value||0),vu=parseFloat(r.querySelector('.cv')?.value||0),ir=r.querySelector('.ci')?.value,imp=cant*vu,ivaA=ir==='X'?0:imp*parseFloat(ir||0);sub+=imp;iva+=ivaA;cons.push({cant,vu,imp,ir,ivaA});});DB.cfdis.push({ser,fol,tip:v('cfTipo').value,fec:v('cfFec').value||new Date().toISOString(),fp:v('cfFP').value,mp:v('cfMP').value,mon:v('cfMon').value,rfcR:v('cfRFC').value.toUpperCase(),nomR:v('cfNom').value,cpR:v('cfCP').value,uso:v('cfUso').value,reg:v('cfReg').value,cons,sub,iva,tot:sub+iva,est:'Emitido',timbrado:false,rfc_emisor:DB.csd.rfc||gc()?.rfc||''});v('cfFolio').value=parseInt(fol)+1;saveDB();cm('mNCFDI');rCFDI();rDB();alert(`CFDI ${ser}${fol} guardado.${DB.csd.activo?' Listo para timbrar con '+DB.csd.pac+'.':' Configure CSD para timbrar.'}`);}
+function saveCli(){if(!v('clRFC').value.trim()||!v('clNom').value.trim()){alert('RFC y Nombre obligatorios.');return;}DB.clis.push({rfc:v('clRFC').value.trim().toUpperCase(),nom:v('clNom').value.trim(),cp:v('clCP').value.trim(),reg:v('clReg').value,uso:v('clUso').value,email:v('clEmail').value.trim(),tel:v('clTel').value.trim(),cred:g('clCred')});saveDB();cm('mNCL');rCLI();alert('Cliente registrado.');}
+function saveProv(){if(!v('pvRFC').value.trim()||!v('pvNom').value.trim()){alert('RFC y Nombre obligatorios.');return;}DB.provs.push({rfc:v('pvRFC').value.trim().toUpperCase(),nom:v('pvNom').value.trim(),cp:v('pvCP').value.trim(),reg:v('pvReg').value,tipoDIOT:v('pvTipoDIOT').value,email:v('pvEmail').value.trim(),tel:v('pvTel').value.trim(),banco:v('pvBanco').value.trim(),cred:g('pvCred'),diasCred:g('pvDiasCred'),giro:v('pvGiro').value.trim(),comprasAcum:0,ivaAcred:0});saveDB();cm('mNPROV');rPROV();alert('Proveedor registrado.');}
+function saveEmp(){if(!v('empRFC').value.trim()||!v('empNom').value.trim()){alert('RFC y Nombre obligatorios.');return;}const sd=parseFloat(v('empSD').value||278.80);DB.emps.push({rfc:v('empRFC').value.trim().toUpperCase(),curp:v('empCURP').value.trim().toUpperCase(),noms:v('empNom').value.trim(),ap:v('empAP').value.trim(),am:v('empAM').value.trim(),nss:v('empNSS').value.trim(),sd,sdi:parseFloat(v('empSDI').value||sd*1.0493),ct:v('empCT').value,jr:v('empJR').value,fi:v('empFI').value,dep:v('empDep').value.trim(),riesgo:v('empRiesgo').value,info:v('empINFO').value.trim()});saveDB();cm('mNEMP');rNOM();alert('Empleado registrado.');}
+function saveCta(){if(!v('caN').value.trim()||!v('caNom').value.trim()){alert('Numero y nombre obligatorios.');return;}DB.cat.push({n:v('caN').value.trim(),nom:v('caNom').value.trim(),nat:v('caNat').value,niv:v('caNiv').value,tip:v('caTip').value});saveDB();cm('mCA');rCAT();alert('Cuenta registrada.');}
+function saveDIOT(){DB.diot.push({rfc:v('dtRFC').value.toUpperCase(),nom:v('dtNom').value,base:g('dtBase'),iva:g('dtIVA'),tipo:v('dtTipo').value});saveDB();cm('mDIOT');v('tbDIOT').innerHTML=DB.diot.map(d=>`<tr><td style="font-family:monospace">${d.rfc}</td><td>${d.nom}</td><td class="tr">${f(d.base)}</td><td class="tr">${f(d.iva)}</td><td><span class="bk bb">${d.tipo}</span></td></tr>`).join('');alert('Proveedor agregado a DIOT.');}
+function saveDecl(){const d={tipo:v('ndTipo').value,per:v('ndPer').value,venc:v('ndVenc').value,reg:v('ndReg').value,monto:g('ndMonto'),est:v('ndEst').value,lc:v('ndLC').value,acuse:v('ndAcuse').value};DB.decls.push(d);saveDB();cm('mNDecl');rDECL();alert('Declaracion registrada.');}
+function saveConf(){DB.cfg.d=v('cfgD').value;DB.cfg.r=v('cfgR').value;DB.cfg.e=v('cfgE').value;saveDB();alert('Configuracion guardada.');}
+// ELIMINACIONES
+function delC(i){if(confirm('Eliminar contribuyente?')){DB.cs.splice(i,1);saveDB();rCT();rCS();}}
+function delP(i){if(confirm('Eliminar poliza?')){DB.pols.splice(i,1);saveDB();rPOL();rDB();}}
+function delCFDI(i){if(confirm('Eliminar CFDI?')){DB.cfdis.splice(i,1);saveDB();rCFDI();}}
+function delCli(i){if(confirm('Eliminar cliente?')){DB.clis.splice(i,1);saveDB();rCLI();}}
+function delProv(i){if(confirm('Eliminar proveedor?')){DB.provs.splice(i,1);saveDB();rPROV();}}
+function delEmp(i){if(confirm('Eliminar empleado?')){DB.emps.splice(i,1);saveDB();rNOM();}}
+function delCta(i){if(confirm('Eliminar cuenta?')){DB.cat.splice(i,1);saveDB();rCAT();}}
+function selGo(i){curC=i;v('csel').value=i;nav('pgDB',document.querySelector('.ni'));rDB();}
+function infoP(i){const p=DB.pols[i];alert(`${p.folio} | ${p.tipo} | ${p.fec}\n${p.con}\nDebe: ${f(p.td)} | Haber: ${f(p.th)}`);}
+function cfdiParaCli(rfc){const cl=DB.clis.find(c=>c.rfc===rfc);if(cl){v('cfRFC').value=cl.rfc;v('cfNom').value=cl.nom;v('cfCP').value=cl.cp||'';v('cfUso').value=cl.uso||'G03';v('cfReg').value=cl.reg||'625';mo('mNCFDI');calcCFDI();}}
+function lookProv(rfc){const p=DB.provs.find(x=>x.rfc===rfc.toUpperCase());if(p){v('dtNom').value=p.nom;v('dtTipo').value=p.tipoDIOT||'04';}}
+function editProv(i){const p=DB.provs[i];alert(`Proveedor: ${p.nom}\nRFC: ${p.rfc}\nRegimen: ${p.reg}\nGiro: ${p.giro||'--'}\nCompras Acum.: ${f(p.comprasAcum||0)}\nIVA Acreditable: ${f(p.ivaAcred||0)}`);}
+function autoSDI(){const sd=parseFloat(v('empSD')?.value||278.80);const sdi=v('empSDI');if(sdi)sdi.value=(sd*1.0493).toFixed(2);}
+// POLIZA MODAL
+function addPR(){const tb=document.getElementById('polMovs');const tr=document.createElement('tr');tr.innerHTML=`<td><input type="text" id="pc${pfi}" placeholder="1010" style="width:100%;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px" oninput="lookCta(this,${pfi})"></td><td><span id="pn${pfi}" style="font-size:11px;color:var(--tx3)">--</span></td><td><input type="text" placeholder="Concepto" style="width:100%;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px"></td><td><input type="number" class="pd" placeholder="0.00" style="width:100%;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px;text-align:right" oninput="updPT()"></td><td><input type="number" class="ph" placeholder="0.00" style="width:100%;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px;text-align:right" oninput="updPT()"></td><td><span style="cursor:pointer;color:var(--er)" onclick="this.closest('tr').remove();updPT()">x</span></td>`;tb.appendChild(tr);pfi++;}
+function lookCta(inp,idx){const c=DB.cat.find(c=>c.n===inp.value.trim());const sp=document.getElementById(`pn${idx}`);if(sp)sp.textContent=c?c.nom:(inp.value?'??':'--');}
+function updPT(){let d=0,h=0;document.querySelectorAll('.pd').forEach(i=>d+=parseFloat(i.value||0));document.querySelectorAll('.ph').forEach(i=>h+=parseFloat(i.value||0));v('ptD').textContent=f(d);v('ptH').textContent=f(h);const diff=d-h;v('ptBal').innerHTML=`Balance: <b style="color:${Math.abs(diff)<0.01?'var(--ok)':'var(--er)'}">${f(diff)}</b>`;}
+// CFDI MODAL
+function calcCFDI(){let sub=0,iva=0;document.querySelectorAll('#cfCons tr').forEach(r=>{const cant=parseFloat(r.querySelector('.cc')?.value||0),vu=parseFloat(r.querySelector('.cv')?.value||0),ir=r.querySelector('.ci')?.value,imp=cant*vu,ivaA=ir==='X'?0:imp*parseFloat(ir||0);sub+=imp;iva+=ivaA;const sp=r.querySelector('.cim');if(sp)sp.textContent=f(imp);});v('cfSub').textContent=f(sub);v('cfIVA').textContent=f(iva);v('cfTot').textContent=f(sub+iva);}
+function addCFDICon(){const tb=document.getElementById('cfCons');const tr=document.createElement('tr');tr.innerHTML=`<td><input type="text" value="84111506" style="width:90px;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px"></td><td><input type="text" value="Servicio" style="width:150px;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px"></td><td><input type="text" value="E48" style="width:50px;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px"></td><td><input type="number" value="1" class="cc" style="width:60px;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px;text-align:right" oninput="calcCFDI()"></td><td><input type="number" value="0" class="cv" style="width:90px;padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px;text-align:right" oninput="calcCFDI()"></td><td><select class="ci" style="padding:4px;border:1px solid var(--bd);border-radius:3px;font-size:11px" onchange="calcCFDI()"><option value="0.16">16%</option><option value="0.08">8%</option><option value="0">0%</option><option value="X">Exento</option></select></td><td style="font-family:monospace;font-size:11px;text-align:right"><span class="cim">$0.00</span></td><td><span style="cursor:pointer;color:var(--er)" onclick="this.closest('tr').remove();calcCFDI()">x</span></td>`;tb.appendChild(tr);}
+function lookCli(rfc){const cl=DB.clis.find(c=>c.rfc===rfc.toUpperCase());if(cl){v('cfNom').value=cl.nom;v('cfCP').value=cl.cp||'';v('cfUso').value=cl.uso||'G03';v('cfReg').value=cl.reg||'625';}}
+// BALANZA
+function genBAL(){const cs=DB.cat.map(c=>{const d=DB.pols.reduce((s,p)=>s+(p.movs||[]).filter(m=>m.cta===c.n).reduce((ss,m)=>ss+(m.d||0),0),0),h=DB.pols.reduce((s,p)=>s+(p.movs||[]).filter(m=>m.cta===c.n).reduce((ss,m)=>ss+(m.h||0),0),0),sf=c.nat==='D'?d-h:h-d;return{...c,d,h,sf};}).filter(c=>c.d||c.h||c.sf);v('tbBAL').innerHTML=!cs.length?'<tr><td colspan="6" style="color:var(--tx3);text-align:center;padding:20px">Sin movimientos</td></tr>':cs.map(c=>`<tr><td style="font-family:monospace">${c.n}</td><td>${c.nom}</td><td class="tr">${f(0)}</td><td class="tr dc">${f(c.d)}</td><td class="tr hc">${f(c.h)}</td><td class="tr" style="font-weight:700;color:var(--nv)">${f(c.sf)}</td></tr>`).join('');genBG(cs);genER(cs);}
+function genBG(cs){const act=cs.filter(c=>c.tip==='A'),pas=cs.filter(c=>c.tip==='P'),cap=cs.filter(c=>c.tip==='C'),tA=act.reduce((s,c)=>s+c.sf,0),tP=pas.reduce((s,c)=>s+c.sf,0),tC=cap.reduce((s,c)=>s+c.sf,0),uEj=cs.filter(c=>c.tip==='I').reduce((s,c)=>s+c.sf,0)-cs.filter(c=>c.tip==='E').reduce((s,c)=>s+c.sf,0);v('cBG').innerHTML=`<div class="g2" style="gap:16px"><div><div class="fsect" style="margin-bottom:10px">ACTIVO</div>${act.map(c=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--bg3);font-size:12px"><span>${c.n} -- ${c.nom}</span><span style="font-family:monospace">${f(c.sf)}</span></div>`).join('')}<div style="display:flex;justify-content:space-between;padding:8px 0;font-weight:700;font-size:13px;border-top:2px solid var(--nv);margin-top:4px"><span>TOTAL ACTIVO</span><span style="font-family:monospace;color:var(--nv)">${f(tA)}</span></div></div><div><div class="fsect" style="margin-bottom:10px">PASIVO</div>${pas.map(c=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--bg3);font-size:12px"><span>${c.n} -- ${c.nom}</span><span style="font-family:monospace">${f(c.sf)}</span></div>`).join('')}<div style="display:flex;justify-content:space-between;padding:4px 0;font-weight:600;border-top:1px solid var(--bd)"><span>Total Pasivo</span><span style="font-family:monospace">${f(tP)}</span></div><div class="fsect" style="margin-bottom:10px;margin-top:14px">CAPITAL</div>${cap.map(c=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--bg3);font-size:12px"><span>${c.n} -- ${c.nom}</span><span style="font-family:monospace">${f(c.sf)}</span></div>`).join('')}<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--bg3);font-size:12px"><span>Utilidad Ejercicio</span><span style="font-family:monospace;color:var(--ok)">${f(uEj)}</span></div><div style="display:flex;justify-content:space-between;padding:8px 0;font-weight:700;font-size:13px;border-top:2px solid var(--nv);margin-top:4px"><span>TOTAL PASIVO + CAPITAL</span><span style="font-family:monospace;color:var(--nv)">${f(tP+tC+uEj)}</span></div></div></div>`;}
+function genER(cs){const ing=cs.filter(c=>c.tip==='I'),egr=cs.filter(c=>c.tip==='E'),tI=ing.reduce((s,c)=>s+c.sf,0),tE=egr.reduce((s,c)=>s+c.sf,0),ub=tI-tE,isr=ub*0.025,un=ub-isr;v('cER').innerHTML=`<div style="max-width:500px"><div class="fsect" style="margin-bottom:10px">INGRESOS</div>${ing.map(c=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--bg3);font-size:12px"><span>${c.n} -- ${c.nom}</span><span style="font-family:monospace">${f(c.sf)}</span></div>`).join('')}<div style="display:flex;justify-content:space-between;padding:6px 0;font-weight:600;border-top:1px solid var(--bd)"><span>Total Ingresos</span><span style="font-family:monospace;color:var(--ok)">${f(tI)}</span></div><div class="fsect" style="margin-bottom:10px;margin-top:16px">GASTOS Y COSTOS</div>${egr.map(c=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--bg3);font-size:12px"><span>${c.n} -- ${c.nom}</span><span style="font-family:monospace">${f(c.sf)}</span></div>`).join('')}<div style="display:flex;justify-content:space-between;padding:6px 0;font-weight:600;border-top:1px solid var(--bd)"><span>Total Gastos</span><span style="font-family:monospace;color:var(--er)">${f(tE)}</span></div><div style="background:var(--bg3);padding:10px 12px;border-radius:6px;margin-top:12px"><div style="display:flex;justify-content:space-between;font-weight:700"><span>Utilidad Antes Impuestos</span><span style="font-family:monospace;font-size:14px">${f(ub)}</span></div><div style="display:flex;justify-content:space-between;font-size:12px;margin-top:4px"><span>ISR Estimado</span><span style="font-family:monospace;color:var(--er)">- ${f(isr)}</span></div><div style="display:flex;justify-content:space-between;font-weight:700;font-size:14px;border-top:2px solid var(--ac);margin-top:4px;padding-top:4px;color:var(--nv)"><span>UTILIDAD NETA</span><span style="font-family:monospace">${f(un)}</span></div></div></div>`;}
+// XML / EXPORT
+function genXML(i){const c=DB.cfdis[i],cc=gc();const x=`<?xml version="1.0" encoding="UTF-8"?>\n<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd" Version="4.0" Serie="${c.ser}" Folio="${c.fol}" Fecha="${(c.fec||new Date().toISOString()).substring(0,19)}" FormaPago="${c.fp}" MetodoPago="${c.mp}" SubTotal="${c.sub.toFixed(2)}" Total="${c.tot.toFixed(2)}" Moneda="${c.mon}" TipoDeComprobante="${c.tip}" LugarExpedicion="${DB.csd.cp||cc?.cp||'80000'}">\n  <cfdi:Emisor Rfc="${DB.csd.rfc||cc?.rfc||'XAXX010101000'}" Nombre="${DB.csd.nombre||cc?.noms+' '+cc?.ap||''}" RegimenFiscal="${DB.csd.reg||cc?.regs?.[0]||'625'}"/>\n  <cfdi:Receptor Rfc="${c.rfcR}" Nombre="${c.nomR}" DomicilioFiscalReceptor="${c.cpR}" RegimenFiscalReceptor="${c.reg}" UsoCFDI="${c.uso}"/>\n  <cfdi:Conceptos>\n${(c.cons||[]).map(con=>`    <cfdi:Concepto ClaveProdServ="84111506" Cantidad="${con.cant}" ClaveUnidad="E48" Descripcion="Servicios" ValorUnitario="${con.vu.toFixed(2)}" Importe="${con.imp.toFixed(2)}"/>\n`).join('')}  </cfdi:Conceptos>\n  <cfdi:Impuestos TotalImpuestosTrasladados="${c.iva.toFixed(2)}"><cfdi:Traslados><cfdi:Traslado Base="${c.sub.toFixed(2)}" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="${c.iva.toFixed(2)}"/></cfdi:Traslados></cfdi:Impuestos>\n</cfdi:Comprobante>`;dlF(`CFDI_${c.ser}${c.fol}.xml`,x,'application/xml');}
+function expAllCFDI(){if(!DB.cfdis.length){alert('Sin CFDIs.');return;}DB.cfdis.forEach((_,i)=>genXML(i));}
+function filtCFDI(q){if(!q){rCFDI();return;}const qt=q.toLowerCase();v('tbCFDI').innerHTML=DB.cfdis.filter(c=>c.rfcR?.toLowerCase().includes(qt)||c.nomR?.toLowerCase().includes(qt)||(c.ser+c.fol).toLowerCase().includes(qt)).map((c,i)=>`<tr><td><b>${c.ser}${c.fol}</b></td><td>${(c.fec||'').split('T')[0]}</td><td>${c.tip}</td><td>${c.rfcR}</td><td>${c.nomR}</td><td class="tr">${f(c.sub)}</td><td class="tr">${f(c.iva)}</td><td class="tr">${f(c.tot)}</td><td><span class="bk ${c.timbrado?'bgo':'bo'}">${c.timbrado?'Timbrado':'Sin Timbre'}</span></td><td><button class="btn bs bxs" onclick="genXML(${DB.cfdis.indexOf(c)})">XML</button></td></tr>`).join('')||'<tr><td colspan="10" style="color:var(--tx3);text-align:center;padding:20px">Sin resultados</td></tr>';}
+function expPolXML(){const cc=gc();dlF('Polizas_2026.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<PLZ:Polizas xmlns:PLZ="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo" Version="1.3" RFC="${cc?.rfc||'XAXX010101000'}" Mes="01" Anio="2026" TipoSolicitud="AF">\n${DB.pols.map(p=>`  <PLZ:Poliza Fecha="${p.fec}" Concepto="${p.con}" NumUnIdenPol="${p.folio}" TipoPoliza="${p.tipo?.charAt(0)||'D'}">\n${(p.movs||[]).map(m=>`    <PLZ:Transaccion NumCta="${m.cta}" Debe="${(m.d||0).toFixed(2)}" Haber="${(m.h||0).toFixed(2)}" Concepto="${p.con}"/>\n`).join('')}  </PLZ:Poliza>\n`).join('')}</PLZ:Polizas>`,'application/xml');}
+function expBalXML(){const cc=gc();dlF('Balanza_2026.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<BCE:Balanza xmlns:BCE="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion" Version="1.3" RFC="${cc?.rfc||'XAXX010101000'}" Mes="01" Anio="2026" TipoEnvio="N">\n${DB.cat.map(c=>`  <BCE:Ctas NumCta="${c.n}" SaldoIni="0.00" Debe="0.00" Haber="0.00" SaldoFin="0.00"/>\n`).join('')}</BCE:Balanza>`,'application/xml');}
+function expCatXML(){const cc=gc();dlF('CatalogoCuentas_2026.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<cat:Catalogo xmlns:cat="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas" Version="1.3" RFC="${cc?.rfc||'XAXX010101000'}" Mes="01" Anio="2026">\n${DB.cat.map(c=>`  <cat:Ctas CodAgrup="${c.n}" NumCta="${c.n}" Desc="${c.nom}" Nivel="${c.niv}" Natur="${c.nat}"/>\n`).join('')}</cat:Catalogo>`,'application/xml');}
+function expDIOT(){const src=DB.diot.length?DB.diot:DB.provs.filter(p=>p.comprasAcum>0).map(p=>({rfc:p.rfc,nom:p.nom,base:p.comprasAcum||0,iva:p.ivaAcred||0,tipo:p.tipoDIOT||'04'}));if(!src.length){alert('Sin proveedores en DIOT.');return;}let t='';src.forEach(d=>{t+=`${d.tipo}||${d.rfc}|${d.nom}||||||${(d.base||0).toFixed(2)}|${(d.iva||0).toFixed(2)}||||||||||||\n`;});dlF('DIOT_2026.txt',t,'text/plain');alert('DIOT exportada. Cargar en portal del SAT.');}
+function expCatClientes(){const csv='RFC,Nombre,CP,Regimen,UsoCFDI,Email\n'+DB.clis.map(c=>`${c.rfc},"${c.nom}",${c.cp||''},${c.reg},${c.uso},${c.email||''}`).join('\n');dlF('Catalogo_Clientes.csv',csv,'text/csv');}
+function expCatProveedores(){const csv='RFC,Nombre,CP,Regimen,TipoDIOT,Giro,ComprasAcum,IVA_Acred\n'+DB.provs.map(p=>`${p.rfc},"${p.nom}",${p.cp||''},${p.reg},${p.tipoDIOT||'04'},"${p.giro||''}",${p.comprasAcum||0},${p.ivaAcred||0}`).join('\n');dlF('Catalogo_Proveedores.csv',csv,'text/csv');}
+function dlF(nom,cont,tipo){const b=new Blob([cont],{type:tipo});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=nom;a.click();URL.revokeObjectURL(a.href);}
+function repISR(){const c=gc();v('repCont').innerHTML=`<div class="card" style="margin-top:8px"><div class="ctit">Resumen ISR Anual -- ${c?`${c.noms} ${c.ap}`:'Sin contribuyente'} -- 2026</div><div class="al ai">Reporte consolidado de pagos provisionales.</div><div class="tw"><table><thead><tr><th>Mes</th><th>Regimen</th><th class="tr">Ingresos</th><th class="tr">ISR</th><th>Estado</th></tr></thead><tbody>${['Enero','Febrero','Marzo','Abril','Mayo'].map((m,i)=>`<tr><td>${m} 2026</td><td><span class="bk bb">${(c?.regs||['625'])[0]}</span></td><td class="tr">${f(0)}</td><td class="tr">${f(0)}</td><td><span class="bk ${i<3?'bgo':'bo'}">${i<3?'Presentada':'Pendiente'}</span></td></tr>`).join('')}</tbody></table></div></div>`;}
+function repIVA(){v('repCont').innerHTML=`<div class="card" style="margin-top:8px"><div class="ctit">Reporte IVA 2026</div><div class="tw"><table><thead><tr><th>Mes</th><th class="tr">IVA Causado</th><th class="tr">IVA Acreditable</th><th class="tr">A Pagar</th><th>Estado</th></tr></thead><tbody>${['Enero','Febrero','Marzo','Abril','Mayo'].map((m,i)=>`<tr><td>${m}</td><td class="tr">${f(0)}</td><td class="tr">${f(0)}</td><td class="tr" style="font-weight:700">${f(0)}</td><td><span class="bk ${i<3?'bgo':'bo'}">${i<3?'Presentada':'Pendiente'}</span></td></tr>`).join('')}</tbody></table></div></div>`;}
+function expDB(){dlF('ContaFiscalMX_2026v2_backup.json',JSON.stringify(DB,null,2),'application/json');}
+function impDB(){const inp=document.createElement('input');inp.type='file';inp.accept='.json';inp.onchange=e=>{const fr=new FileReader();fr.onload=ev=>{try{Object.assign(DB,JSON.parse(ev.target.result));if(!DB.provs)DB.provs=[];saveDB();rAll();alert('Datos importados.');}catch{alert('Archivo invalido.');}};fr.readAsText(e.target.files[0]);};inp.click();}
+function clearDB(){Object.keys(DB).forEach(k=>{if(Array.isArray(DB[k]))DB[k]=[];});DB.csd={cer:null,key:null,rfc:'',nombre:'',reg:'625',cp:'',email:'',pac:'',activo:false};DB.cfg={d:'Despacho Contable S.C.',r:'DCS200101ABC',e:'2026'};localStorage.removeItem('cfmx26v2');initCat();rAll();alert('Base de datos limpiada.');}
+
+// ═══════════════════════════════════════
+// ASIENTO RAPIDO — Contabilizacion Inteligente
+// ═══════════════════════════════════════
+const AR_TIPOS = [
+  // Gastos de operacion
+  {id:'papeleria',  ico:'📎', label:'Papeleria y Utiles',       debe:'5040', haber:null, cat:'gasto',  desc:'Compra de papeleria y materiales de oficina'},
+  {id:'gasolina',   ico:'⛽', label:'Gasolina / Combustible',    debe:'5060', haber:null, cat:'gasto',  desc:'Carga de gasolina o diesel'},
+  {id:'renta',      ico:'🏢', label:'Renta de Oficina',          debe:'5030', haber:null, cat:'gasto',  desc:'Pago mensual de renta'},
+  {id:'honorarios', ico:'👨‍💼', label:'Honorarios Profesionales', debe:'5020', haber:null, cat:'gasto',  desc:'Pago de honorarios a terceros'},
+  {id:'servicios',  ico:'🔧', label:'Servicios Contratados',     debe:'5070', haber:null, cat:'gasto',  desc:'Servicios diversos contratados'},
+  {id:'telecom',    ico:'📱', label:'Telefonia / Internet',       debe:'5050', haber:null, cat:'gasto',  desc:'Pago de telefono, internet o comunicaciones'},
+  {id:'sueldos',    ico:'👥', label:'Pago de Sueldos',           debe:'5080', haber:null, cat:'nomina', desc:'Dispersión de nómina a empleados'},
+  {id:'imss_pago',  ico:'🏥', label:'Pago IMSS',                 debe:'2040', haber:null, cat:'nomina', desc:'Pago bimestral de cuotas IMSS'},
+  {id:'depreciacion',ico:'📉',label:'Depreciacion',              debe:'5100', haber:'1290',cat:'ajuste',desc:'Calculo mensual de depreciacion'},
+  // Ingresos
+  {id:'ingreso_serv',ico:'💼',label:'Ingreso por Servicio',      debe:null,  haber:'4010', cat:'ingreso',desc:'Cobro de servicio o factura'},
+  {id:'ingreso_vta', ico:'🛒',label:'Ingreso por Venta',         debe:null,  haber:'4030', cat:'ingreso',desc:'Venta de bienes'},
+  {id:'ingreso_arr', ico:'🏠',label:'Ingreso por Arrendamiento', debe:null,  haber:'4020', cat:'ingreso',desc:'Cobro de renta a inquilino'},
+  // Impuestos
+  {id:'pago_isr',   ico:'📋', label:'Pago ISR Provisional',      debe:'2030', haber:null, cat:'impuesto',desc:'Pago provisional ISR al SAT'},
+  {id:'pago_iva',   ico:'📋', label:'Pago IVA Mensual',          debe:'2020', haber:null, cat:'impuesto',desc:'Pago mensual de IVA al SAT'},
+  // Compras / Activos
+  {id:'compra_eq',  ico:'💻', label:'Compra Equipo / Activo',    debe:'1210', haber:null, cat:'activo', desc:'Adquisicion de equipo o activo fijo'},
+  {id:'compra_gen', ico:'🛍️', label:'Compra General',            debe:'5010', haber:null, cat:'gasto',  desc:'Gasto operativo general'},
+  {id:'cobro_cli',  ico:'💰', label:'Cobro a Cliente',           debe:'1020', haber:'1110', cat:'ingreso',desc:'Cobro de cuenta por cobrar'},
+  {id:'pago_prov',  ico:'🤝', label:'Pago a Proveedor',          debe:'2010', haber:null, cat:'gasto',  desc:'Liquidacion de cuenta por pagar'},
+];
+let arTipoSel = null;
+
+function initAR(){
+  const grid = v('arTipoGrid');
+  if(!grid) return;
+  const cats = {gasto:'🔴 Gastos', nomina:'👥 Nomina', ajuste:'🔵 Ajustes', ingreso:'🟢 Ingresos', impuesto:'📋 Impuestos', activo:'🏗️ Activos'};
+  // Group by category
+  const bycat = {};
+  AR_TIPOS.forEach(t=>{ if(!bycat[t.cat]) bycat[t.cat]=[]; bycat[t.cat].push(t); });
+  let html = '';
+  Object.keys(bycat).forEach(cat=>{
+    html += `<div style="grid-column:1/-1;font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;margin:8px 0 4px;border-bottom:1px solid var(--bd);padding-bottom:4px">${cats[cat]||cat}</div>`;
+    bycat[cat].forEach(t=>{
+      html += `<div onclick="arSelTipo('${t.id}')" style="border:2px solid var(--bd);border-radius:8px;padding:10px 8px;cursor:pointer;text-align:center;transition:all .15s;background:var(--bg2)" id="arBtn_${t.id}" onmouseover="this.style.borderColor='var(--ac)'" onmouseout="if(arTipoSel!=='${t.id}')this.style.borderColor='var(--bd)'">
+        <div style="font-size:20px;margin-bottom:4px">${t.ico}</div>
+        <div style="font-size:11px;font-weight:600;color:var(--nv);line-height:1.2">${t.label}</div>
+      </div>`;
+    });
+  });
+  grid.innerHTML = html;
+  // Set today date
+  const fi = v('arFecha');
+  if(fi) fi.value = new Date().toISOString().split('T')[0];
+}
+
+function arSelTipo(id){
+  arTipoSel = id;
+  // Highlight selection
+  document.querySelectorAll('[id^="arBtn_"]').forEach(b=>b.style.borderColor='var(--bd)');
+  const btn = v('arBtn_'+id);
+  if(btn){ btn.style.borderColor='var(--ac)'; btn.style.background='var(--aL)'; }
+  const tipo = AR_TIPOS.find(t=>t.id===id);
+  if(!tipo) return;
+  v('arFormArea').style.display='block';
+  v('arFormTitulo').textContent = tipo.ico+' '+tipo.label+' — Datos del Comprobante';
+  v('arDescripcion').value = tipo.desc;
+  // Adjust IVA default
+  if(tipo.cat==='impuesto'||tipo.cat==='nomina'||tipo.cat==='ajuste'){v('arIVA').value='0';}
+  else if(tipo.cat==='ingreso'||tipo.cat==='gasto'){v('arIVA').value='0.16';}
+  arRecalc();
+}
+
+function arLimpiar(){
+  arTipoSel=null;
+  v('arFormArea').style.display='none';
+  document.querySelectorAll('[id^="arBtn_"]').forEach(b=>{b.style.borderColor='var(--bd)';b.style.background='var(--bg2)';});
+}
+
+function arLookupTercero(rfc){
+  const cl=DB.clis.find(c=>c.rfc===rfc.toUpperCase());
+  if(cl){v('arNomTercero').value=cl.nom;return;}
+  const pv=DB.provs.find(p=>p.rfc===rfc.toUpperCase());
+  if(pv){v('arNomTercero').value=pv.nom;}
+}
+
+function arRecalc(){
+  const tipo = AR_TIPOS.find(t=>t.id===arTipoSel);
+  if(!tipo){v('arPreview').innerHTML='<div style="font-size:11px;color:var(--tx3)">Seleccione un tipo de operacion primero</div>';return;}
+  const total = g('arImporte');
+  const ivaRate = v('arIVA')?.value;
+  let base=total, iva=0;
+  if(ivaRate && ivaRate!=='exento' && ivaRate!=='0'){
+    const r=parseFloat(ivaRate);
+    base=total/(1+r);
+    iva=total-base;
+  }
+  const pago = v('arPago')?.value||'1020';
+  const pagoCta = DB.cat.find(c=>c.n===pago);
+  const pagoNom = pagoCta?pagoCta.nom:`Cuenta ${pago}`;
+  // Build movimientos
+  const movs = [];
+  let html = '<table style="width:100%;font-size:12px;border-collapse:collapse">';
+  html += '<thead><tr><th style="padding:6px 10px;background:var(--nv);color:#fff;text-align:left;border-radius:4px 0 0 4px">Cuenta</th><th style="padding:6px 10px;background:var(--nv);color:#fff;text-align:left">Nombre</th><th style="padding:6px 10px;background:var(--nv);color:#fff;text-align:right">Debe</th><th style="padding:6px 10px;background:var(--nv);color:#fff;text-align:right;border-radius:0 4px 4px 0">Haber</th></tr></thead><tbody>';
+
+  if(tipo.cat==='gasto'||tipo.cat==='nomina'||tipo.cat==='activo'){
+    // DEBE: cuenta de gasto/activo
+    const debeNum = tipo.debe;
+    const debeCta = DB.cat.find(c=>c.n===debeNum);
+    const debeNom = debeCta?debeCta.nom:`Cuenta ${debeNum}`;
+    movs.push({cta:debeNum,d:base,h:0});
+    html+=`<tr><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)"><b style="font-family:monospace;color:var(--nv)">${debeNum}</b></td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)">${debeNom}</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right;font-family:monospace;color:var(--ok);font-weight:600">${f(base)}</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right">—</td></tr>`;
+    if(iva>0){
+      movs.push({cta:'1120',d:iva,h:0});
+      html+=`<tr><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)"><b style="font-family:monospace;color:var(--nv)">1120</b></td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)">IVA Acreditable</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right;font-family:monospace;color:var(--ok);font-weight:600">${f(iva)}</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right">—</td></tr>`;
+    }
+    // HABER: cuenta de pago
+    const haberNum = tipo.haber || pago;
+    const haberCta = DB.cat.find(c=>c.n===haberNum);
+    const haberNom = haberCta?haberCta.nom:`Cuenta ${haberNum}`;
+    movs.push({cta:haberNum,d:0,h:total});
+    html+=`<tr><td style="padding:5px 10px"><b style="font-family:monospace;color:var(--nv)">${haberNum}</b></td><td style="padding:5px 10px">${haberNom}</td><td style="padding:5px 10px;text-align:right">—</td><td style="padding:5px 10px;text-align:right;font-family:monospace;color:var(--er);font-weight:600">${f(total)}</td></tr>`;
+
+  } else if(tipo.cat==='ingreso'){
+    // DEBE: banco/caja o cuentas por cobrar
+    const debeNum = tipo.debe || pago;
+    const debeCta = DB.cat.find(c=>c.n===debeNum);
+    movs.push({cta:debeNum,d:total,h:0});
+    html+=`<tr><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)"><b style="font-family:monospace;color:var(--nv)">${debeNum}</b></td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)">${debeCta?debeCta.nom:'Banco / Caja'}</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right;font-family:monospace;color:var(--ok);font-weight:600">${f(total)}</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right">—</td></tr>`;
+    // HABER: ingreso
+    const haberNum = tipo.haber||'4010';
+    const haberCta = DB.cat.find(c=>c.n===haberNum);
+    movs.push({cta:haberNum,d:0,h:base});
+    html+=`<tr><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)"><b style="font-family:monospace;color:var(--nv)">${haberNum}</b></td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)">${haberCta?haberCta.nom:'Ingresos'}</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right">—</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right;font-family:monospace;color:var(--er);font-weight:600">${f(base)}</td></tr>`;
+    if(iva>0){
+      movs.push({cta:'2020',d:0,h:iva});
+      html+=`<tr><td style="padding:5px 10px"><b style="font-family:monospace;color:var(--nv)">2020</b></td><td style="padding:5px 10px">IVA por Pagar</td><td style="padding:5px 10px;text-align:right">—</td><td style="padding:5px 10px;text-align:right;font-family:monospace;color:var(--er);font-weight:600">${f(iva)}</td></tr>`;
+    }
+
+  } else if(tipo.cat==='impuesto'){
+    // Pago impuesto: DEBE cuenta de impuesto, HABER banco
+    const debeNum=tipo.debe;
+    const debeCta=DB.cat.find(c=>c.n===debeNum);
+    movs.push({cta:debeNum,d:total,h:0});
+    html+=`<tr><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)"><b style="font-family:monospace;color:var(--nv)">${debeNum}</b></td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)">${debeCta?debeCta.nom:'Impuesto por pagar'}</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right;font-family:monospace;color:var(--ok);font-weight:600">${f(total)}</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right">—</td></tr>`;
+    movs.push({cta:pago,d:0,h:total});
+    html+=`<tr><td style="padding:5px 10px"><b style="font-family:monospace;color:var(--nv)">${pago}</b></td><td style="padding:5px 10px">${pagoNom}</td><td style="padding:5px 10px;text-align:right">—</td><td style="padding:5px 10px;text-align:right;font-family:monospace;color:var(--er);font-weight:600">${f(total)}</td></tr>`;
+
+  } else if(tipo.cat==='ajuste'){
+    // Depreciacion: DEBE gasto, HABER depreciacion acumulada
+    movs.push({cta:'5100',d:total,h:0});
+    movs.push({cta:'1290',d:0,h:total});
+    const c1=DB.cat.find(c=>c.n==='5100'),c2=DB.cat.find(c=>c.n==='1290');
+    html+=`<tr><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)"><b style="font-family:monospace;color:var(--nv)">5100</b></td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3)">${c1?c1.nom:'Depreciaciones'}</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right;font-family:monospace;color:var(--ok);font-weight:600">${f(total)}</td><td style="padding:5px 10px;border-bottom:1px solid var(--bg3);text-align:right">—</td></tr>`;
+    html+=`<tr><td style="padding:5px 10px"><b style="font-family:monospace;color:var(--nv)">1290</b></td><td style="padding:5px 10px">${c2?c2.nom:'Depreciacion Acumulada'}</td><td style="padding:5px 10px;text-align:right">—</td><td style="padding:5px 10px;text-align:right;font-family:monospace;color:var(--er);font-weight:600">${f(total)}</td></tr>`;
+  }
+
+  html += '</tbody></table>';
+  const totD=movs.reduce((s,m)=>s+m.d,0),totH=movs.reduce((s,m)=>s+m.h,0);
+  const balanced = Math.abs(totD-totH)<0.01;
+  html += `<div style="display:flex;justify-content:flex-end;gap:16px;margin-top:8px;padding:8px 10px;background:${balanced?'var(--okL)':'var(--erL)'};border-radius:6px"><span style="font-size:12px;font-weight:700;color:${balanced?'var(--ok)':'var(--er)'}">${balanced?'✓ Poliza Balanceada':'⚠ Diferencia: '+f(Math.abs(totD-totH))}</span><span style="font-size:12px;font-family:monospace">Debe: ${f(totD)} | Haber: ${f(totH)}</span></div>`;
+
+  v('arPreview').innerHTML = html;
+  v('arPreview')._movs = movs;
+}
+
+function arGuardar(){
+  const tipo = AR_TIPOS.find(t=>t.id===arTipoSel);
+  if(!tipo){alert('Seleccione un tipo de operacion.');return;}
+  const total=g('arImporte');
+  if(total<=0){alert('Capture un importe mayor a cero.');return;}
+  const movs = v('arPreview')._movs;
+  if(!movs||!movs.length){alert('Genere el preview primero.');return;}
+  const fecha=v('arFecha').value||new Date().toISOString().split('T')[0];
+  const desc=v('arDescripcion').value||tipo.label;
+  const rfc=v('arRFC').value||'';
+  const folio=v('arFolio').value||'';
+  const concepto=`${tipo.label}${rfc?' | RFC:'+rfc:''}${folio?' | Folio:'+folio:''}`;
+  const td=movs.reduce((s,m)=>s+m.d,0),th=movs.reduce((s,m)=>s+m.h,0);
+  const pol={
+    folio:`D${String(DB.pols.length+1).padStart(5,'0')}`,
+    tipo:'Diario',
+    fec:fecha,
+    con:concepto,
+    rfc,
+    movs:movs.map(m=>({cta:m.cta,d:m.d,h:m.h})),
+    td,th,
+    est:'Registrada',
+    origen:'asiento_rapido',
+    tipo_ar:arTipoSel
+  };
+  DB.pols.push(pol);
+  saveDB();
+  cm('mAR');
+  rPOL();
+  rDB();
+  // Reset
+  arLimpiar();
+  v('arImporte').value='0';
+  v('arRFC').value='';
+  v('arFolio').value='';
+  alert(`✅ Poliza ${pol.folio} registrada exitosamente.\nConcepto: ${tipo.label}\nImporte: ${f(td)}`);
+}
+
+// Init AR when modal opens - patch into existing mo
+const _mo_orig = window.mo;
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[onclick]');
+  if(btn && btn.getAttribute('onclick') === "mo('mAR')") {
+    setTimeout(initAR, 60);
+  }
+});
+
+document.getElementById('cfFec').value=new Date().toISOString().slice(0,16);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.mo.on').forEach(m=>m.classList.remove('on'));});
+</script>
+
+<!-- MODAL: Asiento Rapido (contabilizacion inteligente) -->
+<div class="mo" id="mAR">
+  <div class="md" style="max-width:780px">
+    <div class="mdh">
+      <h3>&#9889; Asiento Rapido — Contabilizacion Inteligente</h3>
+      <span class="mx" onclick="cm('mAR')">x</span>
+    </div>
+    <div class="al ai">Seleccione el tipo de operacion y el sistema generara automaticamente el asiento contable con las cuentas correctas.</div>
+
+    <div class="fsec"><div class="fsect">Tipo de Operacion</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px" id="arTipoGrid">
+        <!-- generado por JS -->
+      </div>
+    </div>
+
+    <div id="arFormArea" style="display:none">
+      <div class="fsec"><div class="fsect" id="arFormTitulo">Datos del Comprobante</div>
+        <div class="fgrid" style="gap:10px">
+          <div class="fg"><label>Fecha</label><input type="date" id="arFecha"></div>
+          <div class="fg"><label>Importe Total (con IVA si aplica) ($)</label><input type="number" id="arImporte" value="0" oninput="arRecalc()"></div>
+          <div class="fg"><label>IVA Incluido</label>
+            <select id="arIVA" onchange="arRecalc()">
+              <option value="0.16">Si — 16% IVA incluido</option>
+              <option value="0.08">Si — 8% IVA incluido (frontera)</option>
+              <option value="0">No lleva IVA</option>
+              <option value="exento">Exento / Tasa 0%</option>
+            </select>
+          </div>
+          <div class="fg"><label>RFC Tercero (proveedor/cliente)</label>
+            <input type="text" id="arRFC" placeholder="RFC del comprobante" oninput="arLookupTercero(this.value)">
+          </div>
+          <div class="fg"><label>Nombre Tercero</label><input type="text" id="arNomTercero" placeholder="Nombre del tercero"></div>
+          <div class="fg"><label>Folio / UUID del CFDI</label><input type="text" id="arFolio" placeholder="UUID o folio del comprobante"></div>
+          <div class="fg" style="grid-column:1/-1"><label>Descripcion / Concepto</label>
+            <input type="text" id="arDescripcion" placeholder="Descripcion del gasto o ingreso">
+          </div>
+          <div class="fg"><label>Pago con</label>
+            <select id="arPago">
+              <option value="1020">Banco (1020)</option>
+              <option value="1010">Caja (1010)</option>
+              <option value="2010">Credito — Proveedor (2010)</option>
+              <option value="2050">Credito — Acreedor (2050)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview asiento generado -->
+      <div class="fsec">
+        <div class="fsect">Asiento Contable Generado</div>
+        <div id="arPreview" style="background:var(--bg3);border-radius:8px;padding:14px">
+          <div style="font-size:11px;color:var(--tx3)">Configure los datos arriba para ver el asiento...</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px">
+        <button class="btn bs" onclick="cm('mAR')">Cancelar</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn bs bsm" onclick="arLimpiar()">&#8635; Cambiar Tipo</button>
+          <button class="btn bp" onclick="arGuardar()">&#10003; Registrar Poliza</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

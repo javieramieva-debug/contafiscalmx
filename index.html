@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ContaFiscal MX 2026 — Software Contable para Personas Físicas</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+:root {
+  --nv: #0d1b3e;
+  --nv2: #162548;
+  --ac: #2563eb;
+  --ac2: #3b82f6;
+  --gd: #f59e0b;
+  --ok: #059669;
+  --bg: #f0f4f8;
+  --tx: #0f1923;
+  --tx2: #3d5068;
+  --tx3: #6b85a0;
+  --white: #ffffff;
+  --bd: #c8d4e8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--tx);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(13,27,62,0.97);
+  backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 64px; z-index: 1000;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.nav-logo { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: #fff; text-decoration: none; }
+.nav-logo span { color: var(--gd); }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; font-weight: 400; transition: color .2s; }
+.nav-links a:hover { color: #fff; }
+.nav-cta { background: var(--ac); color: #fff !important; padding: 8px 20px; border-radius: 6px; font-weight: 500 !important; font-size: 14px; transition: background .2s !important; }
+.nav-cta:hover { background: #1d4ed8 !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--nv) 0%, #1a2f6e 50%, #0f3460 100%);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 100px 24px 60px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 1; max-width: 780px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4);
+  color: var(--gd); padding: 6px 16px; border-radius: 30px;
+  font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.hero-badge::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero h1 {
+  font-family: 'Syne', sans-serif; font-size: clamp(38px, 6vw, 68px);
+  font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 24px;
+  letter-spacing: -1px;
+}
+.hero h1 em { font-style: normal; color: var(--gd); }
+.hero-sub {
+  font-size: 18px; color: rgba(255,255,255,0.75); line-height: 1.7;
+  max-width: 580px; margin: 0 auto 40px;
+}
+.hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--ac); color: #fff; padding: 14px 32px;
+  border-radius: 8px; text-decoration: none; font-size: 15px; font-weight: 500;
+  transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+  box-shadow: 0 4px 20px rgba(37,99,235,0.4);
+}
+.btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,99,235,0.5); }
+.btn-outline {
+  background: transparent; color: #fff; padding: 14px 32px;
+  border-radius: 8px; text-decoration: none; font-size: 15px; font-weight: 400;
+  border: 1px solid rgba(255,255,255,0.3); transition: all .2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.6); }
+.hero-stats {
+  display: flex; gap: 48px; justify-content: center; margin-top: 60px;
+  padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);
+  flex-wrap: wrap;
+}
+.hero-stat { text-align: center; }
+.hero-stat-n { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: #fff; }
+.hero-stat-n span { color: var(--gd); }
+.hero-stat-l { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+/* ── SECCIÓN GENÉRICA ── */
+section { padding: 90px 24px; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-label {
+  font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--ac); margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800; color: var(--nv); line-height: 1.15; margin-bottom: 16px;
+}
+.section-sub { font-size: 17px; color: var(--tx2); max-width: 560px; line-height: 1.7; }
+
+/* ── FEATURES ── */
+.features-bg { background: #f8faff; }
+.features-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(290px,1fr));
+  gap: 20px; margin-top: 50px;
+}
+.feat-card {
+  background: #fff; border: 1px solid var(--bd); border-radius: 12px;
+  padding: 28px; transition: all .25s;
+}
+.feat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(13,27,62,0.1); border-color: var(--ac2); }
+.feat-icon {
+  width: 48px; height: 48px; background: #dbeafe; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 16px;
+}
+.feat-card h3 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--nv); margin-bottom: 8px; }
+.feat-card p { font-size: 14px; color: var(--tx2); line-height: 1.65; }
+
+/* ── SCREENSHOT MOCKUP ── */
+.demo-section { background: var(--nv); padding: 90px 24px; }
+.demo-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+.demo-inner .section-title { color: #fff; }
+.demo-inner .section-sub { color: rgba(255,255,255,0.6); margin: 0 auto 50px; }
+.mockup-frame {
+  background: #fff; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.mockup-bar {
+  background: var(--nv2); padding: 10px 16px; display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.mockup-content { background: #f0f4f8; padding: 20px; display: flex; gap: 12px; }
+.mock-sidebar {
+  width: 200px; flex-shrink: 0; background: #162548; border-radius: 8px;
+  padding: 12px 0; min-height: 320px;
+}
+.mock-si { padding: 8px 14px; display: flex; align-items: center; gap: 8px; }
+.mock-si.on { background: rgba(37,99,235,0.25); border-left: 2px solid var(--ac2); }
+.mock-si-dot { width: 8px; height: 8px; border-radius: 2px; background: rgba(255,255,255,0.3); flex-shrink: 0; }
+.mock-si.on .mock-si-dot { background: var(--ac2); }
+.mock-si span { font-size: 11px; color: rgba(255,255,255,0.6); font-family: 'DM Sans', sans-serif; }
+.mock-si.on span { color: #fff; }
+.mock-main { flex: 1; display: grid; gap: 10px; }
+.mock-kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+.mock-kpi { background: #fff; border-radius: 6px; padding: 12px; border-top: 3px solid; }
+.mock-kpi-l { font-size: 9px; color: #6b85a0; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+.mock-kpi-v { font-size: 18px; font-weight: 700; color: var(--nv); font-family: 'Syne', sans-serif; }
+.mock-table { background: #fff; border-radius: 6px; padding: 12px; }
+.mock-th { display: grid; grid-template-columns: 1fr 1fr 2fr 1fr 1fr; gap: 8px; padding: 6px 8px; background: #e8eef5; border-radius: 4px; margin-bottom: 6px; }
+.mock-th span { font-size: 9px; color: #3d5068; font-weight: 700; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+.mock-row { display: grid; grid-template-columns: 1fr 1fr 2fr 1fr 1fr; gap: 8px; padding: 6px 8px; border-bottom: 1px solid #f0f4f8; align-items: center; }
+.mock-row span { font-size: 10px; color: #3d5068; font-family: 'DM Sans', sans-serif; }
+.mock-pill { display: inline-block; padding: 2px 7px; border-radius: 12px; font-size: 9px; font-weight: 700; font-family: 'DM Sans', sans-serif; }
+
+/* ── PRECIOS ── */
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 24px; margin-top: 50px; align-items: start;
+}
+.plan {
+  background: #fff; border: 1px solid var(--bd); border-radius: 16px;
+  padding: 36px 32px; position: relative; transition: all .25s;
+}
+.plan:hover { box-shadow: 0 16px 50px rgba(13,27,62,0.12); }
+.plan.featured {
+  background: var(--nv); border-color: var(--nv);
+  color: #fff; transform: scale(1.03);
+  box-shadow: 0 20px 60px rgba(13,27,62,0.35);
+}
+.plan-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--gd); color: var(--nv); padding: 3px 18px;
+  border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap;
+}
+.plan-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.plan.featured .plan-name { color: var(--gd); }
+.plan-desc { font-size: 13px; color: var(--tx2); margin-bottom: 20px; }
+.plan.featured .plan-desc { color: rgba(255,255,255,0.6); }
+.plan-price { margin-bottom: 24px; }
+.plan-price .amount {
+  font-family: 'Syne', sans-serif; font-size: 46px; font-weight: 800; line-height: 1;
+  color: var(--nv);
+}
+.plan.featured .plan-price .amount { color: #fff; }
+.plan-price .currency { font-size: 20px; font-weight: 400; vertical-align: top; margin-top: 8px; display: inline-block; }
+.plan-price .period { font-size: 14px; color: var(--tx3); display: block; margin-top: 6px; }
+.plan.featured .plan-price .period { color: rgba(255,255,255,0.5); }
+.plan-price .anual-note { font-size: 12px; color: var(--ok); font-weight: 500; margin-top: 2px; display: block; }
+.plan.featured .anual-note { color: #6ee7b7; }
+.plan-features { list-style: none; margin-bottom: 32px; display: flex; flex-direction: column; gap: 10px; }
+.plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--tx2); }
+.plan.featured .plan-features li { color: rgba(255,255,255,0.8); }
+.plan-features li::before { content: '✓'; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.plan.featured .plan-features li::before { color: #6ee7b7; }
+.plan-features li.no { color: var(--tx3); }
+.plan.featured .plan-features li.no { color: rgba(255,255,255,0.3); }
+.plan-features li.no::before { content: '–'; color: var(--tx3); }
+.plan-btn {
+  display: block; text-align: center; padding: 13px; border-radius: 8px;
+  text-decoration: none; font-size: 15px; font-weight: 500; transition: all .2s;
+}
+.plan-btn-outline {
+  border: 1px solid var(--bd); color: var(--nv); background: transparent;
+}
+.plan-btn-outline:hover { background: #f8faff; border-color: var(--ac); color: var(--ac); }
+.plan-btn-primary { background: var(--ac); color: #fff; box-shadow: 0 4px 16px rgba(37,99,235,0.35); }
+.plan-btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+.plan-btn-white { background: #fff; color: var(--nv); }
+.plan-btn-white:hover { background: #f0f4f8; }
+.pricing-note { text-align: center; margin-top: 28px; font-size: 13px; color: var(--tx3); }
+
+/* ── PÚBLICO OBJETIVO ── */
+.audience-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 20px; margin-top: 50px;
+}
+.aud-card {
+  background: #fff; border: 1px solid var(--bd); border-radius: 12px; padding: 28px 22px;
+  text-align: center; transition: all .25s;
+}
+.aud-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(13,27,62,0.1); }
+.aud-icon { font-size: 40px; margin-bottom: 14px; display: block; }
+.aud-card h3 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--nv); margin-bottom: 8px; }
+.aud-card p { font-size: 13px; color: var(--tx2); line-height: 1.6; }
+
+/* ── TESTIMONIOS ── */
+.testimonios-bg { background: #f8faff; }
+.test-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 20px; margin-top: 50px;
+}
+.test-card {
+  background: #fff; border: 1px solid var(--bd); border-radius: 12px; padding: 28px;
+}
+.test-stars { color: var(--gd); font-size: 16px; margin-bottom: 12px; letter-spacing: 2px; }
+.test-txt { font-size: 14px; color: var(--tx2); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+.test-author { display: flex; align-items: center; gap: 12px; }
+.test-av {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--ac);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 14px; flex-shrink: 0;
+}
+.test-name { font-size: 14px; font-weight: 500; color: var(--nv); }
+.test-role { font-size: 12px; color: var(--tx3); }
+
+/* ── FAQ ── */
+.faq-list { max-width: 720px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 12px; }
+.faq-item {
+  background: #fff; border: 1px solid var(--bd); border-radius: 10px; overflow: hidden;
+}
+.faq-q {
+  padding: 18px 22px; font-size: 15px; font-weight: 500; color: var(--nv);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  user-select: none;
+}
+.faq-q:hover { background: #f8faff; }
+.faq-q .arrow { color: var(--tx3); font-size: 18px; transition: transform .25s; }
+.faq-item.open .faq-q .arrow { transform: rotate(90deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+.faq-a-inner { padding: 0 22px 18px; font-size: 14px; color: var(--tx2); line-height: 1.7; }
+.faq-item.open .faq-a { max-height: 300px; }
+
+/* ── CTA FINAL ── */
+.cta-section {
+  background: linear-gradient(135deg, var(--nv) 0%, #1a2f6e 100%);
+  padding: 90px 24px; text-align: center;
+}
+.cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(30px, 5vw, 52px); font-weight: 800; color: #fff; margin-bottom: 16px; }
+.cta-section p { font-size: 17px; color: rgba(255,255,255,0.7); margin-bottom: 36px; max-width: 520px; margin-left: auto; margin-right: auto; }
+.cta-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 480px; margin: 0 auto; }
+.cta-form input {
+  flex: 1; min-width: 220px; padding: 13px 18px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08);
+  color: #fff; font-size: 15px; outline: none; font-family: 'DM Sans', sans-serif;
+}
+.cta-form input::placeholder { color: rgba(255,255,255,0.4); }
+.cta-form input:focus { border-color: var(--ac2); background: rgba(255,255,255,0.12); }
+.cta-form button {
+  background: var(--gd); color: var(--nv); padding: 13px 28px; border: none;
+  border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer;
+  transition: all .2s; font-family: 'DM Sans', sans-serif;
+}
+.cta-form button:hover { background: #fbbf24; transform: translateY(-1px); }
+.cta-note { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 14px; }
+
+/* ── FOOTER ── */
+footer {
+  background: #060d1f; padding: 48px 24px 24px;
+  color: rgba(255,255,255,0.5); font-size: 13px;
+}
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 30px; margin-bottom: 32px; }
+.footer-brand .nav-logo { display: block; margin-bottom: 10px; }
+.footer-brand p { font-size: 13px; color: rgba(255,255,255,0.4); max-width: 260px; line-height: 1.7; }
+.footer-links { display: flex; gap: 40px; flex-wrap: wrap; }
+.footer-col h4 { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+.footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; margin-bottom: 8px; font-size: 13px; transition: color .2s; }
+.footer-col a:hover { color: #fff; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.footer-legal { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity: 0; transform: translateY(30px); transition: all .7s cubic-bezier(.16,1,.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── WHATSAPP FLOAT ── */
+.wa-btn {
+  position: fixed; bottom: 28px; right: 28px; z-index: 999;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #25d366; color: #fff; text-decoration: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+  transition: all .25s; animation: waFloat 3s ease-in-out infinite;
+}
+.wa-btn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.7); }
+@keyframes waFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+/* ── RESPONSIVE COMPLETO ── */
+
+/* Laptop 13"-14" (1024px - 1280px) */
+@media(max-width:1280px){
+  .section-inner { max-width: 960px; }
+  .hero h1 { font-size: clamp(30px, 4.5vw, 52px); }
+  .hero-sub { font-size: 16px; }
+  .hero-stat-n { font-size: 28px; }
+  .hero-stats { gap: 32px; }
+  .kv { font-size: 22px; }
+  .pricing-grid { gap: 16px; }
+  .plan { padding: 28px 22px; }
+  .plan-price .amount { font-size: 38px; }
+  .mock-kpi-v { font-size: 15px; }
+  section { padding: 70px 24px; }
+}
+
+/* Tablet / laptop pequeño (768px - 1024px) */
+@media(max-width:1024px){
+  nav { padding: 0 24px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .hero h1 { font-size: clamp(26px, 4vw, 44px); }
+  .hero-stats { gap: 24px; margin-top: 40px; padding-top: 30px; }
+  .hero-stat-n { font-size: 26px; }
+  .features-grid { grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); }
+  .mockup-content { padding: 14px; gap: 10px; }
+  .mock-sidebar { width: 160px; }
+  .mock-kpi-row { grid-template-columns: repeat(2,1fr); }
+  .mock-kpi-v { font-size: 14px; }
+  .mock-th, .mock-row { grid-template-columns: 1fr 1fr 2fr 1fr; }
+  .mock-th span:last-child, .mock-row span:last-child { display: none; }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 480px !important; margin-left: auto; margin-right: auto; }
+  .plan.featured { transform: scale(1); }
+  .audience-grid { grid-template-columns: repeat(2,1fr); }
+  .test-grid { grid-template-columns: 1fr; max-width: 540px; margin-left: auto; margin-right: auto; }
+  section { padding: 60px 20px; }
+}
+
+/* Móvil (max 768px) */
+@media(max-width:768px){
+  nav { padding: 0 16px; height: 56px; }
+  .nav-links { display: none; }
+  .hero { padding: 80px 16px 40px; min-height: auto; }
+  .hero h1 { font-size: clamp(24px, 7vw, 38px); letter-spacing: -.5px; }
+  .hero-sub { font-size: 15px; margin-bottom: 28px; }
+  .hero-badge { font-size: 10px; padding: 5px 12px; }
+  .btn-primary, .btn-outline { padding: 12px 20px; font-size: 14px; }
+  .hero-stats { gap: 20px; margin-top: 30px; padding-top: 24px; }
+  .hero-stat-n { font-size: 24px; }
+  .hero-stat-l { font-size: 10px; }
+  .mockup-frame { border-radius: 10px; }
+  .mockup-content { padding: 10px; flex-direction: column; }
+  .mock-sidebar { display: none; }
+  .mock-kpi-row { grid-template-columns: repeat(2,1fr); }
+  .mock-kpi { padding: 8px; }
+  .mock-kpi-v { font-size: 13px; }
+  .mock-th, .mock-row { grid-template-columns: 1fr 2fr 1fr; }
+  .mock-th span:nth-child(2), .mock-row span:nth-child(2) { display: none; }
+  .mock-th span:last-child, .mock-row span:last-child { display: none; }
+  .features-grid { grid-template-columns: 1fr; }
+  .feat-card { padding: 20px; }
+  .pricing-grid { grid-template-columns: 1fr !important; max-width: 100% !important; }
+  .plan { padding: 24px 18px; }
+  .plan.featured { transform: scale(1); }
+  .plan-price .amount { font-size: 36px; }
+  .audience-grid { grid-template-columns: 1fr 1fr; }
+  .aud-card { padding: 18px 14px; }
+  .aud-icon { font-size: 30px; }
+  .test-grid { grid-template-columns: 1fr; }
+  .faq-q { font-size: 14px; padding: 14px 16px; }
+  .cta-section h2 { font-size: clamp(24px, 6vw, 38px); }
+  .cta-section p { font-size: 15px; }
+  .cta-form { flex-direction: column; }
+  .cta-form input { min-width: unset; width: 100%; }
+  footer .footer-top { flex-direction: column; }
+  footer .footer-links { flex-direction: column; gap: 24px; }
+  section { padding: 50px 16px; }
+  .section-title { font-size: clamp(22px, 5vw, 32px); }
+  .section-sub { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Conta<span>Fiscal</span> MX</a>
+  <div class="nav-links">
+    <a href="#caracteristicas">Características</a>
+    <a href="#para-quien">¿Para quién?</a>
+    <a href="#precios">Precios</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://wa.me/524641144437?text=Hola%2C%20me%20interesa%20ContaFiscal%20MX%202026.%20%C2%BFMe%20pueden%20dar%20informaci%C3%B3n%3F" target="_blank" class="nav-cta">Comenzar ahora →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">🟡 Nuevo — Versión 2026 disponible</div>
+    <h1>Contabilidad para <em>Personas Físicas</em> sin complicaciones</h1>
+    <p class="hero-sub">Sistema ERP contable 100% SAT México 2026. Sin instalación, sin servidor, sin mensualidades ocultas. Funciona desde tu navegador.</p>
+    <div class="hero-actions">
+      <a href="#precios" class="btn-primary">Ver planes y precios →</a>
+      <a href="https://wa.me/524641144437?text=Hola%2C%20quisiera%20ver%20una%20demostraci%C3%B3n%20de%20ContaFiscal%20MX%202026" target="_blank" class="btn-outline">▶ Ver demostración</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-n">100<span>%</span></div><div class="hero-stat-l">SAT Actualizado 2026</div></div>
+      <div class="hero-stat"><div class="hero-stat-n">0<span>₱</span></div><div class="hero-stat-l">Sin instalación</div></div>
+      <div class="hero-stat"><div class="hero-stat-n">+15</div><div class="hero-stat-l">Módulos incluidos</div></div>
+      <div class="hero-stat"><div class="hero-stat-n">10<span>d</span></div><div class="hero-stat-l">Prueba gratuita</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO MOCKUP -->
+<section class="demo-section" id="demo">
+  <div class="demo-inner">
+    <div class="section-label" style="color:rgba(255,255,255,0.5)">Vista previa</div>
+    <h2 class="section-title" style="color:#fff;margin-bottom:10px">Interfaz profesional nivel ERP</h2>
+    <p class="section-sub">Diseño estilo Microsoft AX / SAP. Acceso inmediato desde cualquier navegador.</p>
+    <div class="mockup-frame reveal">
+      <div class="mockup-bar">
+        <div class="dot" style="background:#ff5f57"></div>
+        <div class="dot" style="background:#febc2e"></div>
+        <div class="dot" style="background:#28c840"></div>
+        <span style="margin-left:12px;font-size:11px;color:rgba(255,255,255,0.4);font-family:'DM Sans',sans-serif">ContaFiscal MX 2026 · Mi Empresa SA de CV</span>
+      </div>
+      <div class="mockup-content">
+        <div class="mock-sidebar">
+          <div style="padding:8px 12px;margin-bottom:8px">
+            <span style="font-size:9px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;font-family:'DM Sans',sans-serif">MÓDULOS</span>
+          </div>
+          <div class="mock-si on"><div class="mock-si-dot"></div><span>Dashboard</span></div>
+          <div class="mock-si"><div class="mock-si-dot"></div><span>Pólizas</span></div>
+          <div class="mock-si"><div class="mock-si-dot"></div><span>Asiento Rápido</span></div>
+          <div class="mock-si"><div class="mock-si-dot"></div><span>Catálogo Ctas.</span></div>
+          <div class="mock-si"><div class="mock-si-dot"></div><span>CFDI / SAT</span></div>
+          <div class="mock-si"><div class="mock-si-dot"></div><span>IMSS / Nómina</span></div>
+          <div class="mock-si"><div class="mock-si-dot"></div><span>Reportes</span></div>
+          <div class="mock-si"><div class="mock-si-dot"></div><span>Terceros</span></div>
+        </div>
+        <div class="mock-main">
+          <div class="mock-kpi-row">
+            <div class="mock-kpi" style="border-top-color:#2563eb">
+              <div class="mock-kpi-l">Ingresos</div>
+              <div class="mock-kpi-v">$148K</div>
+            </div>
+            <div class="mock-kpi" style="border-top-color:#dc2626">
+              <div class="mock-kpi-l">Egresos</div>
+              <div class="mock-kpi-v">$89K</div>
+            </div>
+            <div class="mock-kpi" style="border-top-color:#059669">
+              <div class="mock-kpi-l">Utilidad</div>
+              <div class="mock-kpi-v">$59K</div>
+            </div>
+            <div class="mock-kpi" style="border-top-color:#f59e0b">
+              <div class="mock-kpi-l">IVA xPagar</div>
+              <div class="mock-kpi-v">$9.4K</div>
+            </div>
+          </div>
+          <div class="mock-table">
+            <div class="mock-th">
+              <span>Folio</span><span>Fecha</span><span>Concepto</span><span>Importe</span><span>Estado</span>
+            </div>
+            <div class="mock-row">
+              <span>D00012</span><span>15/01/26</span><span>Venta cliente ABC</span><span style="color:#059669;font-weight:600">$18,500</span>
+              <span><span class="mock-pill" style="background:#d1fae5;color:#065f46">Timbrada</span></span>
+            </div>
+            <div class="mock-row">
+              <span>D00013</span><span>16/01/26</span><span>Pago servicios</span><span style="color:#dc2626;font-weight:600">$4,200</span>
+              <span><span class="mock-pill" style="background:#fee2e2;color:#991b1b">Gasto</span></span>
+            </div>
+            <div class="mock-row">
+              <span>D00014</span><span>17/01/26</span><span>Nómina quincenal</span><span style="color:#dc2626;font-weight:600">$22,000</span>
+              <span><span class="mock-pill" style="background:#fef3c7;color:#92400e">Pendiente</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARACTERÍSTICAS -->
+<section class="features-bg" id="caracteristicas">
+  <div class="section-inner">
+    <div class="section-label">Características</div>
+    <h2 class="section-title reveal">Todo lo que necesita tu negocio</h2>
+    <p class="section-sub reveal">Módulos completos para llevar la contabilidad de tu empresa sin depender de un despacho.</p>
+    <div class="features-grid">
+      <div class="feat-card reveal">
+        <div class="feat-icon">📊</div>
+        <h3>Dashboard ejecutivo</h3>
+        <p>Visualiza ingresos, egresos, IVA por pagar y utilidad neta en tiempo real. KPIs listos para toma de decisiones.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">⚡</div>
+        <h3>Asiento Rápido</h3>
+        <p>Genera asientos contables automáticamente por tipo de operación: venta, gasto, nómina, IVA. Sin conocimiento técnico.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🧾</div>
+        <h3>CFDI y SAT 2026</h3>
+        <p>Catálogos actualizados del SAT. Vincula tus facturas con UUID, RFC y folio directamente desde el sistema.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">👥</div>
+        <h3>IMSS y Nómina</h3>
+        <p>Tabla de cuotas IMSS integrada. Cálculo de prestaciones, ISR y aportaciones para personas físicas con trabajadores.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">📋</div>
+        <h3>Catálogo de cuentas</h3>
+        <p>Catálogo contable completo con estructura SAT. Personalizable para tu giro de negocio.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🔐</div>
+        <h3>Acceso seguro CSD</h3>
+        <p>Zona de carga de certificados de sello digital. Manejo multi-empresa desde un solo archivo.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">📤</div>
+        <h3>Exportación y reportes</h3>
+        <p>Genera pólizas en formato estándar. Balanza de comprobación, mayor y reportes mensuales listos para contadores.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">💻</div>
+        <h3>Sin instalación</h3>
+        <p>Un solo archivo HTML. Funciona en Windows, Mac y cualquier navegador. Sin servidores, sin internet requerido.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🌐</div>
+        <h3>Multi-usuario</h3>
+        <p>Sistema de login con roles. Maneja múltiples RFCs y empresas desde la misma plataforma.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIÉN -->
+<section id="para-quien">
+  <div class="section-inner">
+    <div class="section-label">¿Para quién es?</div>
+    <h2 class="section-title reveal">Diseñado para negocios mexicanos reales</h2>
+    <p class="section-sub reveal">Desde el profesionista independiente hasta la PyME con varios empleados.</p>
+    <div class="audience-grid">
+      <div class="aud-card reveal">
+        <span class="aud-icon">👨‍💼</span>
+        <h3>Contadores independientes</h3>
+        <p>Gestiona la contabilidad de varios clientes desde una sola herramienta. Exporta pólizas listas para cualquier ERP.</p>
+      </div>
+      <div class="aud-card reveal">
+        <span class="aud-icon">🏪</span>
+        <h3>Pequeñas y medianas empresas</h3>
+        <p>Lleva la contabilidad interna sin pagar despacho externo. Control total de tus números cada mes.</p>
+      </div>
+      <div class="aud-card reveal">
+        <span class="aud-icon">🧑‍🔧</span>
+        <h3>Personas físicas con negocio</h3>
+        <p>Comerciante, prestador de servicios, arrendatario. Cumple con el SAT sin complicarte la vida.</p>
+      </div>
+      <div class="aud-card reveal">
+        <span class="aud-icon">🌾</span>
+        <h3>Sector agroindustrial</h3>
+        <p>Perfecta para empresas del campo con nómina, flota vehicular y múltiples centros de costo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRECIOS -->
+<section id="precios" style="background:#f8faff;">
+  <div class="section-inner">
+    <div class="section-label" style="text-align:center">Planes y precios</div>
+    <h2 class="section-title reveal" style="text-align:center;max-width:100%">Invierte menos de lo que cuesta<br>una hora de contador</h2>
+    <p class="section-sub reveal" style="margin:0 auto 0;text-align:center;max-width:480px">Sin sorpresas. Sin comisiones ocultas. Cancela cuando quieras.</p>
+    <div class="pricing-grid" style="max-width:900px;margin:50px auto 0;">
+      <!-- BÁSICO -->
+      <div class="plan reveal">
+        <div class="plan-name">Básico</div>
+        <div class="plan-desc">Para el profesionista independiente o negocio pequeño.</div>
+        <div class="plan-price">
+          <span class="currency">$</span><span class="amount">199</span>
+          <span class="period">por mes · facturado mensual</span>
+          <span class="anual-note">💰 $1,999/año — ahorra 2 meses</span>
+        </div>
+        <ul class="plan-features">
+          <li>1 empresa / RFC</li>
+          <li>Módulos Pólizas y Asiento Rápido</li>
+          <li>Catálogo de cuentas SAT</li>
+          <li>Exportación básica de reportes</li>
+          <li>Soporte por email</li>
+          <li>🧾 Emite CFDI 4.0 a tus clientes directo desde el sistema</li>
+          <li class="no">IMSS y Nómina</li>
+          <li class="no">Multi-empresa</li>
+        </ul>
+        <a href="https://wa.me/524641144437?text=Hola%2C%20me%20interesa%20el%20Plan%20B%C3%A1sico%20de%20ContaFiscal%20MX%202026.%20%C2%BFC%C3%B3mo%20activo%20mis%2010%20d%C3%ADas%20gratis%3F" target="_blank" class="plan-btn plan-btn-outline">Comenzar gratis 10 días</a>
+      </div>
+      <!-- PROFESIONAL (DESTACADO) -->
+      <div class="plan featured reveal">
+        <div class="plan-badge">⭐ MÁS POPULAR</div>
+        <div class="plan-name">Profesional</div>
+        <div class="plan-desc">El paquete completo para PyMEs y contadores.</div>
+        <div class="plan-price">
+          <span class="currency" style="color:rgba(255,255,255,0.6)">$</span><span class="amount">399</span>
+          <span class="period">por mes · facturado mensual</span>
+          <span class="anual-note">💰 $3,599/año — ahorra 2 meses</span>
+        </div>
+        <ul class="plan-features">
+          <li>Hasta 5 empresas / RFC</li>
+          <li>Todos los módulos incluidos</li>
+          <li>IMSS, Nómina y CSD</li>
+          <li>Reportes completos + exportación</li>
+          <li>Actualizaciones SAT automáticas</li>
+          <li>Soporte WhatsApp prioritario</li>
+          <li>Capacitación en línea incluida</li>
+          <li>🧾 Emite CFDI 4.0 a tus clientes directo desde el sistema</li>
+        </ul>
+        <a href="https://wa.me/524641144437?text=Hola%2C%20me%20interesa%20el%20Plan%20Profesional%20de%20ContaFiscal%20MX%202026.%20%C2%BFC%C3%B3mo%20activo%20mis%2010%20d%C3%ADas%20gratis%3F" target="_blank" class="plan-btn plan-btn-primary">Comenzar gratis 10 días →</a>
+      </div>
+      <!-- ENTERPRISE -->
+      <div class="plan reveal">
+        <div class="plan-name">Despacho / Enterprise</div>
+        <div class="plan-desc">Para contadores y despachos que manejan múltiples clientes.</div>
+        <div class="plan-price">
+          <span class="currency">$</span><span class="amount">899</span>
+          <span class="period">por mes · facturado mensual</span>
+          <span class="anual-note">💰 $8,099/año — ahorra 2 meses</span>
+        </div>
+        <ul class="plan-features">
+          <li>Hasta 50 empresas / RFC</li>
+          <li>Todo lo del plan Profesional</li>
+          <li>Soporte WhatsApp prioritario</li>
+          <li>Capacitación en línea incluida</li>
+          <li>SLA de respuesta 4 horas</li>
+          <li>🧾 Emite CFDI 4.0 a tus clientes directo desde el sistema</li>
+          <li>Actualizaciones SAT automáticas</li>
+          <li>Acceso a todas las versiones futuras</li>
+        </ul>
+        <a href="https://wa.me/524641144437?text=Hola%2C%20me%20interesa%20el%20Plan%20Despacho%20de%20ContaFiscal%20MX%202026.%20%C2%BFC%C3%B3mo%20activo%20mis%2010%20d%C3%ADas%20gratis%3F" target="_blank" class="plan-btn plan-btn-outline">Comenzar 10 días gratis</a>
+      </div>
+    </div>
+    <p class="pricing-note reveal">✅ 10 días de prueba sin tarjeta · 🧾 Solicita tu factura de compra en todos los planes · Precios en MXN + IVA</p>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="testimonios-bg">
+  <div class="section-inner">
+    <div class="section-label">Testimonios</div>
+    <h2 class="section-title reveal">Lo que dicen nuestros usuarios</h2>
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-txt">"Por fin un sistema que entiende la realidad del SAT en México. El asiento rápido me ahorra 3 horas por semana. Mis clientes están muy contentos con los reportes."</p>
+        <div class="test-author">
+          <div class="test-av" style="background:#7c3aed">MG</div>
+          <div>
+            <div class="test-name">M. González</div>
+            <div class="test-role">Contadora Independiente · Culiacán, Sin.</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-txt">"Soy dueño de una ferretería y antes pagaba $1,800 mensuales a un contador. Ahora llevo yo mismo mi contabilidad. Simple y sin errores del SAT."</p>
+        <div class="test-author">
+          <div class="test-av" style="background:#059669">RL</div>
+          <div>
+            <div class="test-name">R. López</div>
+            <div class="test-role">Persona Física · Mazatlán, Sin.</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-stars">★★★★☆</div>
+        <p class="test-txt">"Tiene todo lo que necesito para mis 4 empresas agrícolas. La integración IMSS es lo que me convenció. Buen soporte por WhatsApp cuando tengo dudas."</p>
+        <div class="test-author">
+          <div class="test-av" style="background:#f59e0b">JH</div>
+          <div>
+            <div class="test-name">J. Hernández</div>
+            <div class="test-role">Productor Agrícola · Los Mochis, Sin.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-label">Preguntas frecuentes</div>
+    <h2 class="section-title reveal">¿Tienes dudas? Las respondemos</h2>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Necesito instalar algo? <span class="arrow">›</span></div>
+        <div class="faq-a"><div class="faq-a-inner">No. ContaFiscal MX funciona 100% desde tu navegador web. Solo necesitas abrir el archivo o acceder al enlace. Funciona en Chrome, Edge, Firefox y Safari tanto en Windows como en Mac.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Está actualizado para el SAT 2026? <span class="arrow">›</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Sí. El sistema incluye los catálogos del SAT actualizados a 2026: catálogo de cuentas conforme a la NIF, tablas ISR vigentes, manejo de CFDI 4.0 y cuotas IMSS actualizadas. Los planes Profesional y Enterprise reciben actualizaciones automáticas.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Puedo cancelar cuando quiera? <span class="arrow">›</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Totalmente. No hay contratos de permanencia. Cancela cuando quieras sin penalizaciones. Si pagas anualmente, el reembolso proporcional se procesa en 5 días hábiles.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Cómo se realiza el pago? <span class="arrow">›</span></div>
+        <div class="faq-a"><div class="faq-a-inner">El pago se realiza de forma segura a través de Mercado Pago. Aceptamos tarjeta de crédito/débito (Visa, Mastercard, American Express), transferencia SPEI y pago en efectivo en OXXO o tiendas de conveniencia. Al confirmar tu pago recibirás acceso inmediato al sistema.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Qué pasa con mis datos si cancelo? <span class="arrow">›</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Tus datos son tuyos. Antes de cancelar puedes exportar toda tu información en formatos estándar. El archivo local también conserva toda la información de forma permanente en tu equipo.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Incluye capacitación? <span class="arrow">›</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Todos los planes incluyen sesión de capacitación en línea y acceso a videos tutoriales. Además hay soporte vía WhatsApp para cualquier duda operativa.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section" id="contacto">
+  <h2>Comienza hoy — 10 días gratis</h2>
+  <p>Sin tarjeta de crédito. Sin compromisos. Empieza a llevar tu contabilidad como profesional.</p>
+  <div class="cta-form">
+    <input type="email" placeholder="tu@email.com" id="ctaEmail">
+    <button onclick="ctaSubmit()">Quiero mi acceso →</button>
+  </div>
+  <p class="cta-note">O escríbenos al WhatsApp: <strong style="color:rgba(255,255,255,0.7)">+52 464 114 4437</strong> · Respondemos en menos de 1 hora</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">Conta<span>Fiscal</span> MX</a>
+        <p>Software contable para personas físicas y PyMEs en México. Cumplimiento SAT garantizado 2026.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Producto</h4>
+          <a href="#caracteristicas">Características</a>
+          <a href="#precios">Precios</a>
+          <a href="#demo">Demo</a>
+          <a href="#faq">Preguntas frecuentes</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <a href="mailto:soporte@jbconsul.com">soporte@jbconsul.com</a>
+          <a href="https://wa.me/524641144437?text=Hola%2C%20me%20interesa%20ContaFiscal%20MX%202026" target="_blank">WhatsApp +52 464 114 4437</a>
+          <a href="#contacto">Solicitar acceso</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#faq">Términos de uso</a>
+          <a href="#faq">Privacidad</a>
+          <a href="mailto:soporte@jbconsul.com?subject=Solicitud%20de%20Factura%20ContaFiscal%20MX">Solicitar factura</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-legal">© 2026 ContaFiscal MX. Todos los derechos reservados.</span>
+      <span class="footer-legal">Hecho en Sinaloa, México 🇲🇽</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp flotante -->
+<a href="https://wa.me/524641144437?text=Hola%2C%20me%20interesa%20ContaFiscal%20MX%202026.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F" class="wa-btn" target="_blank" title="Contáctanos por WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+function ctaSubmit() {
+  const email = document.getElementById('ctaEmail').value;
+  if (!email || !email.includes('@')) { alert('Por favor ingresa un email válido.'); return; }
+  const msg = encodeURIComponent('Hola, me interesa ContaFiscal MX 2026. Mi correo es: ' + email + '. ¿Me pueden dar más información sobre los planes?');
+  window.open('https://wa.me/524641144437?text=' + msg, '_blank');
+  document.getElementById('ctaEmail').value = '';
+}
+
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
